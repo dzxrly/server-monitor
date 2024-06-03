@@ -6,6 +6,11 @@ from lib.utils.utils import unit_convert
 def get_memory_state(
         unit: str = 'GB',
 ) -> dict:
+    """
+    获取内存的状态，包括总内存、可用内存、已用内存、剩余内存、内存使用率，以及交换分区的状态
+    :param unit: 内存的单位，可选值为B, KB, MB, GB, TB
+    :return: dict
+    """
     assert unit in ['B', 'KB', 'MB', 'GB', 'TB'], \
         '[ERROR] get_memory_state: unit must be one of B, KB, MB, GB, TB'
 

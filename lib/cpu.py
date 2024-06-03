@@ -83,6 +83,10 @@ def get_cpu_temperature(
 
 
 def get_cpu_name() -> str:
+    """
+    获取CPU名称，仅在Linux和Windows下有效
+    :return: 返回CPU名称，如果获取失败则返回'Unknown'
+    """
     if psutil.LINUX:
         with open('/proc/cpuinfo', 'r') as f:
             for line in f.readlines():

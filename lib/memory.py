@@ -1,25 +1,6 @@
 import psutil
 
-
-def unit_convert(
-        input_value: float,
-        input_unit: str,
-        output_unit: str,
-) -> float:
-    assert input_unit in ['B', 'KB', 'MB', 'GB', 'TB'], \
-        '[ERROR] unit_convert: input_unit must be one of B, KB, MB, GB, TB'
-    assert output_unit in ['B', 'KB', 'MB', 'GB', 'TB'], \
-        '[ERROR] unit_convert: output_unit must be one of B, KB, MB, GB, TB'
-
-    unit_dict = {
-        'B': 0,
-        'KB': 1,
-        'MB': 2,
-        'GB': 3,
-        'TB': 4,
-    }
-
-    return input_value * (1024 ** (unit_dict[input_unit] - unit_dict[output_unit]))
+from lib.utils.utils import unit_convert
 
 
 def get_memory_state(

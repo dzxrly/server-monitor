@@ -59,7 +59,7 @@ def get_cpu_temperature(
         temps = psutil.sensors_temperatures(fahrenheit=fahrenheit)
         if 'coretemp' in temps:
             return {
-                'numa_node_temp': [
+                'numa_node_temperature': [
                     {
                         'label': temp.label,
                         'current': temp.current,
@@ -67,7 +67,7 @@ def get_cpu_temperature(
                         'critical': temp.critical,
                     } for temp in temps['coretemp'] if 'Package id' in temp.label
                 ],
-                'core_temp': [
+                'core_temperature': [
                     {
                         'label': temp.label,
                         'current': temp.current,

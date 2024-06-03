@@ -80,3 +80,21 @@ def get_cpu_temperature(
             return {}
     except Exception as e:
         return {}
+
+
+def get_cpu_name() -> str:
+    if psutil.LINUX:
+        with open('/proc/cpuinfo', 'r') as f:
+            for line in f.readlines():
+                if 'model name' in line:
+                    return line.split(':')[1].strip()
+        return 'Unknown'
+    elif psutil.WINDOWS:
+        try:
+            import wmi
+            c = wmi.WMI()
+            return c.Win32_Processor()[0].Name
+        except Exception as e:
+            return 'Unknown'
+    else:
+        raise NotImplementedError('Unsupported system')

@@ -30,4 +30,4 @@ def get_memory_state(
             'swap_percent': swap.percent,
         }
     except Exception as e:
-        return {}
+        raise '[ERROR] get_memory_state: {}'.format(e)

@@ -44,7 +44,7 @@ def get_cpu_state(
             'cpu_syscalls': cpu_stats.syscalls,
         }
     except Exception as e:
-        return {}
+        raise '[ERROR] Get CPU state failed. Detail: {}'.format(e)
 
 
 def get_cpu_temperature(
@@ -79,7 +79,7 @@ def get_cpu_temperature(
         else:
             return {}
     except Exception as e:
-        return {}
+        raise '[ERROR] Get CPU temperature failed. Detail: {}'.format(e)
 
 
 def get_cpu_name() -> str:

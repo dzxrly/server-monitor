@@ -72,7 +72,6 @@ def get_gpu_state():
     # 读取URL的参数
     unit = request.args.get('unit', type=str)
     fahrenheit = request.args.get('fahrenheit', type=flask_request_arg_bool)
-    print(unit, fahrenheit)
 
     try:
         gpu_state = get_nv_gpu_state(unit=unit, fahrenheit=fahrenheit)

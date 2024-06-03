@@ -2,6 +2,11 @@
 // so you can safely delete all default props below
 
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful'
+  'cancelBtn': 'Cancel',
+  'confirmBtn': 'Confirm',
+  'addServer': 'Add Server',
+  'serverUUID': 'Server UUID',
+  'customServerName': 'Custom Server Name',
+  'serverUrl': 'Server URL',
+  'serverTagColor': 'Server Tag Color'
 };

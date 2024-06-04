@@ -2,6 +2,7 @@ import argparse
 from typing import Union
 
 from flask import Flask, jsonify, request, abort
+from flask_cors import CORS
 
 from lib.cpu import get_cpu_state, get_cpu_temperature, get_cpu_name
 from lib.gpu import get_nv_gpu_state
@@ -9,6 +10,7 @@ from lib.memory import get_memory_state
 from lib.utils.utils import flask_request_arg_bool
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/cpu_name', methods=['GET'])

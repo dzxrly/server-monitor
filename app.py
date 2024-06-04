@@ -15,11 +15,11 @@ app = Flask(__name__)
 def cpu_name():
     try:
         return jsonify({
-            'cpu_name': get_cpu_name(),
+            'cpuName': get_cpu_name(),
         })
     except Exception as e:
         return jsonify({
-            'cpu_name': 'Unknown',
+            'cpuName': 'Unknown',
         })
 
 
@@ -32,20 +32,20 @@ def cpu_state():
 
     state = get_cpu_state(interval, percpu)
     res = {
-        'cpu_usage': state['cpu_usage'],
-        'cpu_freq': state['cpu_freq'],
-        'cpu_cores': state['cpu_cores'],
-        'cpu_ctx_switches': state['cpu_ctx_switches'],
-        'cpu_interrupts': state['cpu_interrupts'],
-        'cpu_soft_interrupts': state['cpu_soft_interrupts'],
-        'cpu_syscalls': state['cpu_syscalls'],
-        'cpu_temperature': get_cpu_temperature(fahrenheit),
+        'cpuUsage': state['cpuUsage'],
+        'cpuFreq': state['cpuFreq'],
+        'cpuCores': state['cpuCores'],
+        'cpuCTXSwitches': state['cpuCTXSwitches'],
+        'cpuInterrupts': state['cpuInterrupts'],
+        'cpuSoftInterrupts': state['cpuSoftInterrupts'],
+        'cpuSyscalls': state['cpuSyscalls'],
+        'cpuTemperature': get_cpu_temperature(fahrenheit),
     }
 
     return jsonify(res)
 
 
-@app.route('/memory', methods=['GET'])
+@app.route('/memory_state', methods=['GET'])
 def memory_state():
     # 读取URL的参数
     unit = request.args.get('unit', type=str)
@@ -53,15 +53,15 @@ def memory_state():
     try:
         state = get_memory_state(unit)
         return jsonify({
-            'memory_total': state['memory_total'],
-            'memory_available': state['memory_available'],
-            'memory_used': state['memory_used'],
-            'memory_free': state['memory_free'],
-            'memory_percent': state['memory_percent'],
-            'swap_total': state['swap_total'],
-            'swap_used': state['swap_used'],
-            'swap_free': state['swap_free'],
-            'swap_percent': state['swap_percent'],
+            'memoryTotal': state['memoryTotal'],
+            'memoryAvailable': state['memoryAvailable'],
+            'memoryUsed': state['memoryUsed'],
+            'memoryFree': state['memoryFree'],
+            'memoryPercent': state['memoryPercent'],
+            'swapTotal': state['swapTotal'],
+            'swapUsed': state['swapUsed'],
+            'swapFree': state['swapFree'],
+            'swapPercent': state['swapPercent'],
         })
     except Exception as e:
         abort(400)
@@ -76,8 +76,8 @@ def get_gpu_state():
     try:
         gpu_state = get_nv_gpu_state(unit=unit, fahrenheit=fahrenheit)
         return jsonify({
-            'driver_version': gpu_state['driver_version'],
-            'gpu_list': gpu_state['gpu_list'],
+            'driverVersion': gpu_state['driverVersion'],
+            'gpuList': gpu_state['gpuList'],
         })
     except Exception as e:
         abort(400)

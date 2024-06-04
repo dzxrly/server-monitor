@@ -20,8 +20,8 @@ def get_nv_gpu_state(
     try:
         pynvml.nvmlInit()
         res = {
-            'driver_version': pynvml.nvmlSystemGetDriverVersion(),
-            'gpu_list': [],
+            'driverVersion': pynvml.nvmlSystemGetDriverVersion(),
+            'gpuList': [],
         }
         for device_index in range(pynvml.nvmlDeviceGetCount()):
             handle = pynvml.nvmlDeviceGetHandleByIndex(device_index)
@@ -32,22 +32,22 @@ def get_nv_gpu_state(
                 fan_speed = pynvml.nvmlDeviceGetFanSpeed(handle)
             except pynvml.NVMLError:
                 pass
-            res['gpu_list'].append({
-                'gpu_index': device_index,
-                'gpu_name': pynvml.nvmlDeviceGetName(handle),
-                'gpu_usage': usage_info.gpu,
-                'memory_total': unit_convert(memory_info.total, 'B', unit),
-                'memory_used': unit_convert(memory_info.used, 'B', unit),
-                'memory_free': unit_convert(memory_info.free, 'B', unit),
-                'memory_percent': memory_info.used / memory_info.total * 100,
-                'gpu_temperature': temperature_convert(
+            res['gpuList'].append({
+                'gpuIndex': device_index,
+                'gpuName': pynvml.nvmlDeviceGetName(handle),
+                'gpuUsage': usage_info.gpu,
+                'memoryTotal': unit_convert(memory_info.total, 'B', unit),
+                'memoryUsed': unit_convert(memory_info.used, 'B', unit),
+                'memoryFree': unit_convert(memory_info.free, 'B', unit),
+                'memoryPercent': memory_info.used / memory_info.total * 100,
+                'gpuTemperature': temperature_convert(
                     pynvml.nvmlDeviceGetTemperature(handle, pynvml.NVML_TEMPERATURE_GPU),
                     'C',
                     'F' if fahrenheit else 'C',
                 ),
-                'power_current': pynvml.nvmlDeviceGetPowerUsage(handle) / 1000,
-                'power_limit': pynvml.nvmlDeviceGetEnforcedPowerLimit(handle) / 1000,
-                'fan_speed': fan_speed,
+                'powerCurrent': pynvml.nvmlDeviceGetPowerUsage(handle) / 1000,
+                'powerLimit': pynvml.nvmlDeviceGetEnforcedPowerLimit(handle) / 1000,
+                'fanSpeed': fan_speed,
             })
         pynvml.nvmlShutdown()
         return res

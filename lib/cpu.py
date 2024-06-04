@@ -16,11 +16,11 @@ def get_cpu_state(
     try:
         cpu_stats = psutil.cpu_stats()
         return {
-            'cpu_usage': {
+            'cpuUsage': {
                 'percpu': psutil.cpu_percent(interval=interval, percpu=percpu),
                 'avg': psutil.cpu_percent(interval=interval, percpu=False),
             },
-            'cpu_freq': {
+            'cpuFreq': {
                 'percpu': [
                     {
                         'current': freq.current,
@@ -34,14 +34,14 @@ def get_cpu_state(
                     'max': psutil.cpu_freq(percpu=False).max,
                 },
             },
-            'cpu_cores': {
+            'cpuCores': {
                 'cores': psutil.cpu_count(logical=False),
                 'threads': psutil.cpu_count(logical=True),
             },
-            'cpu_ctx_switches': cpu_stats.ctx_switches,
-            'cpu_interrupts': cpu_stats.interrupts,
-            'cpu_soft_interrupts': cpu_stats.soft_interrupts,
-            'cpu_syscalls': cpu_stats.syscalls,
+            'cpuCTXSwitches': cpu_stats.ctx_switches,
+            'cpuInterrupts': cpu_stats.interrupts,
+            'cpuSoftInterrupts': cpu_stats.soft_interrupts,
+            'cpuSyscalls': cpu_stats.syscalls,
         }
     except Exception as e:
         raise '[ERROR] Get CPU state failed. Detail: {}'.format(e)
@@ -59,7 +59,7 @@ def get_cpu_temperature(
         temps = psutil.sensors_temperatures(fahrenheit=fahrenheit)
         if 'coretemp' in temps:
             return {
-                'numa_node_temperature': [
+                'numaNodeTemperature': [
                     {
                         'label': temp.label,
                         'current': temp.current,
@@ -67,7 +67,7 @@ def get_cpu_temperature(
                         'critical': temp.critical,
                     } for temp in temps['coretemp'] if 'Package id' in temp.label
                 ],
-                'core_temperature': [
+                'coreTemperature': [
                     {
                         'label': temp.label,
                         'current': temp.current,

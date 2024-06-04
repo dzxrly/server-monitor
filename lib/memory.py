@@ -19,15 +19,15 @@ def get_memory_state(
         swap = psutil.swap_memory()
 
         return {
-            'memory_total': unit_convert(mem.total, 'B', unit),
-            'memory_available': unit_convert(mem.available, 'B', unit),
-            'memory_used': unit_convert(mem.used, 'B', unit),
-            'memory_free': unit_convert(mem.free, 'B', unit),
-            'memory_percent': mem.percent,
-            'swap_total': unit_convert(swap.total, 'B', unit),
-            'swap_used': unit_convert(swap.used, 'B', unit),
-            'swap_free': unit_convert(swap.free, 'B', unit),
-            'swap_percent': swap.percent,
+            'memoryTotal': unit_convert(mem.total, 'B', unit),
+            'memoryAvailable': unit_convert(mem.available, 'B', unit),
+            'memoryUsed': unit_convert(mem.used, 'B', unit),
+            'memoryFree': unit_convert(mem.free, 'B', unit),
+            'memoryPercent': mem.percent,
+            'swapTotal': unit_convert(swap.total, 'B', unit),
+            'swapUsed': unit_convert(swap.used, 'B', unit),
+            'swapFree': unit_convert(swap.free, 'B', unit),
+            'swapPercent': swap.percent,
         }
     except Exception as e:
         raise '[ERROR] get_memory_state: {}'.format(e)

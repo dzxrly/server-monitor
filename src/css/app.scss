@@ -1,9 +1,41 @@
 // app global css in SCSS form
 html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
   --border-radius: 19px;
+  --bg-default-color: #f9f9ff;
+  --bg-card-color: #ededf4;
+  --text-base-color: #191c20;
+
+  background: var(--bg-default-color);
 }
 
+.bg-default-color {
+  background: var(--bg-default-color) !important;
+}
+
+.bg-card-color {
+  background: var(--bg-card-color) !important;
+}
+
+.text-base-color {
+  color: var(--text-base-color) !important;
+}
 
 .rounded-borders {
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius) !important;
+}
+
+.free-color {
+  color: #8AC926 !important;
+}
+
+.mid-color {
+  color: #FFCA3A !important;
+}
+
+.max-color {
+  color: #FF595E !important;
 }

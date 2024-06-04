@@ -34,3 +34,10 @@ export default boot(({ app }) => {
   // Set i18n instance on app
   app.use(i18n);
 });
+
+export const languageMap: {
+  [key: string]: string;
+} = {
+  'en-US': 'English',
+  'zh-CN': '简体中文'
+};

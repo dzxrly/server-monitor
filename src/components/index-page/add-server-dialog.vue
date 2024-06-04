@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-transparent full-width">
-    <div class="column no-wrap justify-center items-center bg-info full-width q-pa-md rounded-borders">
+  <div class="bg-transparent full-width text-base-color">
+    <div class="column no-wrap justify-center items-center bg-card-color full-width q-pa-md rounded-borders">
       <div class="row justify-start items-center full-width">
         <span class="text-h6">{{ t('addServer') }}</span>
       </div>
@@ -13,17 +13,32 @@
             outlined
             readonly
           />
+          <div class="full-width q-mt-md row justify-center items-start">
+            <q-select
+              v-model="serverUrlPrependUrlSelect"
+              :options="serverUrlPrependSelectOptions"
+              map-options
+              emit-value
+              outlined />
+            <q-input
+              ref="serverUrlInputRef"
+              class="col-grow q-ml-xs"
+              v-model="serverUrlInput"
+              :label="t('serverUrl')"
+              :hint="t('serverUrlInputFieldHint')"
+              :rules="[ val => val && val.length > 0 || t('serverUrlInputFieldHintErrorMsg') ]"
+              @change="serverConfig.serverUrl = `${serverUrlPrependUrlSelect}${serverUrlInput}`"
+              outlined
+              clearable
+            />
+          </div>
           <q-input
+            ref="serverNameInputRef"
             class="full-width q-mt-md"
             v-model="serverConfig.customName"
             :label="t('customServerName')"
-            outlined
-            clearable
-          />
-          <q-input
-            class="full-width q-mt-md"
-            v-model="serverConfig.serverUrl"
-            :label="t('serverUrl')"
+            :hint="t('customServerNameInputFieldHint')"
+            :rules="[ val => val && val.length <= 10 || t('customServerNameInputFieldHintErrorMsg') ]"
             outlined
             clearable
           />
@@ -32,15 +47,16 @@
             class="full-width q-mt-md"
             v-model="serverConfig.tagColor"
             :label="t('serverTagColor')"
+            :hint="t('serverTagColorHint')"
             :rules="['hexColor']"
             outlined
             clearable
           >
             <template v-slot:prepend>
               <q-icon
-                name="dns"
-                size="lg"
-                :style="{ color: serverConfig.tagColor }"
+                :name="tagColorInputError ? 'warning' : 'dns'"
+                size="md"
+                :style="{ color: tagColorInputError ? '#C10015' : serverConfig.tagColor }"
               />
             </template>
             <template v-slot:append>
@@ -50,14 +66,25 @@
                 </q-popup-proxy>
               </q-icon>
             </template>
+            <template v-slot:error>
+              {{ t('serverTagColorHintErrorMsg') }}
+            </template>
           </q-input>
+          <q-select
+            class="full-width q-mt-md"
+            v-model="gpuTypeSelect"
+            :options="gpuTypeSelectOptions"
+            :label="t('serverGPUType')"
+            map-options
+            emit-value
+            outlined />
         </div>
       </div>
       <div class="row justify-evenly items-center full-width no-wrap q-pt-md">
         <q-btn
           no-caps
           outline
-          class="col-5"
+          class="col-5 rounded-borders"
           color="negative"
           icon="close"
           :label="t('cancelBtn')"
@@ -65,7 +92,7 @@
         <q-btn
           no-caps
           outline
-          class="col-5"
+          class="col-5 rounded-borders"
           color="primary"
           icon="check"
           :label="t('confirmBtn')"
@@ -77,8 +104,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue';
-import { ServerConfig } from 'src/module/user-config';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { GPUType, ServerConfig } from 'src/module/user-config';
 import { useI18n } from 'vue-i18n';
 import { getUUID } from 'src/utils/utils';
 import { useUserConfigStore } from 'stores/user-config';
@@ -87,14 +114,42 @@ const showAddServerDialog = defineModel('showAddServerDialog', { required: true,
 const serverConfig = reactive(new ServerConfig());
 const { t } = useI18n();
 const userConfigStore = useUserConfigStore();
+const serverNameInputRef = ref();
+const serverUrlInputRef = ref();
 const tagColorInputRef = ref();
+const tagColorInputError = computed(() => tagColorInputRef.value && tagColorInputRef.value.hasError);
+const serverUrlPrependUrlSelect = ref('https://');
+const serverUrlInput = ref('');
+const gpuTypeSelect = ref(GPUType.NoneGPU);
+
+const serverUrlPrependSelectOptions = [
+  {
+    label: 'https://',
+    value: 'https://'
+  },
+  {
+    label: 'http://',
+    value: 'http://'
+  }
+];
+// convert GPUType enum to map, like { label: 'NVIDIA', value: GPUType.NVIDIA }
+const gpuTypeSelectOptions = (Object.keys(GPUType) as (keyof typeof GPUType)[]).map(key => {
+  return {
+    label: t(key),
+    value: GPUType[key],
+    // TODO: Only support NVIDIA GPU
+    disable: GPUType[key] !== GPUType.NoneGPU && GPUType[key] !== GPUType.NVIDIA
+  };
+});
 
 const isValid = computed(() => {
-  return serverConfig.serverUrl && serverConfig.serverUrl !== '' &&
-    serverConfig.tagColor && serverConfig.tagColor !== '' &&
+  return serverConfig.tagColor && serverConfig.tagColor !== '' &&
     serverConfig.uniqueId && serverConfig.uniqueId !== '' &&
+    serverConfig.serverUrl && serverConfig.serverUrl !== '' &&
     serverConfig.customName && serverConfig.customName !== '' &&
-    !tagColorInputRef.value.hasError;
+    !tagColorInputRef.value.hasError &&
+    !serverNameInputRef.value.hasError &&
+    !serverUrlInputRef.value.hasError;
 });
 
 function addServer() {
@@ -104,7 +159,7 @@ function addServer() {
     ...userConfigStore.getUserConfig,
     userConfig: {
       ...userConfigStore.getUserConfig.userConfig,
-      serverListConfig: serverList
+      serverListConfig: serverList as ServerConfig[]
     }
   });
   userConfigStore.updateUserConfigToLocalStorage();
@@ -114,5 +169,13 @@ function addServer() {
 
 onMounted(() => {
   serverConfig.uniqueId = getUUID();
+});
+
+watch(serverUrlPrependUrlSelect, (newVal) => {
+  serverConfig.serverUrl = `${newVal}${serverUrlInput.value}`;
+});
+
+watch(gpuTypeSelect, (newVal) => {
+  serverConfig.gpuServer.setGPUType(newVal);
 });
 </script>

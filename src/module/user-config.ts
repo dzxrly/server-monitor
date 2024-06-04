@@ -1,18 +1,40 @@
+enum GPUType {
+  NoneGPU = 'NoneGPU',
+  NVIDIA = 'NVIDIA',
+  AMD = 'AMD',
+  INTEL = 'Intel',
+}
+
+class GPUServer {
+  public gpuType = GPUType.NoneGPU;
+
+  constructor() {
+    this.gpuType = GPUType.NoneGPU;
+  }
+
+  public setGPUType(type: GPUType) {
+    this.gpuType = type;
+  }
+}
+
 class ServerConfig {
   public customName = '';
   public uniqueId = '';
   public serverUrl = '';
   public tagColor = '#000000';
+  public gpuServer = new GPUServer();
 }
 
 class UserConfig {
   public userConfig = {
     darkMode: false,
     defaultLanguage: 'en-US',
-
-    indexPageServerPanelLayout: 'small',
-
-    serverListConfig: Array<ServerConfig>()
+    indexPageServerPanelLayout: 'sm',
+    serverListConfig: Array<ServerConfig>(),
+    refreshTimeSec: 2,
+    useFahrenheitUnit: false,
+    freeUsageThreshold: 30,
+    midUsageThreshold: 60
   };
 
   public toString() {
@@ -26,5 +48,7 @@ class UserConfig {
 
 export {
   ServerConfig,
-  UserConfig
+  UserConfig,
+  GPUType,
+  GPUServer
 };

@@ -19,9 +19,10 @@ const isLtSm = computed(() => $q.screen.lt.sm);
 provide('isLtSm', isLtSm);
 provide('darkMode', darkMode);
 
+userConfigStore.initUserConfigFromLocalStorage();
+
 onMounted(() => {
   // set language by defaultLanguage
   locale.value = defaultLanguage.value;
-  userConfigStore.initUserConfigFromLocalStorage();
 });
 </script>

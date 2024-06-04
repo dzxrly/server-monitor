@@ -1,9 +1,38 @@
 export default {
+  'NVIDIA': 'NVIDIA',
+  'AMD': 'AMD',
+  'INTEL': 'Intel',
+  'NoneGPU': '无GPU',
+
   'cancelBtn': '取消',
   'confirmBtn': '确定',
   'addServer': '添加服务器',
-  'serverUUID': '服务器 UUID',
+  'serverUUID': '服务器UUID',
   'customServerName': '自定义服务器名称',
-  'serverUrl': '服务器 URL',
-  'serverTagColor': '服务器标签颜色'
+  'customServerNameInputFieldHint': '1-10个字符',
+  'customServerNameInputFieldHintErrorMsg': '服务器名称长度须在1至10个字符内',
+  'serverUrl': '服务器URL',
+  'serverUrlInputFieldHint': '服务器URL不能为空',
+  'serverUrlInputFieldHintErrorMsg': '请输入您的服务器URL',
+  'serverTagColor': '服务器标签颜色',
+  'serverTagColorHint': '服务器标签颜色不能为空',
+  'serverTagColorHintErrorMsg': '请选择您的服务器标签颜色',
+  'serverGPUType': '服务器GPU类型',
+
+  'cpuUsage': 'CPU使用率',
+  'memoryUsage': '内存使用率',
+  'swapUsage': 'Swap使用率',
+  'gpuUsage': 'GPU使用率',
+  'loadingFailed': '读取失败',
+  'loadingFailedTooltip': '读取失败，请检查您的网络连接。',
+  'gpuDriverVersion': '驱动版本',
+
+  'settings': '设置',
+  'darkMode': '暗黑模式',
+  'useFahrenheitUnit': '使用华氏度',
+  'indexPageServerPanelLayout': '服务器面板布局',
+  'layoutSm': '紧凑布局',
+  'layoutMd': '正常布局',
+  'layoutLg': '详细布局',
+  'language': '语言'
 };

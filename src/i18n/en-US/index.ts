@@ -32,7 +32,7 @@ export default {
   'gpuDriverVersion': 'Driver Ver.',
   'gpuInfo': 'GPU Information',
   'gpuCoreUsage': 'GPU Load',
-  'gpuMemoryUsage': 'Mem Usage',
+  'gpuMemoryUsage': 'VRAM Usage',
   'degree': '°C/F',
   'power': 'Power',
   'fanSpeed': 'Fan Speed',

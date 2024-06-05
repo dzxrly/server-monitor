@@ -8,7 +8,12 @@ export default function axiosRequest(
   method: 'get' | 'GET' | 'delete' | 'DELETE' | 'head' | 'HEAD' | 'options' | 'OPTIONS' | 'post' | 'POST' | 'put' | 'PUT' | 'patch' | 'PATCH' | 'purge' | 'PURGE' | 'link' | 'LINK' | 'unlink' | 'UNLINK' | undefined,
   data = {},
   params = {},
-  headers = { 'Content-Type': 'application/json;charset=UTF-8' }
+  headers = {
+    'Content-Type': 'application/json;charset=UTF-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With, X-HTTP-Method-Override, Origin, Accept'
+  }
 ): AxiosPromise {
   const requestConfig = {
     url: url,

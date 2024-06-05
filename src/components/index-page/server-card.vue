@@ -4,7 +4,11 @@
     <div
       class="server-card full-height column justify-center items-center no-wrap bg-card-color rounded-borders q-px-md q-pt-lg">
       <div class="row justify-center items-center full-width">
-        <q-icon name="dns" :style="{color: server.tagColor}" size="md" />
+        <q-icon name="dns" :style="{color: server.tagColor}" size="md">
+          <q-tooltip>
+            {{ server.serverUrl }}
+          </q-tooltip>
+        </q-icon>
         <div class="col-grow row justify-center items-center">
           <span class="text-h6 text-base-color">{{ server.customName }}</span>
         </div>
@@ -62,7 +66,7 @@
 
 <script setup lang="ts">
 import { GPUType, ServerConfig } from 'src/module/user-config';
-import { onBeforeUnmount, onMounted, PropType, reactive, ref, watch } from 'vue';
+import { inject, onBeforeUnmount, onMounted, PropType, reactive, ref, watch } from 'vue';
 import { CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse } from 'src/interface/api';
 import API from 'src/api/api';
 import { useI18n } from 'vue-i18n';
@@ -132,36 +136,44 @@ const cpuState = ref<CPUStatePerCPUResponse>();
 const memoryState = ref<MemoryStateResponse>();
 const gpuState = ref<GPUStateResponse>();
 const loadingError = reactive(new LoadingError());
+const pauseFetchInject = inject('pauseFetch', false);
+const pauseFetch = ref<boolean>(pauseFetchInject);
 
 function getCpuState() {
-  API.getCpuState(
-    server.value.serverUrl,
-    true,
-    props.useFahrenheitUnit
-  ).then((res: any) => {
-    cpuState.value = res as CPUStatePerCPUResponse;
-    loadingError.cpuStateFetchError = false;
-  }).catch(() => {
-    loadingError.cpuStateFetchError = true;
-  });
+  if (!pauseFetch.value) {
+    API.getCpuState(
+      server.value.serverUrl,
+      true,
+      props.useFahrenheitUnit
+    ).then((res: any) => {
+      cpuState.value = res as CPUStatePerCPUResponse;
+      loadingError.cpuStateFetchError = false;
+    }).catch(() => {
+      loadingError.cpuStateFetchError = true;
+    });
+  }
 }
 
 function getMemoryState() {
-  API.getMemoryState(server.value.serverUrl, 'GB').then((res: any) => {
-    memoryState.value = res as MemoryStateResponse;
-    loadingError.memoryStateFetchError = false;
-  }).catch(() => {
-    loadingError.memoryStateFetchError = true;
-  });
+  if (!pauseFetch.value) {
+    API.getMemoryState(server.value.serverUrl, 'GB').then((res: any) => {
+      memoryState.value = res as MemoryStateResponse;
+      loadingError.memoryStateFetchError = false;
+    }).catch(() => {
+      loadingError.memoryStateFetchError = true;
+    });
+  }
 }
 
 function getNVGPUState() {
-  API.getNVGPUState(server.value.serverUrl, 'GB').then((res: any) => {
-    gpuState.value = res as GPUStateResponse;
-    loadingError.gpuStateFetchError = false;
-  }).catch(() => {
-    loadingError.gpuStateFetchError = true;
-  });
+  if (!pauseFetch.value) {
+    API.getNVGPUState(server.value.serverUrl, 'GB').then((res: any) => {
+      gpuState.value = res as GPUStateResponse;
+      loadingError.gpuStateFetchError = false;
+    }).catch(() => {
+      loadingError.gpuStateFetchError = true;
+    });
+  }
 }
 
 function getAMDGPUState() {

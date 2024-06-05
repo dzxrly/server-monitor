@@ -7,7 +7,7 @@
         :value="value"
         size="xl"
         :class="props.color"
-        track-color="grey-4"
+        track-color="grey-6"
       >
         <span class="text-base-color">{{ props.value }}%</span>
       </q-circular-progress>

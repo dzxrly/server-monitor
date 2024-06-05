@@ -5,15 +5,24 @@
       <router-view />
 
       <q-page-sticky>
-        <q-btn
-          v-if="!showSettingDialog"
-          class="q-ma-md shadow-4"
-          color="primary"
-          icon="settings"
-          size="md"
-          @click="showSettingDialog = true"
-          round
-        />
+        <div class="q-ma-md column justify-center items-center no-wrap">
+          <q-btn
+            class="shadow-4"
+            color="primary"
+            :icon="pauseFetch ? 'play_arrow' : 'pause'"
+            size="md"
+            @click="pauseFetch = !pauseFetch"
+            round
+          />
+          <q-btn
+            class="shadow-4 q-mt-md"
+            color="primary"
+            icon="settings"
+            size="md"
+            @click="showSettingDialog = true"
+            round
+          />
+        </div>
       </q-page-sticky>
     </q-page-container>
 
@@ -35,7 +44,10 @@
 </template>
 <script setup lang="ts">
 import SettingDialog from 'components/index-page/setting-dialog.vue';
-import { ref } from 'vue';
+import { provide, ref } from 'vue';
 
 const showSettingDialog = ref(false);
+const pauseFetch = ref<boolean>(false);
+
+provide('pauseFetch', pauseFetch);
 </script>

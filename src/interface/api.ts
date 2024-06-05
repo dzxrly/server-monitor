@@ -73,3 +73,14 @@ export interface GPUStateResponse {
   driverVersion: string,
   gpuList: Array<GPUInfoResponse>,
 }
+
+export interface NetworkStateResponse {
+  bytesSent: number,
+  bytesRecv: number,
+  packetsSent: number,
+  packetsRecv: number,
+  errIn: number,
+  errOut: number,
+  dropIn: number,
+  dropOut: number,
+}

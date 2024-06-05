@@ -37,5 +37,9 @@ export default {
   'layoutSm': 'Dense Layout',
   'layoutMd': 'Normal Layout',
   'layoutLg': 'Details Layout',
-  'language': 'Language'
+  'language': 'Language',
+  'settingsSaved': 'Settings Saved',
+  'refreshTimeSec': 'Data Refresh Time (sec)',
+  'freeUsageThreshold': 'Free Usage Threshold %',
+  'midUsageThreshold': 'Mid Usage Threshold %'
 };

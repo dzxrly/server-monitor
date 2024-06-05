@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { UserConfig } from 'src/module/user-config';
-import { LocalStorage } from 'quasar';
+import { LocalStorage, Notify } from 'quasar';
+import { i18n } from 'src/boot/i18n';
+
 
 export const useUserConfigStore = defineStore('userConfig', {
   state: () => {
@@ -25,6 +27,13 @@ export const useUserConfigStore = defineStore('userConfig', {
     },
     updateUserConfigToLocalStorage() {
       LocalStorage.set('userConfig', this.userConfig);
+      Notify.create({
+        message: i18n.global.t('settingsSaved'),
+        color: 'primary',
+        position: 'top',
+        icon: 'check',
+        timeout: 1000
+      });
     }
   }
 });

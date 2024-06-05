@@ -31,10 +31,10 @@ class UserConfig {
     defaultLanguage: 'en-US',
     indexPageServerPanelLayout: 'sm',
     serverListConfig: Array<ServerConfig>(),
-    refreshTimeSec: 2,
+    refreshTimeSec: 5,
     useFahrenheitUnit: false,
     freeUsageThreshold: 30,
-    midUsageThreshold: 60
+    midUsageThreshold: 70
   };
 
   public toString() {

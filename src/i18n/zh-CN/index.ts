@@ -34,5 +34,9 @@ export default {
   'layoutSm': '紧凑布局',
   'layoutMd': '正常布局',
   'layoutLg': '详细布局',
-  'language': '语言'
+  'language': '语言',
+  'settingsSaved': '设置已保存',
+  'refreshTimeSec': '数据刷新时间（秒）',
+  'freeUsageThreshold': '使用率空闲阈值 %',
+  'midUsageThreshold': '使用率中等阈值 %'
 };

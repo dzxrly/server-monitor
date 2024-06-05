@@ -2,7 +2,7 @@
   <div
     class="server-card-wrapper cursor-pointer q-pa-sm bg-transparent">
     <div
-      class="server-card full-height column justify-center items-center no-wrap bg-card-color rounded-borders q-px-md q-py-lg">
+      class="server-card full-height column justify-center items-center no-wrap bg-card-color rounded-borders q-px-md q-pt-lg">
       <div class="row justify-center items-center full-width">
         <q-icon name="dns" :style="{color: server.tagColor}" size="md" />
         <div class="col-grow row justify-center items-center">
@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { GPUType, ServerConfig } from 'src/module/user-config';
-import { onBeforeUnmount, onMounted, PropType, reactive, ref } from 'vue';
+import { onBeforeUnmount, onMounted, PropType, reactive, ref, watch } from 'vue';
 import { CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse } from 'src/interface/api';
 import API from 'src/api/api';
 import { useI18n } from 'vue-i18n';
@@ -206,6 +206,26 @@ onMounted(() => {
     () => getGPUState(),
     props.refreshTimeSec * 1000
   );
+});
+
+watch(props, () => {
+  cpuStateRemoveInterval();
+  memoryStateRemoveInterval();
+  gpuStateRemoveInterval();
+  cpuStateRegisterInterval(
+    () => getCpuState(),
+    props.refreshTimeSec * 1000
+  );
+  memoryStateRegisterInterval(
+    () => getMemoryState(),
+    props.refreshTimeSec * 1000
+  );
+  gpuStateRegisterInterval(
+    () => getGPUState(),
+    props.refreshTimeSec * 1000
+  );
+}, {
+  deep: true
 });
 
 onBeforeUnmount(() => {

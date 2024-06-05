@@ -1,39 +1,51 @@
 import { defineStore } from 'pinia';
-import { UserConfig } from 'src/module/user-config';
+import { Config } from 'src/module/config';
 import { LocalStorage, Notify } from 'quasar';
 import { i18n } from 'src/boot/i18n';
+import { ref } from 'vue';
 
 
-export const useUserConfigStore = defineStore('userConfig', {
-  state: () => {
-    return {
-      userConfig: new UserConfig()
-    };
-  },
-  getters: {
-    getUserConfig: (state) => state.userConfig
-  },
-  actions: {
-    setUserConfig(newConfig: UserConfig) {
-      this.userConfig = newConfig;
-    },
-    initUserConfigFromLocalStorage() {
-      const localConfig = LocalStorage.getItem<UserConfig>('userConfig');
-      if (localConfig) {
-        this.userConfig = localConfig;
-      } else {
-        this.userConfig = new UserConfig();
-      }
-    },
-    updateUserConfigToLocalStorage() {
-      LocalStorage.set('userConfig', this.userConfig);
-      Notify.create({
-        message: i18n.global.t('settingsSaved'),
-        color: 'primary',
-        position: 'top',
-        icon: 'check',
-        timeout: 1000
-      });
+export const useConfigStore = defineStore('config', () => {
+  const config = ref<Config>(new Config());
+
+  function initConfig() {
+    const localConfig = LocalStorage.getItem<Config>('config');
+    if (localConfig) {
+      config.value = localConfig;
+    } else {
+      config.value = new Config();
+      LocalStorage.set('config', config.value);
     }
   }
+
+  function setConfig(newConfig: Config) {
+    config.value = newConfig;
+    LocalStorage.set('config', config.value);
+    Notify.create({
+      message: i18n.global.t('settingsSaved').toString(),
+      color: 'primary',
+      position: 'top',
+      icon: 'check',
+      timeout: 1000
+    });
+  }
+
+  function resetConfig() {
+    config.value = new Config();
+    LocalStorage.set('config', config.value);
+    Notify.create({
+      message: i18n.global.t('resetSettingSuccess').toString(),
+      color: 'primary',
+      position: 'top',
+      icon: 'check',
+      timeout: 1000
+    });
+  }
+
+  return {
+    config,
+    initConfig,
+    setConfig,
+    resetConfig
+  };
 });

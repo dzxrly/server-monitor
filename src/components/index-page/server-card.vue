@@ -51,13 +51,22 @@
             :is-error="loadingError.memoryStateFetchError"
           />
         </div>
+        <CpuInfoRow
+          class="q-mt-md"
+          v-if="props.showLayout !== 'sm' && cpuState && cpuName"
+          :cpu-name="cpuName"
+          :cpu-state="cpuState"
+          :show-layout="showLayout"
+          :free-usage-threshold="props.freeUsageThreshold"
+          :mid-usage-threshold="props.midUsageThreshold"
+        />
         <div v-if="server.gpuServer.gpuType !== GPUType.NoneGPU && gpuState"
              class="row justify-center items-center no-wrap full-width q-mt-md">
           <GpuInfoRow
             :gpu-state="gpuState"
             :show-layout="props.showLayout"
             :free-usage-threshold="props.freeUsageThreshold"
-            :mid-usage-threshold="props.midUsageThreshold"></GpuInfoRow>
+            :mid-usage-threshold="props.midUsageThreshold" />
         </div>
       </div>
     </div>
@@ -65,9 +74,9 @@
 </template>
 
 <script setup lang="ts">
-import { GPUType, ServerConfig } from 'src/module/user-config';
+import { GPUType, ServerConfig } from 'src/module/config';
 import { inject, onBeforeUnmount, onMounted, PropType, reactive, ref, watch } from 'vue';
-import { CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse } from 'src/interface/api';
+import { CPUNameResponse, CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse } from 'src/interface/api';
 import API from 'src/api/api';
 import { useI18n } from 'vue-i18n';
 import { useInterval } from 'quasar';
@@ -75,6 +84,7 @@ import { getUsageColorClass, rounded } from 'src/utils/utils';
 import CircularProgressWithTitle from 'components/base/circular-progress-with-title.vue';
 import { LoadingError } from 'src/module/loading-error';
 import GpuInfoRow from 'components/base/gpu-info-row.vue';
+import CpuInfoRow from 'components/base/cpu-info-row.vue';
 
 const props = defineProps({
   serverConfig: {
@@ -133,11 +143,25 @@ const {
 
 const server = ref(props.serverConfig);
 const cpuState = ref<CPUStatePerCPUResponse>();
+const cpuName = ref<CPUNameResponse>();
 const memoryState = ref<MemoryStateResponse>();
 const gpuState = ref<GPUStateResponse>();
 const loadingError = reactive(new LoadingError());
 const pauseFetchInject = inject('pauseFetch', false);
 const pauseFetch = ref<boolean>(pauseFetchInject);
+
+function getCpuName() {
+  if (!pauseFetch.value) {
+    API.getCpuName(
+      server.value.serverUrl
+    ).then((res: any) => {
+      cpuName.value = res as CPUNameResponse;
+      loadingError.cpuNameFetchError = false;
+    }).catch(() => {
+      loadingError.cpuNameFetchError = true;
+    });
+  }
+}
 
 function getCpuState() {
   if (!pauseFetch.value) {
@@ -206,8 +230,12 @@ onMounted(() => {
   getCpuState();
   getMemoryState();
   getGPUState();
+  getCpuName();
   cpuStateRegisterInterval(
-    () => getCpuState(),
+    () => {
+      getCpuName();
+      getCpuState();
+    },
     props.refreshTimeSec * 1000
   );
   memoryStateRegisterInterval(
@@ -225,7 +253,10 @@ watch(props, () => {
   memoryStateRemoveInterval();
   gpuStateRemoveInterval();
   cpuStateRegisterInterval(
-    () => getCpuState(),
+    () => {
+      getCpuName();
+      getCpuState();
+    },
     props.refreshTimeSec * 1000
   );
   memoryStateRegisterInterval(

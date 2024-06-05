@@ -1,8 +1,15 @@
 <template>
   <div class="bg-transparent full-width text-base-color">
     <div class="column no-wrap justify-center items-center bg-card-color full-width q-pa-md rounded-borders">
-      <div class="row justify-start items-center full-width">
-        <span class="text-h6">{{ t('addServer') }}</span>
+      <div class="row justify-between items-center full-width">
+        <span class="text-h6 text-base-color">{{ t('addServer') }}</span>
+        <q-btn
+          class="text-base-color"
+          icon="close"
+          @click="showAddServerDialog = false"
+          flat
+          round
+        />
       </div>
       <div class="col-grow full-width q-pt-md">
         <div class="add-server-dialog-wrapper column no-wrap justify-center items-center full-width">
@@ -80,40 +87,30 @@
             outlined />
         </div>
       </div>
-      <div class="row justify-evenly items-center full-width no-wrap q-pt-md">
-        <q-btn
-          no-caps
-          outline
-          class="col-5 rounded-borders"
-          color="negative"
-          icon="close"
-          :label="t('cancelBtn')"
-          @click="showAddServerDialog = false" />
-        <q-btn
-          no-caps
-          outline
-          class="col-5 rounded-borders"
-          color="primary"
-          icon="check"
-          :label="t('confirmBtn')"
-          :disable="!isValid"
-          @click="addServer" />
-      </div>
+      <q-btn
+        no-caps
+        outline
+        class="full-width rounded-borders q-mt-md"
+        color="primary"
+        icon="add"
+        :label="t('addBtn')"
+        :disable="!isValid"
+        @click="addServer" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
-import { GPUType, ServerConfig } from 'src/module/user-config';
+import { GPUType, ServerConfig } from 'src/module/config';
 import { useI18n } from 'vue-i18n';
 import { getUUID } from 'src/utils/utils';
-import { useUserConfigStore } from 'stores/user-config';
+import { useConfigStore } from 'stores/user-config';
 
 const showAddServerDialog = defineModel('showAddServerDialog', { required: true, type: Boolean });
 const serverConfig = reactive(new ServerConfig());
 const { t } = useI18n();
-const userConfigStore = useUserConfigStore();
+const configStore = useConfigStore();
 const serverNameInputRef = ref();
 const serverUrlInputRef = ref();
 const tagColorInputRef = ref();
@@ -153,17 +150,15 @@ const isValid = computed(() => {
 });
 
 function addServer() {
-  const serverList = userConfigStore.getUserConfig.userConfig.serverListConfig;
+  const serverList = configStore.config.userConfig.serverListConfig;
   serverList.push(serverConfig);
-  userConfigStore.setUserConfig({
-    ...userConfigStore.getUserConfig,
+  configStore.setConfig({
+    ...configStore.config,
     userConfig: {
-      ...userConfigStore.getUserConfig.userConfig,
-      serverListConfig: serverList as ServerConfig[]
+      ...configStore.config.userConfig,
+      serverListConfig: serverList
     }
   });
-  userConfigStore.updateUserConfigToLocalStorage();
-
   showAddServerDialog.value = false;
 }
 

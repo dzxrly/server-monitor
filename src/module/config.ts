@@ -25,7 +25,7 @@ class ServerConfig {
   public gpuServer = new GPUServer();
 }
 
-class UserConfig {
+class Config {
   public userConfig = {
     darkMode: false,
     defaultLanguage: 'en-US',
@@ -48,7 +48,7 @@ class UserConfig {
 
 export {
   ServerConfig,
-  UserConfig,
+  Config,
   GPUType,
   GPUServer
 };

@@ -50,7 +50,7 @@ watch(value, (newVal: string | number) => {
   } else if (newVal > props.max) {
     value.value = props.max;
   } else {
-    value.value = newVal;
+    value.value = newVal as number;
   }
 });
 </script>

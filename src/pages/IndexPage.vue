@@ -3,14 +3,14 @@
     <div class="full-width row wrap justify-start items-stretch">
       <ServerCard
         class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3"
-        v-for="server in serverList"
+        v-for="server in configStore.config.userConfig.serverListConfig"
         :key="server.uniqueId"
         :server-config="server"
-        :show-layout="userConfig.indexPageServerPanelLayout"
-        :use-fahrenheit-unit="userConfig.darkMode"
-        :refresh-time-sec="userConfig.refreshTimeSec"
-        :free-usage-threshold="userConfig.freeUsageThreshold"
-        :mid-usage-threshold="userConfig.midUsageThreshold"
+        :show-layout="configStore.config.userConfig.indexPageServerPanelLayout"
+        :use-fahrenheit-unit="configStore.config.userConfig.darkMode"
+        :refresh-time-sec="configStore.config.userConfig.refreshTimeSec"
+        :free-usage-threshold="configStore.config.userConfig.freeUsageThreshold"
+        :mid-usage-threshold="configStore.config.userConfig.midUsageThreshold"
       />
       <div class="add-server-card-wrapper col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 q-pa-sm bg-transparent">
         <div
@@ -36,18 +36,15 @@
 </template>
 
 <script setup lang="ts">
-import { useUserConfigStore } from 'stores/user-config';
+import { useConfigStore } from 'stores/user-config';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AddServerDialog from 'components/index-page/add-server-dialog.vue';
-import { ServerConfig } from 'src/module/user-config';
 import ServerCard from 'components/index-page/server-card.vue';
 
-const userConfigStore = useUserConfigStore();
+const configStore = useConfigStore();
 const { t } = useI18n();
 
-const serverList = ref<Array<ServerConfig>>(userConfigStore.getUserConfig.userConfig.serverListConfig);
-const userConfig = ref(userConfigStore.getUserConfig.userConfig);
 const showAddServerDialog = ref(false);
 const isLtSm = inject('isLtSm');
 </script>

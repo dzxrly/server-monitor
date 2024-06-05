@@ -6,6 +6,7 @@ export default {
 
   'cancelBtn': '取消',
   'confirmBtn': '确定',
+  'addBtn': '添加',
   'addServer': '添加服务器',
   'serverUUID': '服务器UUID',
   'customServerName': '自定义服务器名称',
@@ -45,5 +46,9 @@ export default {
   'settingsSaved': '设置已保存',
   'refreshTimeSec': '数据刷新时间（秒）',
   'freeUsageThreshold': '使用率空闲阈值 %',
-  'midUsageThreshold': '使用率中等阈值 %'
+  'midUsageThreshold': '使用率中等阈值 %',
+  'resetSettingBtn': '重置设置',
+  'resetSettingConfirmTitle': '重置设置',
+  'resetSettingConfirm': '确定要重置所有设置吗？此操作无法撤销！',
+  'resetSettingSuccess': '设置已重置'
 };

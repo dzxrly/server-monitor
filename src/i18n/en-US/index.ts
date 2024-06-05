@@ -9,6 +9,7 @@ export default {
 
   'cancelBtn': 'Cancel',
   'confirmBtn': 'Confirm',
+  'addBtn': 'Add',
   'addServer': 'Add Server',
   'serverUUID': 'Server UUID',
   'customServerName': 'Custom Server Name',
@@ -48,5 +49,9 @@ export default {
   'settingsSaved': 'Settings Saved',
   'refreshTimeSec': 'Data Refresh Time (sec)',
   'freeUsageThreshold': 'Free Usage Threshold %',
-  'midUsageThreshold': 'Mid Usage Threshold %'
+  'midUsageThreshold': 'Mid Usage Threshold %',
+  'resetSettingBtn': 'Reset',
+  'resetSettingConfirmTitle': 'Reset Settings',
+  'resetSettingConfirm': 'Are you sure to reset all settings? This action can not be undone!',
+  'resetSettingSuccess': 'Settings reset successfully'
 };

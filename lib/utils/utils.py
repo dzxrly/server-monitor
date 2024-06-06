@@ -1,5 +1,8 @@
+from typing import Union
+
+
 def unit_convert(
-        input_value: float,
+        input_value: Union[float, int],
         input_unit: str,
         output_unit: str,
 ) -> float:

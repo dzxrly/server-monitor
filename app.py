@@ -7,6 +7,7 @@ from flask_cors import CORS
 from lib.cpu import get_cpu_state, get_cpu_temperature, get_cpu_name
 from lib.gpu import get_nv_gpu_state
 from lib.memory import get_memory_state
+from lib.network import get_net_state
 from lib.utils.utils import flask_request_arg_bool
 
 app = Flask(__name__)
@@ -81,6 +82,18 @@ def get_gpu_state():
             'driverVersion': gpu_state['driverVersion'],
             'gpuList': gpu_state['gpuList'],
         })
+    except Exception as e:
+        abort(400)
+
+
+@app.route('/network_state', methods=['GET'])
+def get_network_state():
+    # 读取URL的参数
+    unit = request.args.get('unit', type=str)
+
+    try:
+        network_state = get_net_state(unit=unit)
+        return jsonify(network_state)
     except Exception as e:
         abort(400)
 

@@ -128,12 +128,12 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import ClickableSwitchRow from 'components/base/clickable-switch-row.vue';
+import ClickableSwitchRow from 'components/base/ClickableSwitchRow.vue';
 import { useConfigStore } from 'stores/user-config';
 import { computed, ref, watch } from 'vue';
 import { languageMap } from 'boot/i18n';
-import SelectRow from 'components/base/select-row.vue';
-import NumberInputRow from 'components/base/number-input-row.vue';
+import SelectRow from 'components/base/SelectRow.vue';
+import NumberInputRow from 'components/base/NumberInputRow.vue';
 import { useQuasar } from 'quasar';
 import { Config, configZod } from 'src/module/config';
 

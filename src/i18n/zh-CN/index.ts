@@ -31,7 +31,8 @@ export default {
   'gpuInfo': 'GPU信息',
   'gpuCoreUsage': 'GPU负载',
   'gpuMemoryUsage': '显存占用',
-  'degree': '°C/F',
+  'degreeC': '°C',
+  'degreeF': '°F',
   'power': '功耗',
   'fanSpeed': '风扇转速',
 

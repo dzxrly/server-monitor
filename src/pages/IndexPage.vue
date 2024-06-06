@@ -39,8 +39,8 @@
 import { useConfigStore } from 'stores/user-config';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AddServerDialog from 'components/index-page/add-server-dialog.vue';
-import ServerCard from 'components/index-page/server-card.vue';
+import AddServerDialog from 'components/index-page/AddServerDialog.vue';
+import ServerCard from 'components/index-page/ServerCard.vue';
 
 const configStore = useConfigStore();
 const { t } = useI18n();

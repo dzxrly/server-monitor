@@ -34,7 +34,8 @@ export default {
   'gpuInfo': 'GPU Information',
   'gpuCoreUsage': 'GPU Load',
   'gpuMemoryUsage': 'VRAM Usage',
-  'degree': '°C/F',
+  'degreeC': '°C',
+  'degreeF': '°F',
   'power': 'Power',
   'fanSpeed': 'Fan Speed',
 

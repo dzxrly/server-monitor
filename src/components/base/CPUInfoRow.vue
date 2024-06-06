@@ -26,7 +26,7 @@
       <div class="row justify-center items-center no-wrap">
         <q-icon name="mdi-thermometer" size="xs" />
         <span class="text-card-color text-body2">
-          {{ `${rounded(avgTemp, 2)}${t('degree')}` }}
+          {{ `${rounded(avgTemp, 2)}${getDegreeUnit(props.useFahrenheitUnit)}` }}
         </span>
       </div>
     </div>
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { CPUNameResponse, CPUStatePerCPUResponse } from 'src/interface/api';
 import { computed, PropType } from 'vue';
-import { rounded } from 'src/utils/utils';
+import { getDegreeUnit, rounded } from 'src/utils/utils';
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps({
@@ -68,6 +68,10 @@ const props = defineProps({
     validator(val: number) {
       return val >= 0 && val <= 100;
     }
+  },
+  useFahrenheitUnit: {
+    type: Boolean,
+    default: false
   }
 });
 

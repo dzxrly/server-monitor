@@ -35,7 +35,9 @@
             <q-icon class="text-card-color q-mr-xs" name="mdi-expansion-card" size="xs" />
             <span class="text-card-color text-subtitle2 overflow-hidden ellipsis">{{ gpu.gpuName }}</span>
           </div>
-          <span class="text-card-color text-subtitle2">{{ `${rounded(gpu.gpuTemperature, 0)}${t('degree')}` }}</span>
+          <span
+            class="text-card-color text-subtitle2">{{ `${rounded(gpu.gpuTemperature, 0)}${getDegreeUnit(props.useFahrenheitUnit)}`
+            }}</span>
         </div>
         <div class="row justify-between items-center no-wrap full-width">
           <span class="col-4 text-card-color text-body2">{{ t('gpuCoreUsage') }}</span>
@@ -101,8 +103,8 @@
 import { PropType } from 'vue';
 import { GPUStateResponse } from 'src/interface/api';
 import { useI18n } from 'vue-i18n';
-import { getUsageColorClass, rounded } from 'src/utils/utils';
-import FanIcon from 'components/base/fan-icon.vue';
+import { getDegreeUnit, getUsageColorClass, rounded } from 'src/utils/utils';
+import FanIcon from 'components/base/FanIcon.vue';
 
 const props = defineProps({
   gpuState: {
@@ -129,6 +131,10 @@ const props = defineProps({
     validator(val: number) {
       return val >= 0 && val <= 100;
     }
+  },
+  useFahrenheitUnit: {
+    type: Boolean,
+    default: false
   }
 });
 

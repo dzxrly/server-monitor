@@ -1,10 +1,10 @@
 <template>
   <div
-    class="server-card-wrapper cursor-pointer q-pa-sm bg-transparent">
+    class="server-card-wrapper q-pa-sm bg-transparent">
     <div
       class="server-card full-height column justify-center items-center no-wrap bg-card-color rounded-borders q-px-md q-pt-lg">
       <div class="row justify-center items-center full-width">
-        <q-icon name="dns" :style="{color: server.tagColor}" size="md">
+        <q-icon class="cursor-pointer" name="dns" :style="{color: server.tagColor}" size="md">
           <q-tooltip>
             {{ server.serverUrl }}
           </q-tooltip>
@@ -59,6 +59,7 @@
           :show-layout="showLayout"
           :free-usage-threshold="props.freeUsageThreshold"
           :mid-usage-threshold="props.midUsageThreshold"
+          :use-fahrenheit-unit="props.useFahrenheitUnit"
         />
         <div v-if="server.gpuServer.gpuType !== GPUType.NoneGPU && gpuState"
              class="row justify-center items-center no-wrap full-width q-mt-md">
@@ -81,10 +82,10 @@ import API from 'src/api/api';
 import { useI18n } from 'vue-i18n';
 import { useInterval } from 'quasar';
 import { getUsageColorClass, rounded } from 'src/utils/utils';
-import CircularProgressWithTitle from 'components/base/circular-progress-with-title.vue';
+import CircularProgressWithTitle from 'components/base/CircularProgressWithTitle.vue';
 import { LoadingError } from 'src/module/loading-error';
-import GpuInfoRow from 'components/base/gpu-info-row.vue';
-import CpuInfoRow from 'components/base/cpu-info-row.vue';
+import GpuInfoRow from 'components/base/GPUInfoRow.vue';
+import CpuInfoRow from 'components/base/CPUInfoRow.vue';
 
 const props = defineProps({
   serverConfig: {
@@ -281,9 +282,5 @@ onBeforeUnmount(() => {
 <style lang="sass" scoped>
 .server-card-wrapper
   .server-card
-    box-shadow: none
     transition: all 0.2s ease-in-out
-
-  .server-card:hover
-    box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f
 </style>

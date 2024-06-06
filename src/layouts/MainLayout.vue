@@ -7,7 +7,7 @@
       <q-page-sticky>
         <div class="q-ma-md column justify-center items-center no-wrap">
           <q-btn
-            class="shadow-4 text-btn-color"
+            class="sticky-btn shadow-4 text-btn-color"
             color="btn-color"
             :icon="pauseFetch ? 'play_arrow' : 'pause'"
             size="md"
@@ -15,7 +15,7 @@
             round
           />
           <q-btn
-            class="shadow-4 q-mt-md text-btn-color"
+            class="sticky-btn shadow-4 q-mt-md text-btn-color"
             color="btn-color"
             icon="settings"
             size="md"
@@ -62,7 +62,7 @@
   </q-layout>
 </template>
 <script setup lang="ts">
-import SettingDialog from 'components/index-page/setting-dialog.vue';
+import SettingDialog from 'components/index-page/SettingDialog.vue';
 import { provide, ref } from 'vue';
 import { openURL } from 'quasar';
 
@@ -73,9 +73,27 @@ provide('pauseFetch', pauseFetch);
 </script>
 
 <style lang="sass" scoped>
+.sticky-btn
+  opacity: 1
+  animation-name: sticky-btn-hide
+  animation-duration: 5s
+  animation-iteration-count: 1
+  animation-direction: normal
+  animation-fill-mode: forwards
+
+.sticky-btn:hover, .sticky-btn:focus
+  animation-play-state: paused
+  opacity: 1 !important
+
 .footer-author, .project-row
   text-decoration: none
 
 .footer-author:hover, .project-row:hover
   text-decoration: underline
+
+@keyframes sticky-btn-hide
+  0%
+    opacity: 1
+  100%
+    opacity: 0.2
 </style>

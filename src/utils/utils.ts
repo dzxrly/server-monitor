@@ -1,3 +1,5 @@
+import { i18n } from 'src/boot/i18n';
+
 function getUUID() {
   const str = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
   return str.replace(/[xy]/g, item => {
@@ -33,8 +35,13 @@ function getUsageColorClass(
   }
 }
 
+function getDegreeUnit(useFahrenheitUnit: boolean): string {
+  return useFahrenheitUnit ? i18n.global.t('degreeF').toString() : i18n.global.t('degreeC').toString();
+}
+
 export {
   getUUID,
   rounded,
-  getUsageColorClass
+  getUsageColorClass,
+  getDegreeUnit
 };

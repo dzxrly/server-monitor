@@ -7,16 +7,16 @@
       <q-page-sticky>
         <div class="q-ma-md column justify-center items-center no-wrap">
           <q-btn
-            class="shadow-4"
-            color="primary"
+            class="shadow-4 text-btn-color"
+            color="btn-color"
             :icon="pauseFetch ? 'play_arrow' : 'pause'"
             size="md"
             @click="pauseFetch = !pauseFetch"
             round
           />
           <q-btn
-            class="shadow-4 q-mt-md"
-            color="primary"
+            class="shadow-4 q-mt-md text-btn-color"
+            color="btn-color"
             icon="settings"
             size="md"
             @click="showSettingDialog = true"

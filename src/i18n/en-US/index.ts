@@ -53,5 +53,11 @@ export default {
   'resetSettingBtn': 'Reset',
   'resetSettingConfirmTitle': 'Reset Settings',
   'resetSettingConfirm': 'Are you sure to reset all settings? This action can not be undone!',
-  'resetSettingSuccess': 'Settings reset successfully'
+  'resetSettingSuccess': 'Settings reset successfully',
+  'exportSettingBtn': 'Export',
+  'importSettingBtn': 'Import',
+  'importSettingSuccess': 'Settings imported successfully',
+  'importSettingFail': 'Import settings failed',
+  'importSettingFailNotAConfigFile': 'Import settings failed! This is not a valid config file',
+  'importSettingFailNoFile': 'Import settings failed! No file to import'
 };

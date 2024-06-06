@@ -10,7 +10,7 @@
           </q-tooltip>
         </q-icon>
         <div class="col-grow row justify-center items-center">
-          <span class="text-h6 text-base-color">{{ server.customName }}</span>
+          <span class="text-h6 text-card-color">{{ server.customName }}</span>
         </div>
         <q-icon v-if="loadingError.hasError()" name="error" color="negative" size="md">
           <q-tooltip>

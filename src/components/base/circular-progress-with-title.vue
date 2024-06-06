@@ -1,6 +1,6 @@
 <template>
   <div class="circular-progress-whit-title-wrapper column justify-center items-center full-width">
-    <span class="text-subtitle2 text-base-color">{{ props.title }}</span>
+    <span class="text-subtitle2 text-card-color">{{ props.title }}</span>
     <div v-if="!isError" class="q-mt-xs">
       <q-circular-progress
         show-value
@@ -9,12 +9,12 @@
         :class="props.color"
         track-color="grey-6"
       >
-        <span class="text-base-color">{{ props.value }}%</span>
+        <span class="text-card-color">{{ props.value }}%</span>
       </q-circular-progress>
     </div>
     <div v-else class="column justify-center items-center no-wrap full-width q-mt-xs">
       <q-icon name="error" size="md" color="negative" />
-      <span class="text-base-color q-mt-sm">{{ t('loadingFailed') }}</span>
+      <span class="text-card-color q-mt-sm">{{ t('loadingFailed') }}</span>
     </div>
   </div>
 </template>

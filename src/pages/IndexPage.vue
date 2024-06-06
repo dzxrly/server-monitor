@@ -3,22 +3,22 @@
     <div class="full-width row wrap justify-start items-stretch">
       <ServerCard
         class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3"
-        v-for="server in configStore.config.userConfig.serverListConfig"
+        v-for="server in configStore.config.serverListConfig"
         :key="server.uniqueId"
         :server-config="server"
-        :show-layout="configStore.config.userConfig.indexPageServerPanelLayout"
-        :use-fahrenheit-unit="configStore.config.userConfig.darkMode"
-        :refresh-time-sec="configStore.config.userConfig.refreshTimeSec"
-        :free-usage-threshold="configStore.config.userConfig.freeUsageThreshold"
-        :mid-usage-threshold="configStore.config.userConfig.midUsageThreshold"
+        :show-layout="configStore.config.indexPageServerPanelLayout"
+        :use-fahrenheit-unit="configStore.config.darkMode"
+        :refresh-time-sec="configStore.config.refreshTimeSec"
+        :free-usage-threshold="configStore.config.freeUsageThreshold"
+        :mid-usage-threshold="configStore.config.midUsageThreshold"
       />
       <div class="add-server-card-wrapper col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 q-pa-sm bg-transparent">
         <div
           class="add-server-card rounded-borders column no-wrap justify-center items-center cursor-pointer bg-card-color q-px-md q-py-xl full-height"
           @click="showAddServerDialog = true"
         >
-          <q-icon class="q-mb-md" color="text-base-color" name="add" size="xl" />
-          <span class="text-subtitle1 text-base-color">{{ t('addServer') }}</span>
+          <q-icon class="q-mb-md" color="text-card-color" name="add" size="xl" />
+          <span class="text-subtitle1 text-card-color">{{ t('addServer') }}</span>
         </div>
       </div>
     </div>

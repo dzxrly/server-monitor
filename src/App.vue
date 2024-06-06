@@ -14,8 +14,8 @@ const { locale } = useI18n({ useScope: 'global' });
 
 configStore.initConfig();
 
-const darkMode = computed(() => configStore.config.userConfig.darkMode);
-const defaultLanguage = computed(() => configStore.config.userConfig.defaultLanguage);
+const darkMode = computed(() => configStore.config.darkMode);
+const defaultLanguage = computed(() => configStore.config.defaultLanguage);
 const isLtSm = computed(() => $q.screen.lt.sm);
 
 provide('isLtSm', isLtSm);

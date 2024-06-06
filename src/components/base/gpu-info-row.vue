@@ -4,8 +4,8 @@
       v-if="props.showLayout === 'sm'"
       class="column justify-center items-center no-wrap full-width">
       <div class="row justify-center no-wrap items-center full-width">
-        <q-icon class="text-base-color q-mr-xs" name="mdi-expansion-card" size="md" />
-        <span class="text-base-color text-subtitle2">{{ t('gpuUsage') }}</span>
+        <q-icon class="text-card-color q-mr-xs" name="mdi-expansion-card" size="md" />
+        <span class="text-card-color text-subtitle2">{{ t('gpuUsage') }}</span>
       </div>
       <div class="row justify-start items-center wrap full-width">
         <q-circular-progress
@@ -19,7 +19,7 @@
           track-color="grey-6"
           :size="props.gpuState?.gpuList.length <= 4 ? 'xl' : 'md'"
         >
-          <span class="text-base-color">{{ rounded(gpu.gpuUsage, 0) }}%</span>
+          <span class="text-card-color">{{ rounded(gpu.gpuUsage, 0) }}%</span>
         </q-circular-progress>
       </div>
     </div>
@@ -32,13 +32,13 @@
         class="column justify-center items-center no-wrap full-width q-mt-sm">
         <div class="row justify-between items-center no-wrap full-width">
           <div>
-            <q-icon class="text-base-color q-mr-xs" name="mdi-expansion-card" size="xs" />
-            <span class="text-base-color text-subtitle2 overflow-hidden ellipsis">{{ gpu.gpuName }}</span>
+            <q-icon class="text-card-color q-mr-xs" name="mdi-expansion-card" size="xs" />
+            <span class="text-card-color text-subtitle2 overflow-hidden ellipsis">{{ gpu.gpuName }}</span>
           </div>
-          <span class="text-base-color text-subtitle2">{{ `${rounded(gpu.gpuTemperature, 0)}${t('degree')}` }}</span>
+          <span class="text-card-color text-subtitle2">{{ `${rounded(gpu.gpuTemperature, 0)}${t('degree')}` }}</span>
         </div>
         <div class="row justify-between items-center no-wrap full-width">
-          <span class="col-4 text-base-color text-body2">{{ t('gpuCoreUsage') }}</span>
+          <span class="col-4 text-card-color text-body2">{{ t('gpuCoreUsage') }}</span>
           <q-linear-progress
             class="col-grow q-ml-xs rounded-borders"
             :value="gpu.gpuUsage / 100"
@@ -48,14 +48,14 @@
           >
             <div class="absolute-full flex flex-center">
               <q-badge
-                color="info"
-                class="text-base-color"
+                color="default-color"
+                class="text-card-color"
                 :label="`${rounded(gpu.gpuUsage, 0)}%`" />
             </div>
           </q-linear-progress>
         </div>
         <div class="row justify-between items-center no-wrap full-width q-mt-xs">
-          <span class="col-4 text-base-color text-body2">{{ t('gpuMemoryUsage') }}</span>
+          <span class="col-4 text-card-color text-body2">{{ t('gpuMemoryUsage') }}</span>
           <q-linear-progress
             class="col-grow q-ml-xs rounded-borders"
             :value="gpu.memoryPercent / 100"
@@ -65,8 +65,8 @@
           >
             <div class="absolute-full flex flex-center">
               <q-badge
-                color="info"
-                class="text-base-color"
+                color="default-color"
+                class="text-card-color"
                 :label="`${rounded(gpu.memoryUsed, 0)}/${rounded(gpu.memoryTotal, 0)}GB`" />
             </div>
           </q-linear-progress>
@@ -75,13 +75,13 @@
           v-if="props.showLayout === 'lg'"
           class="row justify-between items-center full-width no-wrap q-mt-xs">
           <q-chip
-            color="warning"
+            color="default-color"
             size="sm">
-            <q-icon class="text-base-color q-mr-xs" name="mdi-flash" size="0.8rem" />
+            <q-icon class="text-card-color q-mr-xs" name="mdi-flash" size="0.8rem" />
             {{ `${t('power')} ${rounded(gpu.powerCurrent, 0)}/${rounded(gpu.powerLimit, 0)}W` }}
           </q-chip>
           <q-chip
-            color="warning"
+            color="default-color"
             size="sm">
             <FanIcon class="q-mr-xs" :fan-speed="gpu.fanSpeed" size="0.8rem"></FanIcon>
             {{ `${t('fanSpeed')} ${gpu.fanSpeed}%` }}
@@ -91,7 +91,7 @@
       <div
         v-if="props.showLayout === 'lg'"
         class="row justify-end items-center no-wrap full-width q-mt-xs">
-        <span class="text-base-color text-subtitle2">{{ t('gpuDriverVersion') }} {{ gpuState.driverVersion }}</span>
+        <span class="text-card-color text-subtitle2">{{ t('gpuDriverVersion') }} {{ gpuState.driverVersion }}</span>
       </div>
     </div>
   </div>

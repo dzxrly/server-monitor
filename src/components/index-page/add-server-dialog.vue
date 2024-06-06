@@ -1,10 +1,10 @@
 <template>
-  <div class="bg-transparent full-width text-base-color">
+  <div class="add-server-dialog-wrapper full-width bg-transparent text-card-color">
     <div class="column no-wrap justify-center items-center bg-card-color full-width q-pa-md rounded-borders">
       <div class="row justify-between items-center full-width">
-        <span class="text-h6 text-base-color">{{ t('addServer') }}</span>
+        <span class="text-h6 text-card-color">{{ t('addServer') }}</span>
         <q-btn
-          class="text-base-color"
+          color="btn-color"
           icon="close"
           @click="showAddServerDialog = false"
           flat
@@ -34,7 +34,7 @@
               :label="t('serverUrl')"
               :hint="t('serverUrlInputFieldHint')"
               :rules="[ val => val && val.length > 0 || t('serverUrlInputFieldHintErrorMsg') ]"
-              @change="serverConfig.serverUrl = `${serverUrlPrependUrlSelect}${serverUrlInput}`"
+              @change="() => serverConfig.serverUrl = `${serverUrlPrependUrlSelect}${serverUrlInput}`"
               outlined
               clearable
             />
@@ -89,9 +89,9 @@
       </div>
       <q-btn
         no-caps
-        outline
+        flat
         class="full-width rounded-borders q-mt-md"
-        color="primary"
+        color="btn-color"
         icon="add"
         :label="t('addBtn')"
         :disable="!isValid"
@@ -108,7 +108,7 @@ import { getUUID } from 'src/utils/utils';
 import { useConfigStore } from 'stores/user-config';
 
 const showAddServerDialog = defineModel('showAddServerDialog', { required: true, type: Boolean });
-const serverConfig = reactive(new ServerConfig());
+const serverConfig = reactive<ServerConfig>(new ServerConfig());
 const { t } = useI18n();
 const configStore = useConfigStore();
 const serverNameInputRef = ref();
@@ -150,14 +150,11 @@ const isValid = computed(() => {
 });
 
 function addServer() {
-  const serverList = configStore.config.userConfig.serverListConfig;
+  const serverList = configStore.config.serverListConfig;
   serverList.push(serverConfig);
   configStore.setConfig({
     ...configStore.config,
-    userConfig: {
-      ...configStore.config.userConfig,
-      serverListConfig: serverList
-    }
+    serverListConfig: serverList
   });
   showAddServerDialog.value = false;
 }
@@ -174,3 +171,8 @@ watch(gpuTypeSelect, (newVal) => {
   serverConfig.gpuServer.setGPUType(newVal);
 });
 </script>
+
+<style lang="sass" scoped>
+.add-server-dialog-wrapper
+  transition: all 0.25s ease-in-out
+</style>

@@ -50,5 +50,11 @@ export default {
   'resetSettingBtn': '重置设置',
   'resetSettingConfirmTitle': '重置设置',
   'resetSettingConfirm': '确定要重置所有设置吗？此操作无法撤销！',
-  'resetSettingSuccess': '设置已重置'
+  'resetSettingSuccess': '设置已重置',
+  'exportSettingBtn': '导出设置',
+  'importSettingBtn': '导入设置',
+  'importSettingSuccess': '设置导入成功',
+  'importSettingFail': '设置导入失败',
+  'importSettingFailNotAConfigFile': '设置导入失败! 这不是一个有效的配置文件',
+  'importSettingFailNoFile': '设置导入失败! 没有文件可导入'
 };

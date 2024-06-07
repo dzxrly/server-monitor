@@ -6,10 +6,13 @@
         {{ props.cpuName.cpuName.split('@')[0].trim().split('CPU')[0].trim() }}</span>
       <q-badge
         v-if="cpuState.cpuTemperature.numaNodeTemperature && cpuState.cpuTemperature.numaNodeTemperature.length >= 2"
-        class="text-card-color text-subtitle2"
+        class="text-card-color text-subtitle2 cursor-pointer"
         rounded
         color="default-color">
         ×{{ cpuState.cpuTemperature.numaNodeTemperature.length }}
+        <q-tooltip>
+          {{ t('NumaNode') }}
+        </q-tooltip>
       </q-badge>
     </div>
     <div class="row justify-between items-center full-width no-wrap q-mt-sm">

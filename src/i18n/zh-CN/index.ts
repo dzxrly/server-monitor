@@ -57,5 +57,15 @@ export default {
   'importSettingSuccess': '设置导入成功',
   'importSettingFail': '设置导入失败',
   'importSettingFailNotAConfigFile': '设置导入失败! 这不是一个有效的配置文件',
-  'importSettingFailNoFile': '设置导入失败! 没有文件可导入'
+  'importSettingFailNoFile': '设置导入失败! 没有文件可导入',
+
+  'serverRouteFailed': '打开服务器详细信息页面失败，不存在服务器: ',
+  'serverNotFound': '未找到服务器',
+  'deleteThisServer': '删除服务器',
+  'deleteThisServerConfirm': '确定要删除该服务器吗？此操作无法撤销！',
+  'serverDeleted': '服务器已删除',
+  'NumaNode': 'NUMA节点',
+  'serverSettings': '服务器设置',
+  'serverEditDialogSaveErrorMsg': '服务器信息有误，请检查输入的信息',
+  'saveEditBtn': '保存'
 };

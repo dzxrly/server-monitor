@@ -11,81 +11,79 @@
           round
         />
       </div>
-      <div class="col-grow full-width q-pt-md">
-        <div class="add-server-dialog-wrapper column no-wrap justify-center items-center full-width">
-          <q-input
-            class="full-width"
-            v-model="serverConfig.uniqueId"
-            :label="t('serverUUID')"
-            outlined
-            readonly
-          />
-          <div class="full-width q-mt-md row justify-center items-start">
-            <q-select
-              v-model="serverUrlPrependUrlSelect"
-              :options="serverUrlPrependSelectOptions"
-              map-options
-              emit-value
-              outlined />
-            <q-input
-              ref="serverUrlInputRef"
-              class="col-grow q-ml-xs"
-              v-model="serverUrlInput"
-              :label="t('serverUrl')"
-              :hint="t('serverUrlInputFieldHint')"
-              :rules="[ val => val && val.length > 0 || t('serverUrlInputFieldHintErrorMsg') ]"
-              @change="() => serverConfig.serverUrl = `${serverUrlPrependUrlSelect}${serverUrlInput}`"
-              outlined
-              clearable
-            />
-          </div>
-          <q-input
-            ref="serverNameInputRef"
-            class="full-width q-mt-md"
-            v-model="serverConfig.customName"
-            :label="t('customServerName')"
-            :hint="t('customServerNameInputFieldHint')"
-            :rules="[ val => val && val.length <= 10 || t('customServerNameInputFieldHintErrorMsg') ]"
-            outlined
-            clearable
-          />
-          <q-input
-            ref="tagColorInputRef"
-            class="full-width q-mt-md"
-            v-model="serverConfig.tagColor"
-            :label="t('serverTagColor')"
-            :hint="t('serverTagColorHint')"
-            :rules="['hexColor']"
-            outlined
-            clearable
-          >
-            <template v-slot:prepend>
-              <q-icon
-                :name="tagColorInputError ? 'warning' : 'dns'"
-                size="md"
-                :style="{ color: tagColorInputError ? '#C10015' : serverConfig.tagColor }"
-              />
-            </template>
-            <template v-slot:append>
-              <q-icon name="colorize" class="cursor-pointer">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-color v-model="serverConfig.tagColor" />
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-            <template v-slot:error>
-              {{ t('serverTagColorHintErrorMsg') }}
-            </template>
-          </q-input>
+      <div class="col-grow full-width q-pt-md column no-wrap justify-center items-center">
+        <q-input
+          class="full-width"
+          v-model="serverConfig.uniqueId"
+          :label="t('serverUUID')"
+          outlined
+          readonly
+        />
+        <div class="full-width q-mt-md row justify-center items-start">
           <q-select
-            class="full-width q-mt-md"
-            v-model="gpuTypeSelect"
-            :options="gpuTypeSelectOptions"
-            :label="t('serverGPUType')"
+            v-model="serverUrlPrependUrlSelect"
+            :options="serverUrlPrependSelectOptions"
             map-options
             emit-value
             outlined />
+          <q-input
+            ref="serverUrlInputRef"
+            class="col-grow q-ml-xs"
+            v-model="serverUrlInput"
+            :label="t('serverUrl')"
+            :hint="t('serverUrlInputFieldHint')"
+            :rules="[ val => val && val.length > 0 || t('serverUrlInputFieldHintErrorMsg') ]"
+            @change="() => serverConfig.serverUrl = `${serverUrlPrependUrlSelect}${serverUrlInput}`"
+            outlined
+            clearable
+          />
         </div>
+        <q-input
+          ref="serverNameInputRef"
+          class="full-width q-mt-md"
+          v-model="serverConfig.customName"
+          :label="t('customServerName')"
+          :hint="t('customServerNameInputFieldHint')"
+          :rules="[ val => val && val.length <= 10 || t('customServerNameInputFieldHintErrorMsg') ]"
+          outlined
+          clearable
+        />
+        <q-input
+          ref="tagColorInputRef"
+          class="full-width q-mt-md"
+          v-model="serverConfig.tagColor"
+          :label="t('serverTagColor')"
+          :hint="t('serverTagColorHint')"
+          :rules="['hexColor']"
+          outlined
+          clearable
+        >
+          <template v-slot:prepend>
+            <q-icon
+              :name="tagColorInputError ? 'warning' : 'dns'"
+              size="md"
+              :style="{ color: tagColorInputError ? '#C10015' : serverConfig.tagColor }"
+            />
+          </template>
+          <template v-slot:append>
+            <q-icon name="colorize" class="cursor-pointer">
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-color v-model="serverConfig.tagColor" />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+          <template v-slot:error>
+            {{ t('serverTagColorHintErrorMsg') }}
+          </template>
+        </q-input>
+        <q-select
+          class="full-width q-mt-md"
+          v-model="gpuTypeSelect"
+          :options="gpuTypeSelectOptions"
+          :label="t('serverGPUType')"
+          map-options
+          emit-value
+          outlined />
       </div>
       <q-btn
         no-caps
@@ -144,9 +142,9 @@ const isValid = computed(() => {
     serverConfig.uniqueId && serverConfig.uniqueId !== '' &&
     serverConfig.serverUrl && serverConfig.serverUrl !== '' &&
     serverConfig.customName && serverConfig.customName !== '' &&
-    !tagColorInputRef.value.hasError &&
-    !serverNameInputRef.value.hasError &&
-    !serverUrlInputRef.value.hasError;
+    tagColorInputRef.value && !tagColorInputRef.value.hasError &&
+    serverNameInputRef.value && !serverNameInputRef.value.hasError &&
+    serverUrlInputRef.value && !serverUrlInputRef.value.hasError;
 });
 
 function addServer() {

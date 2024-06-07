@@ -169,12 +169,8 @@ const langSettingOptions = useI18n().availableLocales.map((locale) => ({
 
 function resetSettings() {
   configStore.resetConfig();
-  $q.notify({
-    message: t('resetSettingSuccess'),
-    color: 'positive',
-    position: 'top'
-  });
   locale.value = configStore.config.defaultLanguage;
+  showSettingDialog.value = false;
 }
 
 function configToJsonFile() {
@@ -208,6 +204,8 @@ function importConfigFromJsonFile() {
                 ...configStore.config,
                 ...zodParse.data as Config
               });
+              locale.value = configStore.config.defaultLanguage;
+              showSettingDialog.value = false;
             } else {
               $q.notify({
                 message: t('importSettingFailNotAConfigFile'),

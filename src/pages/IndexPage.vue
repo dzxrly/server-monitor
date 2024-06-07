@@ -7,7 +7,7 @@
         :key="server.uniqueId"
         :server-config="server"
         :show-layout="configStore.config.indexPageServerPanelLayout"
-        :use-fahrenheit-unit="configStore.config.darkMode"
+        :use-fahrenheit-unit="configStore.config.useFahrenheitUnit"
         :refresh-time-sec="configStore.config.refreshTimeSec"
         :free-usage-threshold="configStore.config.freeUsageThreshold"
         :mid-usage-threshold="configStore.config.midUsageThreshold"
@@ -47,6 +47,8 @@ const { t } = useI18n();
 
 const showAddServerDialog = ref(false);
 const isLtSm = inject('isLtSm');
+
+configStore.initConfig();
 </script>
 
 <style lang="sass" scoped>

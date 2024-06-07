@@ -47,7 +47,7 @@ export default {
   'layoutMd': 'Normal Layout',
   'layoutLg': 'Details Layout',
   'language': 'Language',
-  'settingsSaved': 'Settings Saved',
+  'settingsSaved': 'Settings saved',
   'refreshTimeSec': 'Data Refresh Time (sec)',
   'freeUsageThreshold': 'Free Usage Threshold %',
   'midUsageThreshold': 'Mid Usage Threshold %',
@@ -60,5 +60,15 @@ export default {
   'importSettingSuccess': 'Settings imported successfully',
   'importSettingFail': 'Import settings failed',
   'importSettingFailNotAConfigFile': 'Import settings failed! This is not a valid config file',
-  'importSettingFailNoFile': 'Import settings failed! No file to import'
+  'importSettingFailNoFile': 'Import settings failed! No file to import',
+
+  'serverRouteFailed': 'Open server details failed, there is not server: ',
+  'serverNotFound': 'Server not found',
+  'deleteThisServer': 'Delete Server',
+  'deleteThisServerConfirm': 'Are you sure to delete this server? This action can not be undone!',
+  'serverDeleted': 'Server Deleted',
+  'NumaNode': 'NUMA Node',
+  'serverSettings': 'Server Settings',
+  'serverEditDialogSaveErrorMsg': 'Server information error, please check your inputs',
+  'saveEditBtn': 'Save'
 };

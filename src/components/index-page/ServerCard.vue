@@ -12,11 +12,20 @@
         <div class="col-grow row justify-center items-center">
           <span class="text-h6 text-card-color">{{ server.customName }}</span>
         </div>
-        <q-icon v-if="loadingError.hasError()" name="error" color="negative" size="md">
-          <q-tooltip>
-            {{ t('loadingFailedTooltip') }}
-          </q-tooltip>
-        </q-icon>
+        <div class="row justify-center items-center">
+          <q-icon v-if="loadingError.hasError()" class="q-mr-xs" name="error" color="negative" size="md">
+            <q-tooltip>
+              {{ t('loadingFailedTooltip') }}
+            </q-tooltip>
+          </q-icon>
+          <q-btn
+            icon="more_vert"
+            size="md"
+            :to="`/server/${server.uniqueId}`"
+            flat
+            round
+          />
+        </div>
       </div>
       <div class="col-grow column justify-start items-center full-width full-height no-wrap q-pt-md">
         <div class="row justify-between items-start no-wrap full-width">
@@ -192,7 +201,11 @@ function getMemoryState() {
 
 function getNVGPUState() {
   if (!pauseFetch.value) {
-    API.getNVGPUState(server.value.serverUrl, 'GB').then((res: any) => {
+    API.getNVGPUState(
+      server.value.serverUrl,
+      'GB',
+      props.useFahrenheitUnit
+    ).then((res: any) => {
       gpuState.value = res as GPUStateResponse;
       loadingError.gpuStateFetchError = false;
     }).catch(() => {

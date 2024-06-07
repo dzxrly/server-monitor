@@ -5,7 +5,7 @@
       <router-view />
 
       <q-page-sticky>
-        <div class="q-ma-md column justify-center items-center no-wrap">
+        <div class="q-pa-md column justify-center items-center no-wrap">
           <q-btn
             class="sticky-btn shadow-4 text-btn-color"
             color="btn-color"
@@ -15,11 +15,30 @@
             round
           />
           <q-btn
+            v-if="$route.name === 'IndexPage'"
             class="sticky-btn shadow-4 q-mt-md text-btn-color"
             color="btn-color"
             icon="settings"
             size="md"
             @click="showSettingDialog = true"
+            round
+          />
+          <q-btn
+            v-if="$route.name === 'ServerDetail'"
+            class="sticky-btn shadow-4 q-mt-md text-btn-color"
+            icon="edit"
+            color="btn-color"
+            size="md"
+            @click="showServerEditDialog = true"
+            round
+          />
+          <q-btn
+            v-if="$route.name === 'ServerDetail'"
+            class="sticky-btn shadow-4 q-mt-md"
+            icon="delete_forever"
+            color="negative"
+            size="md"
+            @click="showDeleteServerDialog = true"
             round
           />
         </div>
@@ -59,15 +78,83 @@
       <SettingDialog v-model:show-setting-dialog="showSettingDialog" />
     </q-dialog>
 
+    <q-dialog
+      v-model="showDeleteServerDialog"
+      backdrop-filter="blur(5px)"
+      transition-duration="250"
+      persistent
+      no-shake
+    >
+      <div class="bg-card-color rounded-borders q-pa-md">
+        <div class="column justify-center items-center no-wrap bg-card-color">
+          <div class="row justify-start items-center no-wrap full-width">
+            <span class="text-card-color text-h6">{{ t('deleteThisServer') }}</span>
+          </div>
+          <div class="row justify-start items-center no-wrap full-width q-mt-md">
+            <span class="text-card-color text-body1">{{ t('deleteThisServerConfirm') }}</span>
+          </div>
+          <div class="row justify-evenly items-center no-wrap full-width q-mt-md">
+            <q-btn
+              :label="t('confirmBtn')"
+              color="negative"
+              size="md"
+              @click="deleteServer"
+              flat
+              rounded
+            />
+            <q-btn
+              :label="t('cancelBtn')"
+              color="primary"
+              size="md"
+              @click="showDeleteServerDialog = false"
+              flat
+              rounded
+            />
+          </div>
+        </div>
+      </div>
+    </q-dialog>
+
+    <q-dialog
+      v-model="showServerEditDialog"
+      backdrop-filter="blur(5px)"
+      transition-duration="250"
+      persistent
+      no-shake>
+      <ServerEditDialog v-model:show-dialog="showServerEditDialog" :server-unique-id="$route.params.uid as string" />
+    </q-dialog>
+
   </q-layout>
 </template>
 <script setup lang="ts">
 import SettingDialog from 'components/index-page/SettingDialog.vue';
 import { provide, ref } from 'vue';
 import { openURL } from 'quasar';
+import { useRoute, useRouter } from 'vue-router';
+import { ServerConfig } from 'src/module/config';
+import { useConfigStore } from 'stores/user-config';
+import { useI18n } from 'vue-i18n';
+import ServerEditDialog from 'components/server-detail-page/server-edit-dialog.vue';
+
+const $route = useRoute();
+const $router = useRouter();
+const configStore = useConfigStore();
+const { t } = useI18n();
 
 const showSettingDialog = ref(false);
 const pauseFetch = ref<boolean>(false);
+const showDeleteServerDialog = ref(false);
+const showServerEditDialog = ref(false);
+
+function deleteServer() {
+  const newServerList = configStore.config.serverListConfig.filter((server: ServerConfig) => server.uniqueId !== ($route.params.uid as string));
+  configStore.setConfig({
+    ...configStore.config,
+    serverListConfig: newServerList
+  });
+  showDeleteServerDialog.value = false;
+  $router.push('/');
+}
 
 provide('pauseFetch', pauseFetch);
 </script>

@@ -20,17 +20,36 @@ function rounded(inputNum: number | null | string | undefined, digital: number):
 function getUsageColorClass(
   usage: number | undefined | null,
   freeUsageThreshold: number,
+  midUsageThreshold: number,
+  isText = true
+): string {
+  if (usage === null || usage === undefined) {
+    return isText ? 'text-max-color' : 'bg-max-color';
+  } else {
+    if (usage <= freeUsageThreshold) {
+      return isText ? 'text-free-color' : 'bg-free-color';
+    } else if (usage <= midUsageThreshold) {
+      return isText ? 'text-mid-color' : 'bg-mid-color';
+    } else {
+      return isText ? 'text-max-color' : 'bg-max-color';
+    }
+  }
+}
+
+function getUsageColor(
+  usage: number | undefined | null,
+  freeUsageThreshold: number,
   midUsageThreshold: number
 ): string {
   if (usage === null || usage === undefined) {
-    return 'max-color';
+    return getComputedStyle(document.body).getPropertyValue('--max-color');
   } else {
     if (usage <= freeUsageThreshold) {
-      return 'free-color';
+      return getComputedStyle(document.body).getPropertyValue('--free-color');
     } else if (usage <= midUsageThreshold) {
-      return 'mid-color';
+      return getComputedStyle(document.body).getPropertyValue('--mid-color');
     } else {
-      return 'max-color';
+      return getComputedStyle(document.body).getPropertyValue('--max-color');
     }
   }
 }
@@ -43,5 +62,6 @@ export {
   getUUID,
   rounded,
   getUsageColorClass,
-  getDegreeUnit
+  getDegreeUnit,
+  getUsageColor
 };

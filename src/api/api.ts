@@ -26,10 +26,12 @@ export default {
   },
   getNVGPUState(
     serverUrl: string,
-    unit: string
+    unit: string,
+    fahrenheit: boolean
   ) {
     return axiosRequest(`${serverUrl}/gpu_state`, 'GET', {}, {
-      'unit': unit
+      'unit': unit,
+      'fahrenheit': fahrenheit
     });
   }
 };

@@ -61,6 +61,7 @@ export default {
   'importSettingFail': 'Import settings failed',
   'importSettingFailNotAConfigFile': 'Import settings failed! This is not a valid config file',
   'importSettingFailNoFile': 'Import settings failed! No file to import',
+  'importSettingFailDuplicateUniqueId': 'Import settings failed! Duplicate server UUID or UUID error',
 
   'serverRouteFailed': 'Open server details failed, there is not server: ',
   'serverNotFound': 'Server not found',
@@ -70,5 +71,5 @@ export default {
   'NumaNode': 'NUMA Node',
   'serverSettings': 'Server Settings',
   'serverEditDialogSaveErrorMsg': 'Server information error, please check your inputs',
-  'saveEditBtn': 'Save'
+  'saveEditBtn': 'Save',
 };

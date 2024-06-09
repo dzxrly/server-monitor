@@ -54,15 +54,15 @@
           <span class="text-card-color text-body2">{{ `${cpuState?.cpuCores.cores}C${cpuState?.cpuCores.threads}T`
             }}</span>
         </div>
-        <div class="row justify-start items-center wrap full-width q-mt-sm">
+        <div class="cpu-usage-cube-wrapper full-width q-mt-sm">
           <CPUUsageCube
             v-for="(core, index) of cpuState?.cpuUsage.percpu"
             :key="index"
             :cpu-usage="core"
             :cpu-temperature="cpuState && cpuState.cpuTemperature && cpuState.cpuTemperature.coreTemperature && cpuState.cpuTemperature.coreTemperature[index] ? cpuState.cpuTemperature.coreTemperature[index].current : 0"
             :use-fahrenheit="configStore.config.useFahrenheitUnit"
-            cube-size="5rem"
-            :text-size-percentage="0.5"
+            :cube-size="cpuUsageCubeSize"
+            :text-size-percentage="0.2"
             :free-usage-threshold="configStore.config.freeUsageThreshold"
             :mid-usage-threshold="configStore.config.midUsageThreshold"
           />
@@ -73,14 +73,14 @@
 </template>
 
 <script setup lang="ts">
-import { useConfigStore } from 'stores/user-config';
-import { inject, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { GPUType, ServerConfig } from 'src/module/config';
-import { useInterval, useQuasar } from 'quasar';
-import { useI18n } from 'vue-i18n';
-import { CPUNameResponse, CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse } from 'src/interface/api';
-import { LoadingError } from 'src/module/loading-error';
+import {useConfigStore} from 'stores/user-config';
+import {computed, inject, onBeforeUnmount, onMounted, reactive, ref, watch} from 'vue';
+import {useRoute, useRouter} from 'vue-router';
+import {GPUType, ServerConfig} from 'src/module/config';
+import {useInterval, useQuasar} from 'quasar';
+import {useI18n} from 'vue-i18n';
+import {CPUNameResponse, CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse} from 'src/interface/api';
+import {LoadingError} from 'src/module/loading-error';
 import API from 'src/api/api';
 import CPUUsageCube from 'components/base/CPUUsageCube.vue';
 
@@ -113,6 +113,11 @@ const gpuState = ref<GPUStateResponse>();
 const loadingError = reactive(new LoadingError());
 const pauseFetchInject = inject('pauseFetch', false);
 const pauseFetch = ref<boolean>(pauseFetchInject);
+const cpuUsageCubeSize = ref(5);
+
+const cpuUsageCubeGridSize = computed(() => {
+  return `${cpuUsageCubeSize.value}rem`;
+});
 
 function getCpuName() {
   if (!pauseFetch.value && server.value) {
@@ -241,12 +246,6 @@ watch(() => configStore, () => {
   deep: true
 });
 
-onBeforeUnmount(() => {
-  cpuStateRemoveInterval();
-  memoryStateRemoveInterval();
-  gpuStateRemoveInterval();
-});
-
 watch(() => configStore, () => {
   if (configStore.config.serverListConfig.findIndex(
     (server: ServerConfig) => server.uniqueId === ($route.params.uid as string)) === -1) {
@@ -259,4 +258,23 @@ watch(() => configStore, () => {
 }, {
   deep: true
 });
+
+onBeforeUnmount(() => {
+  cpuStateRemoveInterval();
+  memoryStateRemoveInterval();
+  gpuStateRemoveInterval();
+});
 </script>
+
+<style lang="sass" scoped>
+.server-detail-page-wrapper
+  .cpu-usage-cube-wrapper
+    display: grid
+    grid-template-rows: repeat(auto-fill, v-bind(cpuUsageCubeGridSize))
+    grid-template-columns: repeat(auto-fill, v-bind(cpuUsageCubeGridSize))
+    justify-items: center
+    align-items: center
+    justify-content: center
+    align-content: center
+    grid-gap: 0.1rem
+</style>

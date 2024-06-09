@@ -127,15 +127,16 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
+import {useI18n} from 'vue-i18n';
 import ClickableSwitchRow from 'components/base/ClickableSwitchRow.vue';
-import { useConfigStore } from 'stores/user-config';
-import { computed, ref, watch } from 'vue';
-import { languageMap } from 'boot/i18n';
+import {useConfigStore} from 'stores/user-config';
+import {computed, ref, watch} from 'vue';
+import {languageMap} from 'boot/i18n';
 import SelectRow from 'components/base/SelectRow.vue';
 import NumberInputRow from 'components/base/NumberInputRow.vue';
-import { useQuasar } from 'quasar';
-import { Config, configZod } from 'src/module/config';
+import {useQuasar} from 'quasar';
+import {Config, configZod} from 'src/module/config';
+import {isUUID} from "src/utils/utils";
 
 const showSettingDialog = defineModel('showSettingDialog', { required: true, type: Boolean });
 const configStore = useConfigStore();
@@ -198,26 +199,43 @@ function importConfigFromJsonFile() {
         if (typeof result === 'string') {
           try {
             const zodParse = configZod.strict().partial().safeParse(JSON.parse(result));
-            if (zodParse.success) {
-              config.value = zodParse.data as Config;
-              configStore.setConfig({
-                ...configStore.config,
-                ...zodParse.data as Config
-              });
-              locale.value = configStore.config.defaultLanguage;
-              showSettingDialog.value = false;
+            if (zodParse.success &&
+              (zodParse.data as Config).hasOwnProperty('serverListConfig') &&
+              (zodParse.data as Config).serverListConfig.length > 0) {
+              let isUniqueIdValid = true;
+              for (const server of (zodParse.data as Config).serverListConfig) {
+                if (!server.uniqueId ||
+                  !isUUID(server.uniqueId) ||
+                  configStore.config.serverListConfig.find((s) => s.uniqueId === server.uniqueId)
+                ) {
+                  isUniqueIdValid = false;
+                  break;
+                }
+              }
+              if (isUniqueIdValid) {
+                config.value = zodParse.data as Config;
+                configStore.setConfig({
+                  ...configStore.config,
+                  ...zodParse.data as Config
+                });
+                locale.value = configStore.config.defaultLanguage;
+                showSettingDialog.value = false;
+              } else {
+                $q.notify({
+                  message: t('importSettingFailDuplicateUniqueId'),
+                  color: 'negative',
+                });
+              }
             } else {
               $q.notify({
                 message: t('importSettingFailNotAConfigFile'),
                 color: 'negative',
-                position: 'top'
               });
             }
           } catch (e) {
             $q.notify({
               message: t('importSettingFailNotAConfigFile'),
               color: 'negative',
-              position: 'top'
             });
           }
         }

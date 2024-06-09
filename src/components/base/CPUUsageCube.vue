@@ -1,12 +1,17 @@
 <template>
   <div
     class="cpu-usage-cube-wrapper column justify-center items-center no-wrap bg-transparent"
-  ></div>
+  >
+    <div
+      class="cpu-usage-text-wrapper text-default-color bg-default-color column justify-center items-center no-wrap">
+      <span>{{ `${rounded(props.cpuUsage, 0)}%` }}</span>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { getUsageColor } from 'src/utils/utils';
+import {computed} from 'vue';
+import {getUsageColor, rounded} from 'src/utils/utils';
 
 const props = defineProps({
   cpuUsage: {
@@ -22,8 +27,8 @@ const props = defineProps({
     default: false
   },
   cubeSize: {
-    type: String,
-    default: '10rem'
+    type: Number,
+    default: 10
   },
   textSizePercentage: {
     type: Number,
@@ -46,7 +51,17 @@ const props = defineProps({
   }
 });
 
-const cubeSize = ref(props.cubeSize);
+const cubeSize = computed(() => {
+  return `${props.cubeSize}rem`;
+});
+
+const textSize = computed(() => {
+  return `${props.textSizePercentage * props.cubeSize}rem`;
+});
+
+const paddingSize = computed(() => {
+  return `${props.textSizePercentage * props.cubeSize / 2}rem`;
+});
 
 const bgColor = computed(() => {
   return getUsageColor(
@@ -72,8 +87,15 @@ const cpuUsageTranslateY = computed(() => {
   width: v-bind(cubeSize)
   height: v-bind(cubeSize)
   border: solid 1px $primary
-  box-sizing: content-box
+  box-sizing: border-box
   overflow: hidden
+  z-index: 0
+
+  .cpu-usage-text-wrapper
+    font-size: v-bind(textSize)
+    padding: 0 v-bind(paddingSize)
+    border-radius: v-bind(paddingSize)
+    z-index: 2
 
 .cpu-usage-cube-wrapper::before
   content: ''
@@ -83,5 +105,5 @@ const cpuUsageTranslateY = computed(() => {
   background-color: v-bind(bgColor)
   transform: v-bind(cpuUsageTranslateY)
   transition: all 0.1s linear
-  z-index: 9999
+  z-index: 1
 </style>

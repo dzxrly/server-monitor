@@ -58,6 +58,7 @@ export default {
   'importSettingFail': '设置导入失败',
   'importSettingFailNotAConfigFile': '设置导入失败! 这不是一个有效的配置文件',
   'importSettingFailNoFile': '设置导入失败! 没有文件可导入',
+  'importSettingFailDuplicateUniqueId': '设置导入失败! 重复的服务器UUID或UUID错误',
 
   'serverRouteFailed': '打开服务器详细信息页面失败，不存在服务器: ',
   'serverNotFound': '未找到服务器',

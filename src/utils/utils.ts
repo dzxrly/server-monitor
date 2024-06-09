@@ -1,4 +1,4 @@
-import { i18n } from 'src/boot/i18n';
+import {i18n} from 'src/boot/i18n';
 
 function getUUID() {
   const str = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
@@ -7,6 +7,11 @@ function getUUID() {
     const v = item === 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(0x10);
   });
+}
+
+function isUUID(uuid: string): boolean {
+  const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+  return uuidRegex.test(uuid);
 }
 
 function rounded(inputNum: number | null | string | undefined, digital: number): number {
@@ -63,5 +68,6 @@ export {
   rounded,
   getUsageColorClass,
   getDegreeUnit,
-  getUsageColor
+  getUsageColor,
+  isUUID
 };

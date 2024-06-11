@@ -1,19 +1,21 @@
 <template>
   <div class="clickable-switch-row-wrapper full-width bg-transparent">
-    <label class="clickable-switch-row row justify-between items-center no-wrap cursor-pointer q-px-md">
+    <label
+      class="clickable-switch-row row justify-between items-center no-wrap cursor-pointer q-px-md"
+    >
       <span class="text-base-color text-subtitle1">{{ props.title }}</span>
-      <q-toggle
-        v-model="switchValue"
-        color="primary"
-        size="md" />
+      <q-toggle v-model="switchValue" color="primary" size="md" />
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
-const switchValue = defineModel('switchValue', { required: true, type: Boolean });
+const switchValue = defineModel('switchValue', {
+  required: true,
+  type: Boolean,
+});
 const props = defineProps({
-  title: { required: true, type: String }
+  title: { required: true, type: String },
 });
 </script>
 

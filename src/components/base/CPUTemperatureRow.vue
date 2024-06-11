@@ -1,6 +1,7 @@
 <template>
-  <div class="cpu-temperature-row-wrapper"
-       :class="isLtSm ? 'q-px-sm q-pb-sm' : 'q-px-md q-px-md'"
+  <div
+    class="cpu-temperature-row-wrapper"
+    :class="isLtSm ? 'q-px-sm q-pb-sm' : 'q-px-md q-px-md'"
   >
     <q-table
       :rows="coreTemperature"
@@ -17,11 +18,11 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, PropType} from "vue";
-import {CPUCoreTemperature, CPUTemperature} from "src/interface/api";
-import {useI18n} from "vue-i18n";
-import {getDegreeUnit} from "src/utils/utils";
-import {QTableColumn} from "quasar";
+import { computed, inject, PropType } from 'vue';
+import { CPUCoreTemperature, CPUTemperature } from 'src/interface/api';
+import { useI18n } from 'vue-i18n';
+import { getDegreeUnit } from 'src/utils/utils';
+import { QTableColumn } from 'quasar';
 
 const props = defineProps({
   cpuTemperature: {
@@ -29,24 +30,33 @@ const props = defineProps({
     required: true,
     default: () => {
       return {
-        coresTemperature: [] as Array<CPUCoreTemperature>
+        coresTemperature: [] as Array<CPUCoreTemperature>,
       } as CPUTemperature;
-    }
+    },
   },
   useFahrenheit: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 const isLtSm = inject('isLtSm', false);
 
 const coreTemperature = computed(() => {
-  if (props.cpuTemperature.coresTemperature && typeof props.cpuTemperature.coresTemperature !== 'undefined') {
-    let deepCopyTemp = JSON.parse(JSON.stringify(props.cpuTemperature.coresTemperature));
-    return deepCopyTemp.sort((a: CPUCoreTemperature, b: CPUCoreTemperature) => parseInt(a.coreLabel.split(' ')[1]) - parseInt(b.coreLabel.split(' ')[1]));
+  if (
+    props.cpuTemperature.coresTemperature &&
+    typeof props.cpuTemperature.coresTemperature !== 'undefined'
+  ) {
+    let deepCopyTemp = JSON.parse(
+      JSON.stringify(props.cpuTemperature.coresTemperature)
+    );
+    return deepCopyTemp.sort(
+      (a: CPUCoreTemperature, b: CPUCoreTemperature) =>
+        parseInt(a.coreLabel.split(' ')[1]) -
+        parseInt(b.coreLabel.split(' ')[1])
+    );
   } else {
     return [] as Array<CPUCoreTemperature>;
   }
@@ -84,6 +94,6 @@ const tableColumns = [
     align: 'center',
     field: (row: CPUCoreTemperature) => row.coreCritical,
     format: (val: number) => `${val}${getDegreeUnit(props.useFahrenheit)}`,
-  }
-] as QTableColumn[]
+  },
+] as QTableColumn[];
 </script>

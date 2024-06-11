@@ -1,6 +1,7 @@
 <template>
   <div
-    class="setting-dialog-wrapper column justify-center items-center no-wrap full-width bg-card-color rounded-borders q-pa-md">
+    class="setting-dialog-wrapper column justify-center items-center no-wrap full-width bg-card-color rounded-borders q-pa-md"
+  >
     <div class="row justify-between items-center full-width">
       <span class="text-card-color text-h6">{{ t('settings') }}</span>
       <q-btn
@@ -33,7 +34,7 @@
       v-model:select-value="config.defaultLanguage"
       :title="t('language')"
       :options="langSettingOptions"
-      v-on:update:select-value="(val) => locale = val"
+      v-on:update:select-value="(val) => (locale = val)"
     />
     <NumberInputRow
       class="q-mt-sm"
@@ -94,19 +95,27 @@
       no-shake
     >
       <div class="bg-transparent text-card-color">
-        <div class="column no-wrap justify-center items-center bg-card-color full-width q-pa-md rounded-borders">
+        <div
+          class="column no-wrap justify-center items-center bg-card-color full-width q-pa-md rounded-borders"
+        >
           <div class="row justify-start items-center full-width">
-            <span class="text-h6 text-card-color">{{ t('resetSettingConfirmTitle') }}</span>
+            <span class="text-h6 text-card-color">{{
+              t('resetSettingConfirmTitle')
+            }}</span>
           </div>
-          <span class="text-body1 text-card-color q-mt-md">{{ t('resetSettingConfirm') }}</span>
+          <span class="text-body1 text-card-color q-mt-md">{{
+            t('resetSettingConfirm')
+          }}</span>
           <div class="row justify-evenly items-center full-width q-mt-md">
             <q-btn
               :label="t('confirmBtn')"
               color="negative"
-              @click="() => {
-                resetSettings();
-                showResetConfirmDialog = false;
-              }"
+              @click="
+                () => {
+                  resetSettings();
+                  showResetConfirmDialog = false;
+                }
+              "
               flat
               rounded
               no-caps
@@ -127,18 +136,21 @@
 </template>
 
 <script setup lang="ts">
-import {useI18n} from 'vue-i18n';
+import { useI18n } from 'vue-i18n';
 import ClickableSwitchRow from 'components/base/ClickableSwitchRow.vue';
-import {useConfigStore} from 'stores/user-config';
-import {computed, ref, watch} from 'vue';
-import {languageMap} from 'boot/i18n';
+import { useConfigStore } from 'stores/user-config';
+import { computed, ref, watch } from 'vue';
+import { languageMap } from 'boot/i18n';
 import SelectRow from 'components/base/SelectRow.vue';
 import NumberInputRow from 'components/base/NumberInputRow.vue';
-import {useQuasar} from 'quasar';
-import {Config, configZod} from 'src/module/config';
-import {isUUID} from "src/utils/utils";
+import { useQuasar } from 'quasar';
+import { Config, configZod } from 'src/module/config';
+import { isUUID } from 'src/utils/utils';
 
-const showSettingDialog = defineModel('showSettingDialog', { required: true, type: Boolean });
+const showSettingDialog = defineModel('showSettingDialog', {
+  required: true,
+  type: Boolean,
+});
 const configStore = useConfigStore();
 
 const config = ref(configStore.config);
@@ -151,21 +163,21 @@ const layoutSettingOptions = computed(() => {
   return [
     {
       value: 'sm',
-      label: t('layoutSm')
+      label: t('layoutSm'),
     },
     {
       value: 'md',
-      label: t('layoutMd')
+      label: t('layoutMd'),
     },
     {
       value: 'lg',
-      label: t('layoutLg')
-    }
+      label: t('layoutLg'),
+    },
   ];
 });
 const langSettingOptions = useI18n().availableLocales.map((locale) => ({
   value: locale,
-  label: languageMap[locale]
+  label: languageMap[locale],
 }));
 
 function resetSettings() {
@@ -198,15 +210,23 @@ function importConfigFromJsonFile() {
         const result = e.target?.result;
         if (typeof result === 'string') {
           try {
-            const zodParse = configZod.strict().partial().safeParse(JSON.parse(result));
-            if (zodParse.success &&
+            const zodParse = configZod
+              .strict()
+              .partial()
+              .safeParse(JSON.parse(result));
+            if (
+              zodParse.success &&
               (zodParse.data as Config).hasOwnProperty('serverListConfig') &&
-              (zodParse.data as Config).serverListConfig.length > 0) {
+              (zodParse.data as Config).serverListConfig.length > 0
+            ) {
               let isUniqueIdValid = true;
               for (const server of (zodParse.data as Config).serverListConfig) {
-                if (!server.uniqueId ||
+                if (
+                  !server.uniqueId ||
                   !isUUID(server.uniqueId) ||
-                  configStore.config.serverListConfig.find((s) => s.uniqueId === server.uniqueId)
+                  configStore.config.serverListConfig.find(
+                    (s) => s.uniqueId === server.uniqueId
+                  )
                 ) {
                   isUniqueIdValid = false;
                   break;
@@ -216,7 +236,7 @@ function importConfigFromJsonFile() {
                 config.value = zodParse.data as Config;
                 configStore.setConfig({
                   ...configStore.config,
-                  ...zodParse.data as Config
+                  ...(zodParse.data as Config),
                 });
                 locale.value = configStore.config.defaultLanguage;
                 showSettingDialog.value = false;
@@ -245,17 +265,21 @@ function importConfigFromJsonFile() {
       $q.notify({
         message: t('importSettingFailNoFile'),
         color: 'negative',
-        position: 'top'
+        position: 'top',
       });
     }
   };
   input.click();
 }
 
-watch(config, () => {
-  configStore.setConfig({
-    ...configStore.config,
-    ...config.value
-  });
-}, { deep: true });
+watch(
+  config,
+  () => {
+    configStore.setConfig({
+      ...configStore.config,
+      ...config.value,
+    });
+  },
+  { deep: true }
+);
 </script>

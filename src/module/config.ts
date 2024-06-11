@@ -43,26 +43,21 @@ const configZod = z.object({
   darkMode: z.boolean(),
   defaultLanguage: z.string(),
   indexPageServerPanelLayout: z.string(),
-  serverListConfig: z.array(z.object({
-    customName: z.string(),
-    uniqueId: z.string(),
-    serverUrl: z.string(),
-    tagColor: z.string(),
-    gpuServer: z.object({
-      gpuType: z.string()
+  serverListConfig: z.array(
+    z.object({
+      customName: z.string(),
+      uniqueId: z.string(),
+      serverUrl: z.string(),
+      tagColor: z.string(),
+      gpuServer: z.object({
+        gpuType: z.string(),
+      }),
     })
-  })),
+  ),
   refreshTimeSec: z.number(),
   useFahrenheitUnit: z.boolean(),
   freeUsageThreshold: z.number(),
-  midUsageThreshold: z.number()
+  midUsageThreshold: z.number(),
 });
 
-export {
-  ServerConfig,
-  Config,
-  GPUType,
-  GPUServer,
-
-  configZod
-};
+export { ServerConfig, Config, GPUType, GPUServer, configZod };

@@ -1,24 +1,31 @@
-import {i18n} from 'src/boot/i18n';
+import { i18n } from 'src/boot/i18n';
 
 function getUUID() {
   const str = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-  return str.replace(/[xy]/g, item => {
-    const r = Math.random() * 0x10 | 0;
-    const v = item === 'x' ? r : (r & 0x3 | 0x8);
+  return str.replace(/[xy]/g, (item) => {
+    const r = (Math.random() * 0x10) | 0;
+    const v = item === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(0x10);
   });
 }
 
 function isUUID(uuid: string): boolean {
-  const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+  const uuidRegex =
+    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
   return uuidRegex.test(uuid);
 }
 
-function rounded(inputNum: number | null | string | undefined, digital: number): number {
+function rounded(
+  inputNum: number | null | string | undefined,
+  digital: number
+): number {
   if (inputNum === null || inputNum === undefined) {
     return 0;
   } else {
-    return Math.round(Number(inputNum) * Math.pow(10, digital)) / Math.pow(10, digital);
+    return (
+      Math.round(Number(inputNum) * Math.pow(10, digital)) /
+      Math.pow(10, digital)
+    );
   }
 }
 
@@ -60,7 +67,9 @@ function getUsageColor(
 }
 
 function getDegreeUnit(useFahrenheitUnit: boolean): string {
-  return useFahrenheitUnit ? i18n.global.t('degreeF').toString() : i18n.global.t('degreeC').toString();
+  return useFahrenheitUnit
+    ? i18n.global.t('degreeF').toString()
+    : i18n.global.t('degreeC').toString();
 }
 
 export {
@@ -69,5 +78,5 @@ export {
   getUsageColorClass,
   getDegreeUnit,
   getUsageColor,
-  isUUID
+  isUUID,
 };

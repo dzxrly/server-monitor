@@ -5,9 +5,11 @@ export class LoadingError {
   public gpuStateFetchError = false;
 
   public hasError(): boolean {
-    return this.cpuStateFetchError ||
+    return (
+      this.cpuStateFetchError ||
       this.cpuNameFetchError ||
       this.memoryStateFetchError ||
-      this.gpuStateFetchError;
+      this.gpuStateFetchError
+    );
   }
 }

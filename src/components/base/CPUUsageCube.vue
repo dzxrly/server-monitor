@@ -3,53 +3,56 @@
     class="cpu-usage-cube-wrapper column justify-center items-center no-wrap bg-transparent"
   >
     <div
-      class="cpu-usage-text-wrapper text-default-color bg-default-color column justify-center items-center no-wrap">
+      class="cpu-usage-text-wrapper text-default-color bg-default-color column justify-center items-center no-wrap"
+    >
       <span>{{ `${rounded(props.cpuUsage, 0)}%` }}</span>
-      <span v-if="props.cpuFreq > 0">{{ `${rounded(props.cpuFreq / 1000, 1)}GHz` }}</span>
+      <span v-if="props.cpuFreq > 0">{{
+        `${rounded(props.cpuFreq / 1000, 1)}GHz`
+      }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue';
-import {getUsageColor, rounded} from 'src/utils/utils';
+import { computed } from 'vue';
+import { getUsageColor, rounded } from 'src/utils/utils';
 
 const props = defineProps({
   cpuUsage: {
     type: Number,
-    default: 0
+    default: 0,
   },
   cpuFreq: {
     type: Number,
-    default: 0
+    default: 0,
   },
   useFahrenheit: {
     type: Boolean,
-    default: false
+    default: false,
   },
   cubeSize: {
     type: Number,
-    default: 10
+    default: 10,
   },
   textSizePercentage: {
     type: Number,
     default: 0.5,
-    validator: (value: number) => value >= 0 && value <= 1
+    validator: (value: number) => value >= 0 && value <= 1,
   },
   freeUsageThreshold: {
     type: Number,
     default: 20,
     validator(val: number) {
       return val >= 0 && val <= 100;
-    }
+    },
   },
   midUsageThreshold: {
     type: Number,
     default: 60,
     validator(val: number) {
       return val >= 0 && val <= 100;
-    }
-  }
+    },
+  },
 });
 
 const cubeSize = computed(() => {
@@ -61,7 +64,7 @@ const textSize = computed(() => {
 });
 
 const paddingSize = computed(() => {
-  return `${props.textSizePercentage * props.cubeSize / 2}rem`;
+  return `${(props.textSizePercentage * props.cubeSize) / 2}rem`;
 });
 
 const bgColor = computed(() => {

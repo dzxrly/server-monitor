@@ -1,7 +1,9 @@
 <template>
   <div class="number-input-row-wrapper q-px-md full-width bg-transparent">
     <div v-if="!isLtSm" class="row justify-between items-center no-wrap">
-      <span class="text-base-color text-subtitle1 col-6">{{ props.title }}</span>
+      <span class="text-base-color text-subtitle1 col-6">{{
+        props.title
+      }}</span>
       <q-input
         class="col-6"
         v-model.number="value"
@@ -39,7 +41,7 @@ const props = defineProps({
   title: { required: true, type: String },
   max: { required: false, type: Number, default: 100 },
   min: { required: false, type: Number, default: 0 },
-  step: { required: false, type: Number, default: 1 }
+  step: { required: false, type: Number, default: 1 },
 });
 
 const isLtSm = inject('isLtSm');

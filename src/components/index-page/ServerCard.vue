@@ -1,10 +1,15 @@
 <template>
-  <div
-    class="server-card-wrapper q-pa-sm bg-transparent">
+  <div class="server-card-wrapper q-pa-sm bg-transparent">
     <div
-      class="server-card full-height column justify-center items-center no-wrap bg-card-color rounded-borders q-px-md q-pt-lg">
+      class="server-card full-height column justify-center items-center no-wrap bg-card-color rounded-borders q-px-md q-pt-lg"
+    >
       <div class="row justify-center items-center full-width">
-        <q-icon class="cursor-pointer" name="dns" :style="{color: server.tagColor}" size="md">
+        <q-icon
+          class="cursor-pointer"
+          name="dns"
+          :style="{ color: server.tagColor }"
+          size="md"
+        >
           <q-tooltip>
             {{ server.serverUrl }}
           </q-tooltip>
@@ -13,7 +18,13 @@
           <span class="text-h6 text-card-color">{{ server.customName }}</span>
         </div>
         <div class="row justify-center items-center">
-          <q-icon v-if="loadingError.hasError()" class="q-mr-xs" name="error" color="negative" size="md">
+          <q-icon
+            v-if="loadingError.hasError()"
+            class="q-mr-xs"
+            name="error"
+            color="negative"
+            size="md"
+          >
             <q-tooltip>
               {{ t('loadingFailedTooltip') }}
             </q-tooltip>
@@ -27,15 +38,19 @@
           />
         </div>
       </div>
-      <div class="col-grow column justify-start items-center full-width full-height no-wrap q-pt-md">
+      <div
+        class="col-grow column justify-start items-center full-width full-height no-wrap q-pt-md"
+      >
         <div class="row justify-between items-start no-wrap full-width">
           <CircularProgressWithTitle
             :title="t('cpuUsage')"
-            :color="getUsageColorClass(
-              cpuState?.cpuUsage.avg,
-              props.freeUsageThreshold,
-              props.midUsageThreshold
-            )"
+            :color="
+              getUsageColorClass(
+                cpuState?.cpuUsage.avg,
+                props.freeUsageThreshold,
+                props.midUsageThreshold
+              )
+            "
             :value="rounded(cpuState?.cpuUsage.avg, 0)"
             :show-value-text="`${rounded(cpuState?.cpuUsage.avg, 0)}%`"
             :is-error="loadingError.cpuStateFetchError"
@@ -44,11 +59,13 @@
           />
           <CircularProgressWithTitle
             :title="t('memoryUsage')"
-            :color="getUsageColorClass(
-              memoryState?.memoryPercent,
-              props.freeUsageThreshold,
-              props.midUsageThreshold
-            )"
+            :color="
+              getUsageColorClass(
+                memoryState?.memoryPercent,
+                props.freeUsageThreshold,
+                props.midUsageThreshold
+              )
+            "
             :value="rounded(memoryState?.memoryPercent, 0)"
             :show-value-text="`${rounded(memoryState?.memoryPercent, 0)}%`"
             :is-error="loadingError.memoryStateFetchError"
@@ -57,11 +74,13 @@
           />
           <CircularProgressWithTitle
             :title="t('swapUsage')"
-            :color="getUsageColorClass(
-              memoryState?.swapPercent,
-              props.freeUsageThreshold,
-              props.midUsageThreshold
-            )"
+            :color="
+              getUsageColorClass(
+                memoryState?.swapPercent,
+                props.freeUsageThreshold,
+                props.midUsageThreshold
+              )
+            "
             :value="rounded(memoryState?.swapPercent, 0)"
             :show-value-text="`${rounded(memoryState?.swapPercent, 0)}%`"
             :is-error="loadingError.memoryStateFetchError"
@@ -79,13 +98,16 @@
           :mid-usage-threshold="props.midUsageThreshold"
           :use-fahrenheit-unit="props.useFahrenheitUnit"
         />
-        <div v-if="server.gpuServer.gpuType !== GPUType.NoneGPU && gpuState"
-             class="row justify-center items-center no-wrap full-width q-mt-md">
+        <div
+          v-if="server.gpuServer.gpuType !== GPUType.NoneGPU && gpuState"
+          class="row justify-center items-center no-wrap full-width q-mt-md"
+        >
           <GpuInfoRow
             :gpu-state="gpuState"
             :show-layout="props.showLayout"
             :free-usage-threshold="props.freeUsageThreshold"
-            :mid-usage-threshold="props.midUsageThreshold" />
+            :mid-usage-threshold="props.midUsageThreshold"
+          />
         </div>
       </div>
     </div>
@@ -93,71 +115,84 @@
 </template>
 
 <script setup lang="ts">
-import {GPUType, ServerConfig} from 'src/module/config';
-import {inject, onBeforeUnmount, onMounted, PropType, reactive, ref, watch} from 'vue';
-import {CPUNameResponse, CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse} from 'src/interface/api';
+import { GPUType, ServerConfig } from 'src/module/config';
+import {
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  PropType,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
+import {
+  CPUNameResponse,
+  CPUStatePerCPUResponse,
+  GPUStateResponse,
+  MemoryStateResponse,
+} from 'src/interface/api';
 import API from 'src/api/api';
-import {useI18n} from 'vue-i18n';
-import {useInterval} from 'quasar';
-import {getUsageColorClass, rounded} from 'src/utils/utils';
+import { useI18n } from 'vue-i18n';
+import { useInterval } from 'quasar';
+import { getUsageColorClass, rounded } from 'src/utils/utils';
 import CircularProgressWithTitle from 'components/base/CircularProgressWithTitle.vue';
-import {LoadingError} from 'src/module/loading-error';
+import { LoadingError } from 'src/module/loading-error';
 import GpuInfoRow from 'components/base/GPUInfoRow.vue';
 import CpuInfoRow from 'components/base/CPUInfoRow.vue';
 
 const props = defineProps({
   serverConfig: {
     type: Object as PropType<ServerConfig>,
-    required: true
+    required: true,
   },
   showLayout: {
     type: String,
     default: 'sm',
     validator(val: string) {
       return ['sm', 'md', 'lg'].includes(val);
-    }
+    },
   },
   useFahrenheitUnit: {
     type: Boolean,
-    default: false
+    default: false,
   },
   refreshTimeSec: {
     type: Number,
     default: 1,
     validator(val: number) {
       return val >= 1;
-    }
+    },
   },
   freeUsageThreshold: {
     type: Number,
     default: 20,
     validator(val: number) {
       return val >= 0 && val <= 100;
-    }
+    },
   },
   midUsageThreshold: {
     type: Number,
     default: 60,
     validator(val: number) {
       return val >= 0 && val <= 100;
-    }
-  }
+    },
+  },
 });
 
 const { t } = useI18n();
 const {
   registerInterval: cpuStateRegisterInterval,
-  removeInterval: cpuStateRemoveInterval
+  removeInterval: cpuStateRemoveInterval,
 } = useInterval();
 
 const {
   registerInterval: memoryStateRegisterInterval,
-  removeInterval: memoryStateRemoveInterval
+  removeInterval: memoryStateRemoveInterval,
 } = useInterval();
 
 const {
   registerInterval: gpuStateRegisterInterval,
-  removeInterval: gpuStateRemoveInterval
+  removeInterval: gpuStateRemoveInterval,
 } = useInterval();
 
 const server = ref(props.serverConfig);
@@ -173,55 +208,53 @@ const innerTextSizePercentage = ref(0.2);
 
 function getCpuName() {
   if (!pauseFetch.value) {
-    API.getCpuName(
-      server.value.serverUrl
-    ).then((res: any) => {
-      cpuName.value = res as CPUNameResponse;
-      loadingError.cpuNameFetchError = false;
-    }).catch(() => {
-      loadingError.cpuNameFetchError = true;
-    });
+    API.getCpuName(server.value.serverUrl)
+      .then((res: any) => {
+        cpuName.value = res as CPUNameResponse;
+        loadingError.cpuNameFetchError = false;
+      })
+      .catch(() => {
+        loadingError.cpuNameFetchError = true;
+      });
   }
 }
 
 function getCpuState() {
   if (!pauseFetch.value) {
-    API.getCpuState(
-      server.value.serverUrl,
-      true,
-      props.useFahrenheitUnit
-    ).then((res: any) => {
-      cpuState.value = res as CPUStatePerCPUResponse;
-      loadingError.cpuStateFetchError = false;
-    }).catch(() => {
-      loadingError.cpuStateFetchError = true;
-    });
+    API.getCpuState(server.value.serverUrl, true, props.useFahrenheitUnit)
+      .then((res: any) => {
+        cpuState.value = res as CPUStatePerCPUResponse;
+        loadingError.cpuStateFetchError = false;
+      })
+      .catch(() => {
+        loadingError.cpuStateFetchError = true;
+      });
   }
 }
 
 function getMemoryState() {
   if (!pauseFetch.value) {
-    API.getMemoryState(server.value.serverUrl, 'GB').then((res: any) => {
-      memoryState.value = res as MemoryStateResponse;
-      loadingError.memoryStateFetchError = false;
-    }).catch(() => {
-      loadingError.memoryStateFetchError = true;
-    });
+    API.getMemoryState(server.value.serverUrl, 'GB')
+      .then((res: any) => {
+        memoryState.value = res as MemoryStateResponse;
+        loadingError.memoryStateFetchError = false;
+      })
+      .catch(() => {
+        loadingError.memoryStateFetchError = true;
+      });
   }
 }
 
 function getNVGPUState() {
   if (!pauseFetch.value) {
-    API.getNVGPUState(
-      server.value.serverUrl,
-      'GB',
-      props.useFahrenheitUnit
-    ).then((res: any) => {
-      gpuState.value = res as GPUStateResponse;
-      loadingError.gpuStateFetchError = false;
-    }).catch(() => {
-      loadingError.gpuStateFetchError = true;
-    });
+    API.getNVGPUState(server.value.serverUrl, 'GB', props.useFahrenheitUnit)
+      .then((res: any) => {
+        gpuState.value = res as GPUStateResponse;
+        loadingError.gpuStateFetchError = false;
+      })
+      .catch(() => {
+        loadingError.gpuStateFetchError = true;
+      });
   }
 }
 
@@ -256,45 +289,37 @@ onMounted(() => {
   getMemoryState();
   getGPUState();
   getCpuName();
-  cpuStateRegisterInterval(
-    () => {
-      getCpuName();
-      getCpuState();
-    },
-    props.refreshTimeSec * 1000
-  );
+  cpuStateRegisterInterval(() => {
+    getCpuName();
+    getCpuState();
+  }, props.refreshTimeSec * 1000);
   memoryStateRegisterInterval(
     () => getMemoryState(),
     props.refreshTimeSec * 1000
   );
-  gpuStateRegisterInterval(
-    () => getGPUState(),
-    props.refreshTimeSec * 1000
-  );
+  gpuStateRegisterInterval(() => getGPUState(), props.refreshTimeSec * 1000);
 });
 
-watch(props, () => {
-  cpuStateRemoveInterval();
-  memoryStateRemoveInterval();
-  gpuStateRemoveInterval();
-  cpuStateRegisterInterval(
-    () => {
+watch(
+  props,
+  () => {
+    cpuStateRemoveInterval();
+    memoryStateRemoveInterval();
+    gpuStateRemoveInterval();
+    cpuStateRegisterInterval(() => {
       getCpuName();
       getCpuState();
-    },
-    props.refreshTimeSec * 1000
-  );
-  memoryStateRegisterInterval(
-    () => getMemoryState(),
-    props.refreshTimeSec * 1000
-  );
-  gpuStateRegisterInterval(
-    () => getGPUState(),
-    props.refreshTimeSec * 1000
-  );
-}, {
-  deep: true
-});
+    }, props.refreshTimeSec * 1000);
+    memoryStateRegisterInterval(
+      () => getMemoryState(),
+      props.refreshTimeSec * 1000
+    );
+    gpuStateRegisterInterval(() => getGPUState(), props.refreshTimeSec * 1000);
+  },
+  {
+    deep: true,
+  }
+);
 
 onBeforeUnmount(() => {
   cpuStateRemoveInterval();

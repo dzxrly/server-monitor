@@ -11,20 +11,20 @@ const props = defineProps({
   fanSpeed: {
     type: Number,
     required: true,
-    default: 0
+    default: 0,
   },
   size: {
     type: String,
-    default: '0.8rem'
+    default: '0.8rem',
   },
   functionCoeffA: {
     type: Number,
-    default: -0.019
+    default: -0.019,
   },
   functionCoeffB: {
     type: Number,
-    default: 2
-  }
+    default: 2,
+  },
 });
 
 const fanSpeed = computed(() => {

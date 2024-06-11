@@ -4,7 +4,6 @@ import { LocalStorage, Notify } from 'quasar';
 import { i18n } from 'src/boot/i18n';
 import { ref } from 'vue';
 
-
 export const useConfigStore = defineStore('config', () => {
   const config = ref<Config>(new Config());
 
@@ -26,7 +25,7 @@ export const useConfigStore = defineStore('config', () => {
       color: 'primary',
       position: 'top',
       icon: 'check',
-      timeout: 1000
+      timeout: 1000,
     });
   }
 
@@ -38,7 +37,7 @@ export const useConfigStore = defineStore('config', () => {
       color: 'primary',
       position: 'top',
       icon: 'check',
-      timeout: 1000
+      timeout: 1000,
     });
   }
 
@@ -46,6 +45,6 @@ export const useConfigStore = defineStore('config', () => {
     config,
     initConfig,
     setConfig,
-    resetConfig
+    resetConfig,
   };
 });

@@ -1,6 +1,5 @@
 <template>
   <q-layout view="hHh lpR fff">
-
     <q-page-container>
       <router-view />
 
@@ -45,7 +44,9 @@
       </q-page-sticky>
     </q-page-container>
 
-    <q-footer class="bg-transparent text-secondary column justify-center items-center q-py-xs">
+    <q-footer
+      class="bg-transparent text-secondary column justify-center items-center q-py-xs"
+    >
       <div class="row justify-center items-center full-width">
         <div class="row justify-center items-center">
           <q-icon class="q-mr-xs" name="mdi-license" size="xs" />
@@ -64,7 +65,8 @@
         <span
           class="footer-author cursor-pointer"
           @click="openURL('https://dzxrly.github.io/')"
-        >Egg Targaryen</span>
+          >Egg Targaryen</span
+        >
       </div>
     </q-footer>
 
@@ -88,12 +90,20 @@
       <div class="bg-card-color rounded-borders q-pa-md">
         <div class="column justify-center items-center no-wrap bg-card-color">
           <div class="row justify-start items-center no-wrap full-width">
-            <span class="text-card-color text-h6">{{ t('deleteThisServer') }}</span>
+            <span class="text-card-color text-h6">{{
+              t('deleteThisServer')
+            }}</span>
           </div>
-          <div class="row justify-start items-center no-wrap full-width q-mt-md">
-            <span class="text-card-color text-body1">{{ t('deleteThisServerConfirm') }}</span>
+          <div
+            class="row justify-start items-center no-wrap full-width q-mt-md"
+          >
+            <span class="text-card-color text-body1">{{
+              t('deleteThisServerConfirm')
+            }}</span>
           </div>
-          <div class="row justify-evenly items-center no-wrap full-width q-mt-md">
+          <div
+            class="row justify-evenly items-center no-wrap full-width q-mt-md"
+          >
             <q-btn
               :label="t('confirmBtn')"
               color="negative"
@@ -122,20 +132,23 @@
       backdrop-filter="blur(5px)"
       transition-duration="250"
       persistent
-      no-shake>
-      <ServerEditDialog v-model:show-dialog="showServerEditDialog" :server-unique-id="$route.params.uid as string" />
+      no-shake
+    >
+      <ServerEditDialog
+        v-model:show-dialog="showServerEditDialog"
+        :server-unique-id="$route.params.uid as string"
+      />
     </q-dialog>
-
   </q-layout>
 </template>
 <script setup lang="ts">
 import SettingDialog from 'components/index-page/SettingDialog.vue';
-import {provide, ref} from 'vue';
-import {openURL} from 'quasar';
-import {useRoute, useRouter} from 'vue-router';
-import {ServerConfig} from 'src/module/config';
-import {useConfigStore} from 'stores/user-config';
-import {useI18n} from 'vue-i18n';
+import { provide, ref } from 'vue';
+import { openURL } from 'quasar';
+import { useRoute, useRouter } from 'vue-router';
+import { ServerConfig } from 'src/module/config';
+import { useConfigStore } from 'stores/user-config';
+import { useI18n } from 'vue-i18n';
 import ServerEditDialog from 'components/server-detail-page/server-edit-dialog.vue';
 
 const $route = useRoute();
@@ -149,10 +162,12 @@ const showDeleteServerDialog = ref(false);
 const showServerEditDialog = ref(false);
 
 function deleteServer() {
-  const newServerList = configStore.config.serverListConfig.filter((server: ServerConfig) => server.uniqueId !== ($route.params.uid as string));
+  const newServerList = configStore.config.serverListConfig.filter(
+    (server: ServerConfig) => server.uniqueId !== ($route.params.uid as string)
+  );
   configStore.setConfig({
     ...configStore.config,
-    serverListConfig: newServerList
+    serverListConfig: newServerList,
   });
   showDeleteServerDialog.value = false;
   $router.push('/');

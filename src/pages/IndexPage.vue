@@ -12,13 +12,22 @@
         :free-usage-threshold="configStore.config.freeUsageThreshold"
         :mid-usage-threshold="configStore.config.midUsageThreshold"
       />
-      <div class="add-server-card-wrapper col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 q-pa-sm bg-transparent">
+      <div
+        class="add-server-card-wrapper col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 q-pa-sm bg-transparent"
+      >
         <div
           class="add-server-card rounded-borders column no-wrap justify-center items-center cursor-pointer bg-card-color q-px-md q-py-xl full-height"
           @click="showAddServerDialog = true"
         >
-          <q-icon class="q-mb-md" color="text-card-color" name="add" size="xl" />
-          <span class="text-subtitle1 text-card-color">{{ t('addServer') }}</span>
+          <q-icon
+            class="q-mb-md"
+            color="text-card-color"
+            name="add"
+            size="xl"
+          />
+          <span class="text-subtitle1 text-card-color">{{
+            t('addServer')
+          }}</span>
         </div>
       </div>
     </div>

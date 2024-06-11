@@ -49,7 +49,7 @@ def get_cpu_state(
 
 def get_cpu_temperature(
         fahrenheit: bool = False,
-) -> Optional[dict]:
+) -> Optional[list]:
     """
     获取CPU温度，仅在Linux下有效
     :param fahrenheit: 是否返回华氏温度，否则返回摄氏温度；默认False
@@ -58,26 +58,30 @@ def get_cpu_temperature(
     try:
         temps = psutil.sensors_temperatures(fahrenheit=fahrenheit)
         if 'coretemp' in temps:
-            return {
-                'numaNodeTemperature': [
-                    {
-                        'label': temp.label,
-                        'current': temp.current,
-                        'high': temp.high,
-                        'critical': temp.critical,
-                    } for temp in temps['coretemp'] if 'Package id' in temp.label
-                ],
-                'coreTemperature': [
-                    {
-                        'label': temp.label,
-                        'current': temp.current,
-                        'high': temp.high,
-                        'critical': temp.critical,
-                    } for temp in temps['coretemp'] if 'Core' in temp.label
-                ],
-            }
+            res = []
+            numa_node_index = None
+            for temp in temps['coretemp']:
+                if 'Package id' in temp.label:
+                    res.append({
+                        'numaLabel': temp.label,
+                        'numaCurrent': temp.current,
+                        'numaHigh': temp.high,
+                        'numaCritical': temp.critical,
+                        'coresTemperature': [],
+                    })
+                    numa_node_index = len(res) - 1
+                elif 'Core' in temp.label:
+                    res[numa_node_index]['coresTemperature'].append({
+                        'coreLabel': temp.label,
+                        'coreCurrent': temp.current,
+                        'coreHigh': temp.high,
+                        'coreCritical': temp.critical,
+                    })
+                else:
+                    pass
+            return res
         else:
-            return {}
+            return []
     except Exception as e:
         raise '[ERROR] Get CPU temperature failed. Detail: {}'.format(e)
 

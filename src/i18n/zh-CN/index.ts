@@ -22,6 +22,9 @@ export default {
 
   'usage': '使用率',
   'cpuUsage': 'CPU使用率',
+  'cpuInfo': 'CPU信息',
+  'cpuFreq': 'CPU频率',
+  'cpuTemp': 'CPU温度',
   'memoryUsage': '内存使用率',
   'swapUsage': 'Swap使用率',
   'gpuUsage': 'GPU使用率',
@@ -35,6 +38,11 @@ export default {
   'degreeF': '°F',
   'power': '功耗',
   'fanSpeed': '风扇转速',
+  'core': '核心',
+  'maxTemperature': '最高温度',
+  'currentTemperature': '当前温度',
+  'criticalTemperature': '降频温度',
+  'rowsPerPage': '每页行数',
 
   'settings': '设置',
   'darkMode': '暗黑模式',
@@ -65,7 +73,7 @@ export default {
   'deleteThisServer': '删除服务器',
   'deleteThisServerConfirm': '确定要删除该服务器吗？此操作无法撤销！',
   'serverDeleted': '服务器已删除',
-  'NumaNode': 'NUMA节点',
+  'numaNode': 'NUMA节点',
   'serverSettings': '服务器设置',
   'serverEditDialogSaveErrorMsg': '服务器信息有误，请检查输入的信息',
   'saveEditBtn': '保存'

@@ -1,15 +1,15 @@
 <template>
   <div class="circular-progress-whit-title-wrapper column justify-center items-center full-width">
-    <span class="text-subtitle2 text-card-color">{{ props.title }}</span>
-    <div v-if="!isError" class="q-mt-xs">
+    <span v-if="props.title && props.title !== ''" class="text-subtitle2 text-card-color">{{ props.title }}</span>
+    <div v-if="!isError" :class="{'q-mt-xs' : props.title && props.title !== ''}">
       <q-circular-progress
         show-value
         :value="value"
-        size="xl"
+        :size="progressSize"
         :class="props.color"
         track-color="grey-6"
       >
-        <span class="text-card-color">{{ props.value }}%</span>
+        <span class="inner-text-span text-card-color">{{ props.showValueText }}</span>
       </q-circular-progress>
     </div>
     <div v-else class="column justify-center items-center no-wrap full-width q-mt-xs">
@@ -21,15 +21,20 @@
 
 <script setup lang="ts">
 
-import { useI18n } from 'vue-i18n';
+import {useI18n} from 'vue-i18n';
+import {computed} from "vue";
 
 const props = defineProps({
   title: {
     type: String,
-    required: true
+    default: ''
   },
   value: {
     type: Number,
+    required: true
+  },
+  showValueText: {
+    type: String,
     required: true
   },
   color: {
@@ -39,8 +44,33 @@ const props = defineProps({
   isError: {
     type: Boolean,
     default: false
+  },
+  size: {
+    type: Number,
+    default: 4
+  },
+  innerTextSizePercentage: {
+    type: Number,
+    default: 0.2,
+    validator: (value: number) => {
+      return value >= 0 && value <= 1;
+    }
   }
 });
 
 const { t } = useI18n();
+
+const progressSize = computed(() => {
+  return `${props.size}rem`;
+});
+
+const innerTextSize = computed(() => {
+  return `${props.size * props.innerTextSizePercentage}rem`;
+});
 </script>
+
+<style lang="sass" scoped>
+.circular-progress-whit-title-wrapper
+  .inner-text-span
+    font-size: v-bind(innerTextSize) !important
+</style>

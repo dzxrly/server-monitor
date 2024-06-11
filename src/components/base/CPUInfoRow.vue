@@ -5,11 +5,11 @@
       <span class="text-card-color text-subtitle2 q-mr-xs">
         {{ props.cpuName.cpuName.split('@')[0].trim().split('CPU')[0].trim() }}</span>
       <q-badge
-        v-if="cpuState.cpuTemperature.numaNodeTemperature && cpuState.cpuTemperature.numaNodeTemperature.length >= 2"
+        v-if="cpuState.cpuTemperature && cpuState.cpuTemperature.length >= 2"
         class="text-card-color text-subtitle2 cursor-pointer"
         rounded
         color="default-color">
-        ×{{ cpuState.cpuTemperature.numaNodeTemperature.length }}
+        ×{{ cpuState.cpuTemperature.length }}
         <q-tooltip>
           {{ t('NumaNode') }}
         </q-tooltip>
@@ -37,10 +37,10 @@
 </template>
 
 <script setup lang="ts">
-import { CPUNameResponse, CPUStatePerCPUResponse } from 'src/interface/api';
-import { computed, PropType } from 'vue';
-import { getDegreeUnit, rounded } from 'src/utils/utils';
-import { useI18n } from 'vue-i18n';
+import {CPUNameResponse, CPUStatePerCPUResponse} from 'src/interface/api';
+import {computed, PropType} from 'vue';
+import {getDegreeUnit, rounded} from 'src/utils/utils';
+import {useI18n} from 'vue-i18n';
 
 const props = defineProps({
   cpuName: {
@@ -80,5 +80,7 @@ const props = defineProps({
 
 const { t } = useI18n();
 
-const avgTemp = computed(() => props.cpuState?.cpuTemperature?.coreTemperature ? props.cpuState.cpuTemperature.coreTemperature.reduce((acc, cur) => acc + cur.current, 0) / props.cpuState.cpuTemperature.coreTemperature.length : 0);
+const avgTemp = computed(() => {
+  return props.cpuState.cpuTemperature.reduce((acc, cur) => acc + (cur.numaCurrent ? cur.numaCurrent : 0), 0) / props.cpuState.cpuTemperature.length;
+});
 </script>

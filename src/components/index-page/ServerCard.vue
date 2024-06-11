@@ -37,7 +37,10 @@
               props.midUsageThreshold
             )"
             :value="rounded(cpuState?.cpuUsage.avg, 0)"
+            :show-value-text="`${rounded(cpuState?.cpuUsage.avg, 0)}%`"
             :is-error="loadingError.cpuStateFetchError"
+            :size="progressSize"
+            :inner-text-size-percentage="innerTextSizePercentage"
           />
           <CircularProgressWithTitle
             :title="t('memoryUsage')"
@@ -47,7 +50,10 @@
               props.midUsageThreshold
             )"
             :value="rounded(memoryState?.memoryPercent, 0)"
+            :show-value-text="`${rounded(memoryState?.memoryPercent, 0)}%`"
             :is-error="loadingError.memoryStateFetchError"
+            :size="progressSize"
+            :inner-text-size-percentage="innerTextSizePercentage"
           />
           <CircularProgressWithTitle
             :title="t('swapUsage')"
@@ -57,7 +63,10 @@
               props.midUsageThreshold
             )"
             :value="rounded(memoryState?.swapPercent, 0)"
+            :show-value-text="`${rounded(memoryState?.swapPercent, 0)}%`"
             :is-error="loadingError.memoryStateFetchError"
+            :size="progressSize"
+            :inner-text-size-percentage="innerTextSizePercentage"
           />
         </div>
         <CpuInfoRow
@@ -84,15 +93,15 @@
 </template>
 
 <script setup lang="ts">
-import { GPUType, ServerConfig } from 'src/module/config';
-import { inject, onBeforeUnmount, onMounted, PropType, reactive, ref, watch } from 'vue';
-import { CPUNameResponse, CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse } from 'src/interface/api';
+import {GPUType, ServerConfig} from 'src/module/config';
+import {inject, onBeforeUnmount, onMounted, PropType, reactive, ref, watch} from 'vue';
+import {CPUNameResponse, CPUStatePerCPUResponse, GPUStateResponse, MemoryStateResponse} from 'src/interface/api';
 import API from 'src/api/api';
-import { useI18n } from 'vue-i18n';
-import { useInterval } from 'quasar';
-import { getUsageColorClass, rounded } from 'src/utils/utils';
+import {useI18n} from 'vue-i18n';
+import {useInterval} from 'quasar';
+import {getUsageColorClass, rounded} from 'src/utils/utils';
 import CircularProgressWithTitle from 'components/base/CircularProgressWithTitle.vue';
-import { LoadingError } from 'src/module/loading-error';
+import {LoadingError} from 'src/module/loading-error';
 import GpuInfoRow from 'components/base/GPUInfoRow.vue';
 import CpuInfoRow from 'components/base/CPUInfoRow.vue';
 
@@ -159,6 +168,8 @@ const gpuState = ref<GPUStateResponse>();
 const loadingError = reactive(new LoadingError());
 const pauseFetchInject = inject('pauseFetch', false);
 const pauseFetch = ref<boolean>(pauseFetchInject);
+const progressSize = ref(4);
+const innerTextSizePercentage = ref(0.2);
 
 function getCpuName() {
   if (!pauseFetch.value) {

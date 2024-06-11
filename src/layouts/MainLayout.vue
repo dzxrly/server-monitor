@@ -99,6 +99,7 @@
               color="negative"
               size="md"
               @click="deleteServer"
+              no-caps
               flat
               rounded
             />
@@ -107,6 +108,7 @@
               color="primary"
               size="md"
               @click="showDeleteServerDialog = false"
+              no-caps
               flat
               rounded
             />
@@ -128,12 +130,12 @@
 </template>
 <script setup lang="ts">
 import SettingDialog from 'components/index-page/SettingDialog.vue';
-import { provide, ref } from 'vue';
-import { openURL } from 'quasar';
-import { useRoute, useRouter } from 'vue-router';
-import { ServerConfig } from 'src/module/config';
-import { useConfigStore } from 'stores/user-config';
-import { useI18n } from 'vue-i18n';
+import {provide, ref} from 'vue';
+import {openURL} from 'quasar';
+import {useRoute, useRouter} from 'vue-router';
+import {ServerConfig} from 'src/module/config';
+import {useConfigStore} from 'stores/user-config';
+import {useI18n} from 'vue-i18n';
 import ServerEditDialog from 'components/server-detail-page/server-edit-dialog.vue';
 
 const $route = useRoute();

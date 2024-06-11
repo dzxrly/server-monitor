@@ -2,6 +2,21 @@ export interface CPUNameResponse {
   cpuName: string,
 }
 
+export interface CPUCoreTemperature {
+  coreCritical: number,
+  coreCurrent: number,
+  coreHigh: number,
+  coreLabel: string,
+}
+
+export interface CPUTemperature {
+  numaCritical?: number,
+  numaCurrent?: number,
+  numaHigh?: number,
+  numaLabel?: string,
+  coresTemperature?: Array<CPUCoreTemperature>,
+}
+
 export interface CPUStatePerCPUResponse {
   cpuCTXSwitches: number,
   cpuCores: {
@@ -23,20 +38,7 @@ export interface CPUStatePerCPUResponse {
   cpuInterrupts: number,
   cpuSoftInterrupts: number,
   cpuSyscalls: number,
-  cpuTemperature: {
-    coreTemperature?: Array<{
-      critical: number,
-      current: number,
-      high: number,
-      label: string,
-    }>,
-    numaNodeTemperature?: Array<{
-      critical: number,
-      current: number,
-      high: number,
-      label: string,
-    }>,
-  },
+  cpuTemperature: Array<CPUTemperature>,
   cpuUsage: {
     avg: number,
     percpu: Array<number>,

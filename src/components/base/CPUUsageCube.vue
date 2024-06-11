@@ -5,6 +5,7 @@
     <div
       class="cpu-usage-text-wrapper text-default-color bg-default-color column justify-center items-center no-wrap">
       <span>{{ `${rounded(props.cpuUsage, 0)}%` }}</span>
+      <span v-if="props.cpuFreq > 0">{{ `${rounded(props.cpuFreq / 1000, 1)}GHz` }}</span>
     </div>
   </div>
 </template>
@@ -18,7 +19,7 @@ const props = defineProps({
     type: Number,
     default: 0
   },
-  cpuTemperature: {
+  cpuFreq: {
     type: Number,
     default: 0
   },
@@ -88,6 +89,7 @@ const cpuUsageTranslateY = computed(() => {
   height: v-bind(cubeSize)
   border: solid 1px $primary
   box-sizing: border-box
+  border-radius: v-bind(paddingSize)
   overflow: hidden
   z-index: 0
 

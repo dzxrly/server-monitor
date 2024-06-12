@@ -14,26 +14,23 @@
         />
         <span class="text-card-color text-subtitle2">{{ t('gpuUsage') }}</span>
       </div>
-      <div class="row justify-start items-center wrap full-width">
-        <q-circular-progress
-          show-value
-          class="q-ma-sm"
+      <div class="gpu-info-row-sm-progress-circle full-width">
+        <CircularProgressWithTitle
           v-for="(gpu, index) of props.gpuState?.gpuList"
           :key="index"
-          :value="rounded(gpu.gpuUsage, 0)"
-          :class="
+          :value="gpu.gpuUsage"
+          :show-value-text="`${rounded(gpu.gpuUsage, 0)}%`"
+          :color="
             getUsageColorClass(
               gpu.gpuUsage,
               props.freeUsageThreshold,
               props.midUsageThreshold
             )
           "
-          :thickness="0.2"
-          track-color="grey-6"
-          :size="props.gpuState?.gpuList.length <= 4 ? 'xl' : 'md'"
-        >
-          <span class="text-card-color">{{ rounded(gpu.gpuUsage, 0) }}%</span>
-        </q-circular-progress>
+          :size="props.size"
+          :inner-text-size-percentage="props.innerTextSizePercentage"
+          :is-error="props.isError"
+        />
       </div>
     </div>
     <div v-else class="column justify-center items-center no-wrap full-width">
@@ -47,7 +44,7 @@
             <q-icon
               class="text-card-color q-mr-xs"
               name="mdi-expansion-card"
-              size="xs"
+              size="sm"
             />
             <span
               class="text-card-color text-subtitle2 overflow-hidden ellipsis"
@@ -109,10 +106,10 @@
               <q-badge
                 color="default-color"
                 class="text-card-color"
-                :label="`${rounded(gpu.memoryUsed, 0)}/${rounded(
+                :label="`${rounded(gpu.memoryUsed, gpuMemoryDigit)}/${rounded(
                   gpu.memoryTotal,
-                  0
-                )}GB`"
+                  gpuMemoryDigit
+                )} ${props.gpuMemoryUnit}`"
               />
             </div>
           </q-linear-progress>
@@ -148,7 +145,7 @@
         v-if="props.showLayout === 'lg'"
         class="row justify-end items-center no-wrap full-width q-mt-xs"
       >
-        <span class="text-card-color text-subtitle2"
+        <span class="text-card-color text-caption"
           >{{ t('gpuDriverVersion') }} {{ gpuState.driverVersion }}</span
         >
       </div>
@@ -157,11 +154,13 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { computed, PropType } from 'vue';
 import { GPUStateResponse } from 'src/interface/api';
 import { useI18n } from 'vue-i18n';
 import { getDegreeUnit, getUsageColorClass, rounded } from 'src/utils/utils';
 import FanIcon from 'components/base/FanIcon.vue';
+import CircularProgressWithTitle from 'components/base/CircularProgressWithTitle.vue';
+import { ByteUnit } from 'src/module/config';
 
 const props = defineProps({
   gpuState: {
@@ -193,7 +192,46 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isError: {
+    type: Boolean,
+    default: false,
+  },
+  size: {
+    type: Number,
+    default: 4,
+  },
+  innerTextSizePercentage: {
+    type: Number,
+    default: 0.2,
+    validator: (value: number) => {
+      return value >= 0 && value <= 1;
+    },
+  },
+  gpuMemoryUnit: {
+    type: String,
+    default: ByteUnit.GB,
+  },
 });
 
 const { t } = useI18n();
+
+const progressSize = computed(() => {
+  return `${props.size}rem`;
+});
+const gpuMemoryDigit = computed(() => {
+  return props.gpuMemoryUnit === ByteUnit.TB ? 2 : 0;
+});
 </script>
+
+<style lang="sass" scoped>
+.gpu-info-row-wrapper
+  .gpu-info-row-sm-progress-circle
+    display: grid
+    grid-template-columns: repeat(auto-fill, v-bind(progressSize))
+    grid-template-rows: repeat(auto-fill, v-bind(progressSize))
+    justify-items: center
+    align-items: center
+    justify-content: center
+    align-content: center
+    grid-gap: 0.2rem
+</style>

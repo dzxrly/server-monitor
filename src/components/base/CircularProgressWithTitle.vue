@@ -16,6 +16,7 @@
         :value="value"
         :size="progressSize"
         :class="props.color"
+        :thickness="props.size * 0.05"
         track-color="grey-6"
       >
         <span class="inner-text-span text-card-color">{{

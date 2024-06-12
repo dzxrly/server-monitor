@@ -54,7 +54,7 @@
             :value="rounded(cpuState?.cpuUsage.avg, 0)"
             :show-value-text="`${rounded(cpuState?.cpuUsage.avg, 0)}%`"
             :is-error="loadingError.cpuStateFetchError"
-            :size="progressSize"
+            :size="cpuProgressSize"
             :inner-text-size-percentage="innerTextSizePercentage"
           />
           <CircularProgressWithTitle
@@ -69,7 +69,7 @@
             :value="rounded(memoryState?.memoryPercent, 0)"
             :show-value-text="`${rounded(memoryState?.memoryPercent, 0)}%`"
             :is-error="loadingError.memoryStateFetchError"
-            :size="progressSize"
+            :size="cpuProgressSize"
             :inner-text-size-percentage="innerTextSizePercentage"
           />
           <CircularProgressWithTitle
@@ -84,7 +84,7 @@
             :value="rounded(memoryState?.swapPercent, 0)"
             :show-value-text="`${rounded(memoryState?.swapPercent, 0)}%`"
             :is-error="loadingError.memoryStateFetchError"
-            :size="progressSize"
+            :size="cpuProgressSize"
             :inner-text-size-percentage="innerTextSizePercentage"
           />
         </div>
@@ -107,6 +107,10 @@
             :show-layout="props.showLayout"
             :free-usage-threshold="props.freeUsageThreshold"
             :mid-usage-threshold="props.midUsageThreshold"
+            :size="gpuProgressSize"
+            :inner-text-size-percentage="innerTextSizePercentage"
+            :is-error="loadingError.gpuStateFetchError"
+            :gpu-memory-unit="props.gpuMemoryUnit"
           />
         </div>
       </div>
@@ -115,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import { GPUType, ServerConfig } from 'src/module/config';
+import { ByteUnit, GPUType, ServerConfig } from 'src/module/config';
 import {
   inject,
   onBeforeUnmount,
@@ -177,6 +181,20 @@ const props = defineProps({
       return val >= 0 && val <= 100;
     },
   },
+  memoryUnit: {
+    type: String,
+    default: ByteUnit.GB,
+    validator(val: ByteUnit) {
+      return [ByteUnit.GB, ByteUnit.TB].includes(val);
+    },
+  },
+  gpuMemoryUnit: {
+    type: String,
+    default: ByteUnit.GB,
+    validator(val: ByteUnit) {
+      return [ByteUnit.GB, ByteUnit.TB].includes(val);
+    },
+  },
 });
 
 const { t } = useI18n();
@@ -203,7 +221,8 @@ const gpuState = ref<GPUStateResponse>();
 const loadingError = reactive(new LoadingError());
 const pauseFetchInject = inject('pauseFetch', false);
 const pauseFetch = ref<boolean>(pauseFetchInject);
-const progressSize = ref(4);
+const cpuProgressSize = ref(4);
+const gpuProgressSize = ref(3);
 const innerTextSizePercentage = ref(0.2);
 
 function getCpuName() {
@@ -234,7 +253,7 @@ function getCpuState() {
 
 function getMemoryState() {
   if (!pauseFetch.value) {
-    API.getMemoryState(server.value.serverUrl, 'GB')
+    API.getMemoryState(server.value.serverUrl, props.memoryUnit)
       .then((res: any) => {
         memoryState.value = res as MemoryStateResponse;
         loadingError.memoryStateFetchError = false;
@@ -247,7 +266,11 @@ function getMemoryState() {
 
 function getNVGPUState() {
   if (!pauseFetch.value) {
-    API.getNVGPUState(server.value.serverUrl, 'GB', props.useFahrenheitUnit)
+    API.getNVGPUState(
+      server.value.serverUrl,
+      props.gpuMemoryUnit,
+      props.useFahrenheitUnit
+    )
       .then((res: any) => {
         gpuState.value = res as GPUStateResponse;
         loadingError.gpuStateFetchError = false;

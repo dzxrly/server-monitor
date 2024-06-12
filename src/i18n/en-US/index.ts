@@ -47,6 +47,9 @@ export default {
   currentTemperature: 'Current Temperature',
   criticalTemperature: 'Critical Temperature',
   rowsPerPage: 'Rows Per Page',
+  memoryAndSwap: 'Memory and Swap',
+  memoryUnit: 'Memory Unit',
+  gpuMemoryUnit: 'VRAM Unit',
 
   settings: 'Settings',
   darkMode: 'Dark Mode',

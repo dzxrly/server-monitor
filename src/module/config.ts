@@ -7,6 +7,14 @@ enum GPUType {
   INTEL = 'Intel',
 }
 
+enum ByteUnit {
+  B = 'B',
+  KB = 'KB',
+  MB = 'MB',
+  GB = 'GB',
+  TB = 'TB',
+}
+
 class GPUServer {
   public gpuType = GPUType.NoneGPU;
 
@@ -36,6 +44,8 @@ class Config {
   public useFahrenheitUnit = false;
   public freeUsageThreshold = 30;
   public midUsageThreshold = 70;
+  public memoryUnit = ByteUnit.GB;
+  public gpuMemoryUnit = ByteUnit.GB;
 }
 
 // when you change the Config class and other classes in this file, you should also update the following zod schema
@@ -58,6 +68,8 @@ const configZod = z.object({
   useFahrenheitUnit: z.boolean(),
   freeUsageThreshold: z.number(),
   midUsageThreshold: z.number(),
+  memoryUnit: z.string(),
+  gpuMemoryUnit: z.string(),
 });
 
-export { ServerConfig, Config, GPUType, GPUServer, configZod };
+export { ByteUnit, ServerConfig, Config, GPUType, GPUServer, configZod };

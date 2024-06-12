@@ -3,7 +3,7 @@
     class="cpu-info-row-wrapper column justify-center items-center no-wrap full-width"
   >
     <div class="row justify-start items-center full-width no-wrap">
-      <q-icon class="q-mr-xs" name="mdi-cpu-64-bit" size="xs" />
+      <q-icon class="q-mr-xs" name="mdi-memory" size="xs" />
       <span class="text-card-color text-subtitle2 q-mr-xs">
         {{
           props.cpuName.cpuName.split('@')[0].trim().split('CPU')[0].trim()

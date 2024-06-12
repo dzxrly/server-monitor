@@ -45,7 +45,7 @@
     </q-page-container>
 
     <q-footer
-      class="bg-transparent text-secondary column justify-center items-center q-py-xs"
+      class="bg-transparent text-secondary column justify-center items-center q-py-sm"
     >
       <div class="row justify-center items-center full-width">
         <div class="row justify-center items-center">
@@ -87,8 +87,8 @@
       persistent
       no-shake
     >
-      <div class="bg-card-color rounded-borders q-pa-md">
-        <div class="column justify-center items-center no-wrap bg-card-color">
+      <q-card class="bg-card-color rounded-borders full-width">
+        <q-card-section class="column justify-center items-center no-wrap">
           <div class="row justify-start items-center no-wrap full-width">
             <span class="text-card-color text-h6">{{
               t('deleteThisServer')
@@ -123,8 +123,8 @@
               rounded
             />
           </div>
-        </div>
-      </div>
+        </q-card-section>
+      </q-card>
     </q-dialog>
 
     <q-dialog
@@ -149,7 +149,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { ServerConfig } from 'src/module/config';
 import { useConfigStore } from 'stores/user-config';
 import { useI18n } from 'vue-i18n';
-import ServerEditDialog from 'components/server-detail-page/server-edit-dialog.vue';
+import ServerEditDialog from 'components/server-detail-page/ServerEditDialog.vue';
 
 const $route = useRoute();
 const $router = useRouter();

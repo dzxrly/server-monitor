@@ -43,6 +43,9 @@ export default {
   currentTemperature: '当前温度',
   criticalTemperature: '降频温度',
   rowsPerPage: '每页行数',
+  memoryAndSwap: '内存和Swap',
+  memoryUnit: '内存单位',
+  gpuMemoryUnit: '显存单位',
 
   settings: '设置',
   darkMode: '暗黑模式',

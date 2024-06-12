@@ -11,6 +11,8 @@
         :refresh-time-sec="configStore.config.refreshTimeSec"
         :free-usage-threshold="configStore.config.freeUsageThreshold"
         :mid-usage-threshold="configStore.config.midUsageThreshold"
+        :memory-unit="configStore.config.memoryUnit"
+        :gpu-memory-unit="configStore.config.gpuMemoryUnit"
       />
       <div
         class="add-server-card-wrapper col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 q-pa-sm bg-transparent"

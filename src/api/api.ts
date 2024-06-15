@@ -1,11 +1,11 @@
 import axiosRequest from 'src/api/base';
 
 export default {
-  getCpuName(serverUrl: string) {
-    return axiosRequest(`${serverUrl}/cpu_name`, 'GET');
+  getCpuName<T>(serverUrl: string) {
+    return axiosRequest<T>(`${serverUrl}/cpu_name`, 'GET');
   },
-  getCpuState(serverUrl: string, percpu: boolean, fahrenheit: boolean) {
-    return axiosRequest(
+  getCpuState<T>(serverUrl: string, percpu: boolean, fahrenheit: boolean) {
+    return axiosRequest<T>(
       `${serverUrl}/cpu_state`,
       'GET',
       {},
@@ -15,8 +15,8 @@ export default {
       }
     );
   },
-  getMemoryState(serverUrl: string, unit: string) {
-    return axiosRequest(
+  getMemoryState<T>(serverUrl: string, unit: string) {
+    return axiosRequest<T>(
       `${serverUrl}/memory_state`,
       'GET',
       {},
@@ -25,8 +25,8 @@ export default {
       }
     );
   },
-  getNVGPUState(serverUrl: string, unit: string, fahrenheit: boolean) {
-    return axiosRequest(
+  getNVGPUState<T>(serverUrl: string, unit: string, fahrenheit: boolean) {
+    return axiosRequest<T>(
       `${serverUrl}/gpu_state`,
       'GET',
       {},

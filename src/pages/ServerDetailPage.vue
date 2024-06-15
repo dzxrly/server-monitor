@@ -123,9 +123,9 @@ const isLtSm = inject('isLtSm', false);
 
 function getCpuName() {
   if (!pauseFetch.value && server.value) {
-    API.getCpuName(server.value.serverUrl)
-      .then((res: any) => {
-        cpuName.value = res as CPUNameResponse;
+    API.getCpuName<CPUNameResponse>(server.value.serverUrl)
+      .then((res) => {
+        cpuName.value = res;
         loadingError.cpuNameFetchError = false;
       })
       .catch(() => {
@@ -136,13 +136,13 @@ function getCpuName() {
 
 function getCpuState() {
   if (!pauseFetch.value && server.value) {
-    API.getCpuState(
+    API.getCpuState<CPUStatePerCPUResponse>(
       server.value.serverUrl,
       true,
       configStore.config.useFahrenheitUnit
     )
-      .then((res: any) => {
-        cpuState.value = res as CPUStatePerCPUResponse;
+      .then((res) => {
+        cpuState.value = res;
         loadingError.cpuStateFetchError = false;
       })
       .catch(() => {
@@ -153,9 +153,12 @@ function getCpuState() {
 
 function getMemoryState() {
   if (!pauseFetch.value && server.value) {
-    API.getMemoryState(server.value.serverUrl, configStore.config.memoryUnit)
-      .then((res: any) => {
-        memoryState.value = res as MemoryStateResponse;
+    API.getMemoryState<MemoryStateResponse>(
+      server.value.serverUrl,
+      configStore.config.memoryUnit
+    )
+      .then((res) => {
+        memoryState.value = res;
         loadingError.memoryStateFetchError = false;
       })
       .catch(() => {
@@ -166,13 +169,13 @@ function getMemoryState() {
 
 function getNVGPUState() {
   if (!pauseFetch.value && server.value) {
-    API.getNVGPUState(
+    API.getNVGPUState<GPUStateResponse>(
       server.value.serverUrl,
       configStore.config.gpuMemoryUnit,
       configStore.config.useFahrenheitUnit
     )
-      .then((res: any) => {
-        gpuState.value = res as GPUStateResponse;
+      .then((res) => {
+        gpuState.value = res;
         loadingError.gpuStateFetchError = false;
       })
       .catch(() => {

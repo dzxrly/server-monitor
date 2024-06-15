@@ -1,8 +1,8 @@
-import axios, { AxiosPromise, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 axios.defaults.timeout = 30 * 1000;
 
-export default function axiosRequest(
+export default function axiosRequest<T>(
   url: string,
   method:
     | 'get'
@@ -35,7 +35,7 @@ export default function axiosRequest(
     'Access-Control-Allow-Headers':
       'Content-Type, X-Requested-With, X-HTTP-Method-Override, Origin, Accept',
   }
-): AxiosPromise {
+): Promise<T> {
   const requestConfig = {
     url: url,
     method: method,
@@ -45,7 +45,7 @@ export default function axiosRequest(
   };
   return new Promise((resolve, reject) => {
     axios(requestConfig)
-      .then((response: AxiosResponse) => {
+      .then((response: AxiosResponse<T>) => {
         if (response.status === 200) {
           resolve(response.data);
         } else reject('Network Error');

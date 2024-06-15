@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-enum GPUType {
+const enum GPUType {
   NoneGPU = 'NoneGPU',
   NVIDIA = 'NVIDIA',
   AMD = 'AMD',
   INTEL = 'Intel',
 }
 
-enum ByteUnit {
+const enum ByteUnit {
   B = 'B',
   KB = 'KB',
   MB = 'MB',

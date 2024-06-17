@@ -91,4 +91,10 @@ export default {
   saveEditBtn: 'Save',
 
   sourceCode: 'Project Repo',
+  privacyPolicy: 'Privacy Policy',
+  backendDeployTitle: 'Server Monitor Backend',
+  backendDeployDesc:
+    'To use Server Monitor to monitor the server hardware, you need to deploy the corresponding backend in the server first, please refer to the ',
+  noPopupTips: "Don't remind me again",
+  backendDeployDocs: 'Server Monitor Backend Documents',
 };

@@ -48,12 +48,12 @@
       class="bg-transparent text-secondary column justify-center items-center q-py-sm"
     >
       <div class="row justify-center items-center full-width">
-        <div class="row justify-center items-center">
+        <div class="row justify-center items-center q-mr-sm">
           <q-icon class="q-mr-xs" name="mdi-license" size="xs" />
-          <span class="q-mr-md">APL-2.0</span>
+          <span>APL-2.0</span>
         </div>
         <div
-          class="project-row row justify-center items-center cursor-pointer"
+          class="link-row row justify-center items-center cursor-pointer"
           @click="openURL('https://github.com/dzxrly/server-monitor')"
         >
           <q-icon class="q-mr-xs" name="fa-brands fa-github" size="xs" />
@@ -61,9 +61,14 @@
         </div>
       </div>
       <div class="row justify-center items-center full-width">
+        <span
+          class="link-row cursor-pointer"
+          @click="openURL('https://dzxrly.github.io/')"
+          >{{ t('privacyPolicy') }}&nbsp;|&nbsp;</span
+        >
         <span>by&nbsp;</span>
         <span
-          class="footer-author cursor-pointer"
+          class="link-row cursor-pointer"
           @click="openURL('https://dzxrly.github.io/')"
           >Egg Targaryen</span
         >
@@ -139,11 +144,66 @@
         :server-unique-id="$route.params.uid as string"
       />
     </q-dialog>
+
+    <q-dialog
+      v-model="showBackendDeployDialog"
+      backdrop-filter="blur(5px)"
+      transition-duration="250"
+      persistent
+      no-shake
+    >
+      <q-card class="bg-card-color rounded-borders full-width">
+        <q-card-section class="column justify-center items-center no-wrap">
+          <div class="row justify-start items-center no-wrap full-width">
+            <span class="text-card-color text-h6">{{
+              t('backendDeployTitle')
+            }}</span>
+          </div>
+          <div
+            class="row justify-start items-center no-wrap full-width q-mt-md"
+          >
+            <span class="text-card-color text-body1"
+              >{{ t('backendDeployDesc') }}
+              <span
+                class="cursor-pointer"
+                style="text-decoration: underline"
+                @click="
+                  openURL(
+                    'https://github.com/dzxrly/server-monitor/blob/backend/README.md'
+                  )
+                "
+              >
+                {{ t('backendDeployDocs') }}
+              </span>
+            </span>
+          </div>
+          <div class="row justify-end items-center no-wrap full-width q-mt-md">
+            <div class="row justify-center items-center no-wrap">
+              <q-checkbox v-model="noMoreBackendDeployTips" />
+              <span>{{ t('noPopupTips') }}</span>
+            </div>
+          </div>
+          <div
+            class="row justify-evenly items-center no-wrap full-width q-mt-md"
+          >
+            <q-btn
+              :label="t('confirmBtn')"
+              color="primary"
+              size="md"
+              @click="closeBackendDeployDialog"
+              no-caps
+              flat
+              rounded
+            />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-layout>
 </template>
 <script setup lang="ts">
 import SettingDialog from 'components/index-page/SettingDialog.vue';
-import { provide, ref } from 'vue';
+import { onMounted, provide, ref } from 'vue';
 import { openURL } from 'quasar';
 import { useRoute, useRouter } from 'vue-router';
 import { ServerConfig } from 'src/module/config';
@@ -160,6 +220,8 @@ const showSettingDialog = ref(false);
 const pauseFetch = ref<boolean>(false);
 const showDeleteServerDialog = ref(false);
 const showServerEditDialog = ref(false);
+const showBackendDeployDialog = ref(true);
+const noMoreBackendDeployTips = ref(false);
 
 function deleteServer() {
   const newServerList = configStore.config.serverListConfig.filter(
@@ -173,7 +235,21 @@ function deleteServer() {
   $router.push('/');
 }
 
+function closeBackendDeployDialog() {
+  showBackendDeployDialog.value = false;
+  if (noMoreBackendDeployTips.value) {
+    configStore.setConfig({
+      ...configStore.config,
+      showBackendTipsDialog: false,
+    });
+  }
+}
+
 provide('pauseFetch', pauseFetch);
+
+onMounted(() => {
+  showBackendDeployDialog.value = configStore.config.showBackendTipsDialog;
+});
 </script>
 
 <style lang="sass" scoped>
@@ -189,10 +265,10 @@ provide('pauseFetch', pauseFetch);
   animation-play-state: paused
   opacity: 1 !important
 
-.footer-author, .project-row
+.link-row
   text-decoration: none
 
-.footer-author:hover, .project-row:hover
+.link-row:hover
   text-decoration: underline
 
 @keyframes sticky-btn-hide

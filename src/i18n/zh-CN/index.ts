@@ -83,4 +83,10 @@ export default {
   saveEditBtn: '保存',
 
   sourceCode: '开源仓库',
+  privacyPolicy: '隐私政策',
+  backendDeployTitle: 'Server Monitor 后端',
+  backendDeployDesc:
+    '使用Server Monitor监控服务器硬件需要先在服务器中部署对应的后端，请参考',
+  noPopupTips: '不再提示',
+  backendDeployDocs: 'Server Monitor后端文档',
 };

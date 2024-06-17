@@ -1,14 +1,10 @@
-import time
+import argparse
 
-from lib.cpu import *
+from app import app
 
 if __name__ == '__main__':
-    while True:
-        print(get_cpu_state(
-            interval=None,
-            percpu=True,
-        ))
-        print(get_cpu_temperature(
-            fahrenheit=False
-        ))
-        time.sleep(3)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--debug', '-d', type=bool, default=False, help='是否开启调试模式')
+
+    args = parser.parse_args()
+    app.run(debug=args.debug, host='0.0.0.0')

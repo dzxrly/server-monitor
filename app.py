@@ -1,4 +1,3 @@
-import argparse
 from typing import Union
 
 from flask import Flask, jsonify, request, abort
@@ -96,11 +95,3 @@ def get_network_state():
         return jsonify(network_state)
     except Exception as e:
         abort(400)
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--debug', '-d', type=bool, default=False, help='是否开启调试模式')
-
-    args = parser.parse_args()
-    app.run(debug=args.debug, host='0.0.0.0')

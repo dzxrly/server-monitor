@@ -1,0 +1,71 @@
+// app global css in SCSS form
+html,
+body {
+  margin: 0;
+  padding: 0;
+  --border-radius: 19px;
+  --bg-default-color: #e4e4e4;
+  --text-default-color: #191919;
+  --bg-card-color: #f9f9f9;
+  --text-card-color: #191919;
+  --bg-btn-color: #d4d4d4;
+  --text-btn-color: #1b1b1b;
+
+  --free-color: #8ac926;
+  --mid-color: #ffca3a;
+  --max-color: #ff595e;
+
+  background: var(--bg-default-color);
+}
+
+.rounded-borders {
+  border-radius: var(--border-radius) !important;
+}
+
+.text-free-color {
+  color: var(--free-color) !important;
+}
+
+.bg-free-color {
+  background: var(--free-color) !important;
+}
+
+.text-mid-color {
+  color: var(--mid-color) !important;
+}
+
+.bg-mid-color {
+  background: var(--mid-color) !important;
+}
+
+.text-max-color {
+  color: var(--max-color) !important;
+}
+
+.bg-max-color {
+  background: var(--max-color) !important;
+}
+
+.bg-default-color {
+  background: var(--bg-default-color) !important;
+}
+
+.text-default-color {
+  color: var(--text-default-color) !important;
+}
+
+.bg-card-color {
+  background: var(--bg-card-color) !important;
+}
+
+.text-card-color {
+  color: var(--text-card-color) !important;
+}
+
+.bg-btn-color {
+  background: var(--bg-btn-color) !important;
+}
+
+.text-btn-color {
+  color: var(--text-btn-color) !important;
+}

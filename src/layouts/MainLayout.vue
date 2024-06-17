@@ -50,14 +50,14 @@
       <div class="row justify-center items-center full-width">
         <div class="row justify-center items-center">
           <q-icon class="q-mr-xs" name="mdi-license" size="xs" />
-          <span class="q-mr-md">Apache License 2.0</span>
+          <span class="q-mr-md">APL-2.0</span>
         </div>
         <div
           class="project-row row justify-center items-center cursor-pointer"
           @click="openURL('https://github.com/dzxrly/server-monitor')"
         >
           <q-icon class="q-mr-xs" name="fa-brands fa-github" size="xs" />
-          <span>GITHUB</span>
+          <span>{{ t('sourceCode') }}</span>
         </div>
       </div>
       <div class="row justify-center items-center full-width">

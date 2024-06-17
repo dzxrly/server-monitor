@@ -81,4 +81,6 @@ export default {
   serverSettings: '服务器设置',
   serverEditDialogSaveErrorMsg: '服务器信息有误，请检查输入的信息',
   saveEditBtn: '保存',
+
+  sourceCode: '开源仓库',
 };

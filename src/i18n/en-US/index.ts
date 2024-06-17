@@ -89,4 +89,6 @@ export default {
   serverEditDialogSaveErrorMsg:
     'Server information error, please check your inputs',
   saveEditBtn: 'Save',
+
+  sourceCode: 'Project Repo',
 };

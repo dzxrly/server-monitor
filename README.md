@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Static Badge](https://img.shields.io/badge/Version?style=flat-square&label=0.0.1&link=https%3A%2F%2Fgithub.com%2Fdzxrly%2Fserver-monitor%2Ftree%2Fbackend)
+![Static Badge](https://img.shields.io/badge/Verison-V0.0.1-2a82c0?style=flat-square)
 
 </div>
 

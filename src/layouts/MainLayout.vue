@@ -63,7 +63,7 @@
       <div class="row justify-center items-center full-width">
         <span
           class="link-row cursor-pointer"
-          @click="openURL('https://dzxrly.github.io/')"
+          @click="openURL('https://github.com/dzxrly/server-monitor/blob/main/Privacy.md')"
           >{{ t('privacyPolicy') }}&nbsp;|&nbsp;</span
         >
         <span>by&nbsp;</span>

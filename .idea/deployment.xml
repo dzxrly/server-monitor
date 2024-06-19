@@ -6,21 +6,21 @@
       <paths name="RTX3070">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/eggtargaryen/code/server-monitor/dev/backend" local="$PROJECT_DIR$" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
       <paths name="RTX3090">
         <serverdata>
           <mappings>
-            <mapping deploy="/sdc1/heyuchen/code/server-monitor/backend-dev" local="$PROJECT_DIR$" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
       <paths name="RTX4080">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/eggtargaryen/code/server-moniter/dev/backend" local="$PROJECT_DIR$" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

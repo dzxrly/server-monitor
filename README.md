@@ -1,4 +1,8 @@
+<div align="center">
+
 # Server Monitor 前端
+
+</div>
 
 <div align="center">
 
@@ -6,47 +10,69 @@
 
 </div>
 
+<div align="center">
+
 这是一个在线服务器硬件状态监控网站的前端部分，可以通过`docker`构建与部署。
+
+</div>
 
 ## 部署
 
 1. 拉取前端部分源码
 
-   `git clone -b frontend https://github.com/dzxrly/server-monitor.git`
+   ```bash
+   git clone -b frontend https://github.com/dzxrly/server-monitor.git
+   ```
 
 2. 进入源码根目录
 
-   `cd server-monitor`
+   ```bash
+   cd server-monitor
+   ```
 
 3. 使用`docker buildx`构建镜像
 
-   `docker buildx build -t eggtargaryen/server-monitor .`
+   ```bash
+   docker buildx build -t eggtargaryen/server-monitor .
+   ```
 
 4. 运行该镜像
 
-   `docker run -p 80:80 eggtargaryen/server-monitor`
+   ```bash
+   docker run -p 80:80 eggtargaryen/server-monitor
+   ```
 
 ## 从源码手动构建（可选）
 
 1. 拉取前端部分源码
 
-   `git clone -b frontend https://github.com/dzxrly/server-monitor.git`
+   ```bash
+   git clone -b frontend https://github.com/dzxrly/server-monitor.git
+   ```
 
 2. 进入源码根目录
 
-   `cd server-monitor`
+   ```bash
+   cd server-monitor
+   ```
 
 3. 安装`quasar/cli`
 
-   `npm install -g @quasar/cli`
+   ```bash
+   npm install -g @quasar/cli
+   ```
 
 4. 安装其他依赖库
 
-   `npm install`
+   ```bash
+   npm install
+   ```
 
 5. 使用`quasar/cli`构建
 
-   `quasar build`
+   ```bash
+   quasar build
+   ```
 
 6. 入口文件`index.html`位于`./dist/spa`目录下
 

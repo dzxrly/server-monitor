@@ -6,7 +6,7 @@
 
 <div align="center">
 
-![Static Badge](https://img.shields.io/badge/Version-V0.0.1-2a82c0?style=flat-square)
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdzxrly%2Fserver-monitor%2Fbackend%2Fpackage.json&query=%24.version&prefix=V&style=flat-square&label=Version)
 
 </div>
 

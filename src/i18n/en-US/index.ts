@@ -13,9 +13,9 @@ export default {
   addServer: 'Add Server',
   serverUUID: 'Server UUID',
   customServerName: 'Custom Server Name',
-  customServerNameInputFieldHint: '1~10 characters',
+  customServerNameInputFieldHint: '1~16 characters',
   customServerNameInputFieldHintErrorMsg:
-    'Input length muse be in 1~10 characters',
+    'Input length muse be in 1~16 characters',
   serverUrl: 'Server URL',
   serverUrlInputFieldHint: 'Server URL can not be NULL',
   serverUrlInputFieldHintErrorMsg: "Please input your server's URL",

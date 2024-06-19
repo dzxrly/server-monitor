@@ -59,7 +59,7 @@
           :hint="t('customServerNameInputFieldHint')"
           :rules="[
             (val) =>
-              (val && val.length <= 10) ||
+              (val && val.length <= 16) ||
               t('customServerNameInputFieldHintErrorMsg'),
           ]"
           outlined

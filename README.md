@@ -83,10 +83,14 @@
 
 ## i18n
 
+<div align="center">
+
 | 语言代码 | 支持情况 |                文本文件位置                 |
 | :------: | :------: | :-----------------------------------------: |
 |  zh-CN   |    ✅    | [zh-CN/index.ts](./src/i18n/zh-CN/index.ts) |
 |  en-US   |    ✅    | [en-US/index.ts](./src/i18n/en-US/index.ts) |
+
+</div>
 
 ---
 

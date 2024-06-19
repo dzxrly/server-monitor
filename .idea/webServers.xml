@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="fdbe9219-1b45-4215-8d5d-b569fde15a3b" name="RTX3090">
+        <fileTransfer accessType="SFTP" host="192.168.1.161" port="22" sshConfigId="d42bd98c-70e2-49af-912c-62c92d407da1" sshConfig="eggtargaryen@192.168.1.161:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="c995a631-8103-4cf3-aeb3-4d4e9826eaac" name="RTX4080">
+        <fileTransfer accessType="SFTP" host="219.231.164.11" port="22" sshConfigId="9cfc6521-321d-4b0b-a29b-e03ec1fec620" sshConfig="eggtargaryen@219.231.164.11:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="4308cfb2-6818-42be-8545-8dbe68d20f08" name="RTX3070">
+        <fileTransfer accessType="SFTP" host="219.231.164.69" port="22" sshConfigId="31be2d7f-2d9c-4ff8-b2af-e527ece696a9" sshConfig="eggtargaryen@219.231.164.69:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

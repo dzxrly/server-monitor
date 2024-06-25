@@ -16,13 +16,13 @@
 
 </div>
 
-> [!CAUTION] 
+> [!CAUTION]
 >
 > 在前端监控服务器状态需要在每台被监控上部署[后端服务](https://github.com/dzxrly/server-monitor/blob/backend/README.md)！
 
 ## 部署
 
-### 直接从Docker构建
+### 直接从 Docker 构建
 
 1. 拉取前端部分源码
 

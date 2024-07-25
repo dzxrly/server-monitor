@@ -6,7 +6,10 @@
       <div
         class="card-header-row row justify-between items-center full-width bg-card-color"
       >
-        <span class="text-card-color text-h6">{{ t('settings') }}</span>
+        <div class="row justify-start items-center">
+          <q-icon class="text-card-color q-pr-sm" name="settings" size="sm" />
+          <span class="text-card-color text-h6">{{ t('settings') }}</span>
+        </div>
         <q-btn
           icon="close"
           class="text-btn-color"
@@ -80,6 +83,7 @@
           :label="t('resetSettingBtn')"
           color="negative"
           @click="showResetConfirmDialog = true"
+          icon="restart_alt"
           flat
           rounded
           no-caps
@@ -88,6 +92,7 @@
           :label="t('exportSettingBtn')"
           color="btn-color"
           @click="configToJsonFile()"
+          icon="file_upload"
           flat
           rounded
           no-caps
@@ -96,6 +101,7 @@
           :label="t('importSettingBtn')"
           color="btn-color"
           @click="importConfigFromJsonFile()"
+          icon="file_download"
           flat
           rounded
           no-caps

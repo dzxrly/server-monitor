@@ -6,7 +6,10 @@
       class="column no-wrap justify-center items-center bg-card-color full-width q-pa-md rounded-borders"
     >
       <div class="row justify-between items-center full-width">
-        <span class="text-h6 text-card-color">{{ t('addServer') }}</span>
+        <div class="row justify-start items-center">
+          <q-icon class="text-card-color q-pr-sm" name="add" size="sm" />
+          <span class="text-h6 text-card-color">{{ t('addServer') }}</span>
+        </div>
         <q-btn
           color="btn-color"
           icon="close"

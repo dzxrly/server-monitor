@@ -6,7 +6,10 @@
       <div
         class="card-header-row row justify-between items-center full-width bg-card-color"
       >
-        <span class="text-card-color text-h6">{{ t('serverSettings') }}</span>
+        <div class="row justify-start items-center">
+          <q-icon class="text-card-color q-pr-sm" name="edit" size="sm" />
+          <span class="text-card-color text-h6">{{ t('serverSettings') }}</span>
+        </div>
         <q-btn
           icon="close"
           class="text-btn-color"
@@ -114,7 +117,7 @@
           flat
           class="full-width rounded-borders q-mt-md"
           color="btn-color"
-          icon="add"
+          icon="save"
           :label="t('saveEditBtn')"
           :disable="!isValid"
           @click="saveEdit"

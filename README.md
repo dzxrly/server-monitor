@@ -29,6 +29,24 @@
 - [前端部署](https://github.com/dzxrly/server-monitor/blob/frontend/README.md)
 - [后端部署](https://github.com/dzxrly/server-monitor/blob/backend/README.md)
 
+## 操作系统与硬件支持情况
+
+> [!CAUTION]
+> 
+> Linux系统仅测试了 Linux Kernel > 5.x 版本的支持情况，Windows系统仅测试了Windows 10 与 11 的支持情况
+
+|    硬件信息    | Linux支持情况 | Windows支持情况 |
+| :------------: | :-----------: | :-------------: |
+|    CPU信息     |   ✅完全支持   |     ❌不支持     |
+|    内存信息    |   ✅完全支持   |    ✅完全支持    |
+|    Swap信息    |   ✅完全支持   |    ✅完全支持    |
+| NVIDIA GPU信息 |   ✅完全支持   |    ✅完全支持    |
+|  AMD GPU信息   |    ❌不支持    |     ❌不支持     |
+| Intel GPU信息  |    ❌不支持    |     ❌不支持     |
+|  其他GPU信息   |    ❌不支持    |     ❌不支持     |
+
+> 详细的操作系统与硬件支持情况请查看[详细支持列表](./HardwareSupportList.md)
+
 ---
 
 <div align="center">

@@ -77,16 +77,16 @@ export default {
   deleteThisServer: '删除服务器',
   deleteThisServerConfirm: '确定要删除该服务器吗？此操作无法撤销！',
   serverDeleted: '服务器已删除',
-  numaNode: 'NUMA节点',
+  numaNode: 'CPU数量',
   serverSettings: '服务器设置',
   serverEditDialogSaveErrorMsg: '服务器信息有误，请检查输入的信息',
   saveEditBtn: '保存',
 
   sourceCode: '开源仓库',
   privacyPolicy: '隐私政策',
-  backendDeployTitle: 'Server Monitor 后端',
+  backendDeployTitle: 'Server Monitor 使用须知',
   backendDeployDesc:
     '使用Server Monitor监控服务器硬件需要先在服务器中部署对应的后端，请参考',
   noPopupTips: '不再提示',
-  backendDeployDocs: 'Server Monitor后端文档',
+  backendDeployDocs: 'Server Monitor 后端文档',
 };

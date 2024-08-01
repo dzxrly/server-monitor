@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import messages from 'src/i18n';
 
 enum GPUType {
   NoneGPU = 'NoneGPU',
@@ -47,6 +48,13 @@ class Config {
   public memoryUnit = ByteUnit.GB;
   public gpuMemoryUnit = ByteUnit.GB;
   public showBackendTipsDialog = true;
+
+  constructor() {
+    const browserLanguage = navigator.language || 'en-US';
+    this.defaultLanguage = messages.hasOwnProperty(browserLanguage)
+      ? browserLanguage
+      : 'en-US';
+  }
 }
 
 // when you change the Config class and other classes in this file, you should also update the following zod schema

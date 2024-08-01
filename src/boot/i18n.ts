@@ -20,9 +20,9 @@ declare module 'vue-i18n' {
   export interface DefineNumberFormat {}
 }
 /* eslint-enable @typescript-eslint/no-empty-interface */
-
+const browserLanguage = navigator.language || 'en-US';
 export const i18n = createI18n({
-  locale: 'en-US',
+  locale: messages.hasOwnProperty(browserLanguage) ? browserLanguage : 'en-US',
   legacy: false,
   messages,
 });
@@ -37,4 +37,5 @@ export const languageMap: {
 } = {
   'en-US': 'English',
   'zh-CN': '简体中文',
+  'zh-TW': '繁體中文',
 };

@@ -84,7 +84,7 @@ export default {
   deleteThisServerConfirm:
     'Are you sure to delete this server? This action can not be undone!',
   serverDeleted: 'Server Deleted',
-  numaNode: 'NUMA Node',
+  numaNode: 'CPUs',
   serverSettings: 'Server Settings',
   serverEditDialogSaveErrorMsg:
     'Server information error, please check your inputs',
@@ -92,7 +92,7 @@ export default {
 
   sourceCode: 'Project Repo',
   privacyPolicy: 'Privacy Policy',
-  backendDeployTitle: 'Server Monitor Backend',
+  backendDeployTitle: 'Server Monitor Notification',
   backendDeployDesc:
     'To use Server Monitor to monitor the server hardware, you need to deploy the corresponding backend in the server first, please refer to the ',
   noPopupTips: "Don't remind me again",

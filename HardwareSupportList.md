@@ -4,6 +4,7 @@
 > 
 > Linux系统仅测试了 Linux Kernel > 5.x 版本的支持情况，Windows系统仅测试了Windows 10 与 11 的支持情况
 
+<div align="center">
 
 |       硬件信息       | Linux支持情况 | Windows支持情况 |
 | :------------------: | :-----------: | :-------------: |
@@ -21,3 +22,5 @@
 |    NVIDIA GPU功耗    |   ✅完全支持   |    ✅完全支持    |
 | NVIDIA GPU显存使用率 |   ✅完全支持   |    ✅完全支持    |
 |  NVIDIA GPU风扇转速  |   ✅完全支持   |    ✅完全支持    |
+
+</div >

@@ -35,6 +35,8 @@
 > 
 > Linux系统仅测试了 Linux Kernel > 5.x 版本的支持情况，Windows系统仅测试了Windows 10 与 11 的支持情况
 
+<div align="center">
+
 |    硬件信息    | Linux支持情况 | Windows支持情况 |
 | :------------: | :-----------: | :-------------: |
 |    CPU信息     |   ✅完全支持   |     ❌不支持     |
@@ -44,6 +46,8 @@
 |  AMD GPU信息   |    ❌不支持    |     ❌不支持     |
 | Intel GPU信息  |    ❌不支持    |     ❌不支持     |
 |  其他GPU信息   |    ❌不支持    |     ❌不支持     |
+
+</div >
 
 > 详细的操作系统与硬件支持情况请查看[详细支持列表](./HardwareSupportList.md)
 

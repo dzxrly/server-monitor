@@ -61,6 +61,6 @@
 
 <div align="center">
 
-by Egg Targaryen
+by [Egg Targaryen](https://eggtargaryen.com)
 
 </div>

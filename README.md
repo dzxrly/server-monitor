@@ -51,6 +51,17 @@
 
 > 详细的操作系统与硬件支持情况请查看[详细支持列表](./HardwareSupportList.md)
 
+## 运行时截图
+
+<div align="center">
+
+![main page](./img/zh-CN/main_page.jpeg)
+![server  details](./img/zh-CN/server_details.jpeg)
+![add server](./img/zh-CN/add_server.jpeg)
+![server edit](./img/zh-CN/server_edit.jpeg)
+
+</div>
+
 ---
 
 <div align="center">

@@ -79,6 +79,7 @@ const configZod = z.object({
   midUsageThreshold: z.number(),
   memoryUnit: z.string(),
   gpuMemoryUnit: z.string(),
+  showBackendTipsDialog: z.boolean(),
 });
 
 export { ByteUnit, ServerConfig, Config, GPUType, GPUServer, configZod };

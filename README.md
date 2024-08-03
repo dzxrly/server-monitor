@@ -22,7 +22,7 @@
 
 ## 部署
 
-### 直接从 Docker 构建
+### 从 Docker 构建（推荐）
 
 1. 拉取前端部分源码
 
@@ -48,7 +48,7 @@
    docker run -p 80:80 eggtargaryen/server-monitor
    ```
 
-### 从源码手动构建（可选）
+### 从源码手动构建
 
 1. 拉取前端部分源码
 
@@ -109,6 +109,6 @@
 
 <div align="center">
 
-by Egg Targaryen
+by [Egg Targaryen](https://eggtargaryen.com)
 
 </div>

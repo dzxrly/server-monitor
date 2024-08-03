@@ -259,7 +259,7 @@ function importConfigFromJsonFile() {
             if (
               zodParse.success &&
               (zodParse.data as Config).hasOwnProperty('serverListConfig') &&
-              (zodParse.data as Config).serverListConfig.length > 0
+              (zodParse.data as Config).serverListConfig.length >= 0
             ) {
               let isUniqueIdValid = true;
               for (const server of (zodParse.data as Config).serverListConfig) {

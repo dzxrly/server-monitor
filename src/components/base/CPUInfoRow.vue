@@ -17,7 +17,7 @@
       >
         ×{{ cpuState.cpuTemperature.length }}
         <q-tooltip>
-          {{ t('NumaNode') }}
+          {{ t('numaNode') }}
         </q-tooltip>
       </q-badge>
     </div>

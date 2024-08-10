@@ -2,6 +2,5 @@ psutil
 pynvml
 flask
 flask-cors
-wmi
 waitress
 PasteDeploy

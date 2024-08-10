@@ -2,6 +2,8 @@ from typing import Optional
 
 import psutil
 
+from lib.utils.cpu_info import cpu
+
 
 def get_cpu_state(
         interval: float = None,
@@ -55,35 +57,40 @@ def get_cpu_temperature(
     :param fahrenheit: 是否返回华氏温度，否则返回摄氏温度；默认False
     :return: 返回CPU温度
     """
-    try:
-        temps = psutil.sensors_temperatures(fahrenheit=fahrenheit)
-        if 'coretemp' in temps:
-            res = []
-            numa_node_index = None
-            for temp in temps['coretemp']:
-                if 'Package id' in temp.label:
-                    res.append({
-                        'numaLabel': temp.label,
-                        'numaCurrent': temp.current,
-                        'numaHigh': temp.high,
-                        'numaCritical': temp.critical,
-                        'coresTemperature': [],
-                    })
-                    numa_node_index = len(res) - 1
-                elif 'Core' in temp.label:
-                    res[numa_node_index]['coresTemperature'].append({
-                        'coreLabel': temp.label,
-                        'coreCurrent': temp.current,
-                        'coreHigh': temp.high,
-                        'coreCritical': temp.critical,
-                    })
-                else:
-                    pass
-            return res
-        else:
-            return []
-    except Exception as e:
-        raise '[ERROR] Get CPU temperature failed. Detail: {}'.format(e)
+    if psutil.LINUX:
+        try:
+            temps = psutil.sensors_temperatures(fahrenheit=fahrenheit)
+            if 'coretemp' in temps:
+                res = []
+                numa_node_index = None
+                for temp in temps['coretemp']:
+                    if 'Package id' in temp.label:
+                        res.append({
+                            'numaLabel': temp.label,
+                            'numaCurrent': temp.current,
+                            'numaHigh': temp.high,
+                            'numaCritical': temp.critical,
+                            'coresTemperature': [],
+                        })
+                        numa_node_index = len(res) - 1
+                    elif 'Core' in temp.label:
+                        res[numa_node_index]['coresTemperature'].append({
+                            'coreLabel': temp.label,
+                            'coreCurrent': temp.current,
+                            'coreHigh': temp.high,
+                            'coreCritical': temp.critical,
+                        })
+                    else:
+                        pass
+                return res
+            else:
+                return []
+        except Exception as e:
+            raise NotImplementedError('[ERROR] Get CPU temperature failed. Detail: {}'.format(e))
+    elif psutil.WINDOWS:
+        return []
+    else:
+        raise NotImplementedError('Unsupported system')
 
 
 def get_cpu_name() -> str:
@@ -98,11 +105,6 @@ def get_cpu_name() -> str:
                     return line.split(':')[1].strip()
         return 'Unknown'
     elif psutil.WINDOWS:
-        try:
-            import wmi
-            c = wmi.WMI()
-            return c.Win32_Processor()[0].Name
-        except Exception as e:
-            return 'Unknown'
+        return cpu.info[0]['ProcessorNameString'].strip()
     else:
         raise NotImplementedError('Unsupported system')

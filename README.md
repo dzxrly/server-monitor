@@ -12,11 +12,12 @@
 
 <div align="center">
 
-这是一个在线多服务器硬件状态监控网站的轻量化后端。请在需要监控硬件状态的服务器上部署该后端，默认状态下后端使用`6543`端口，请确保防火墙放行该端口！
+这是一个在线多服务器硬件状态监控网站的轻量化后端。请在需要监控硬件状态的服务器上部署该后端，默认状态下后端使用`6543`
+端口，请确保防火墙放行该端口！
 
 </div>
 
-> [!CAUTION] 
+> [!CAUTION]
 >
 > 完成后端部署后需要部署[前端网站](https://github.com/dzxrly/server-monitor/blob/frontend/README.md)以监控服务器硬件状态！
 
@@ -44,21 +45,22 @@
    cd server-monitor
    ```
 
-3. - 对于**Linux系统**
+3.
+    - 对于**Linux系统**
 
-     ```bash
-     # 授予脚本可执行权限
-     chmod +x deploy.sh
-     # 运行部署脚本
-     ./deploy.sh
-     ```
+      ```bash
+      # 授予脚本可执行权限
+      chmod +x deploy.sh
+      # 运行部署脚本
+      ./deploy.sh
+      ```
 
-   - 对于**Windows系统**
+    - 对于**Windows系统**
 
-     ```bash
-     # 直接运行以下命令
-     ./deploy.bat
-     ```
+      ```bash
+      # 直接运行以下命令
+      ./deploy.bat
+      ```
 
 ### 手动构建（可选）
 
@@ -103,7 +105,8 @@
 ## 配置文件设置
 
 配置文件位于`./server_config.py`中，其中字段均为`waitress`的`serve`
-函数可接受字段，默认仅设置了`host`与`port`，具体配置请参考：[waitress serve arguments docs](https://docs.pylonsproject.org/projects/waitress/en/latest/arguments.html#arguments)。
+函数可接受字段，默认仅设置了`host`与`port`
+，具体配置请参考：[waitress serve arguments docs](https://docs.pylonsproject.org/projects/waitress/en/latest/arguments.html#arguments)。
 
 ---
 

@@ -98,7 +98,7 @@ def get_network_state():
         abort(400)
 
 
-@app.route('./os_info', methods=['GET'])
+@app.route('/os_info', methods=['GET'])
 def get_os_info():
     try:
         return jsonify(get_operating_system_info())

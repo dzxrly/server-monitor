@@ -15,12 +15,15 @@ def get_operating_system_info() -> dict:
             'os_name': '{} {} NT_Ver.{}'.format(uname.system, platform.win32_edition(), uname.version),
             'os_architecture': architecture,
             'os_sign': uname.system,
+            'os_node': uname.node,
         }
     elif psutil.LINUX:
+        _freedesktop_os_release = platform.freedesktop_os_release()
         return {
-            'os_name': '',
+            'os_name': '{} {}'.format(_freedesktop_os_release['NAME'], _freedesktop_os_release['VERSION']),
             'os_architecture': architecture,
             'os_sign': uname.system,
+            'os_node': uname.node,
         }
     else:
         raise NotImplementedError('Unsupported system')

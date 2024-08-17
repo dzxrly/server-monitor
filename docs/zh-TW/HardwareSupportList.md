@@ -1,0 +1,29 @@
+# 作業系統與硬體支援情況詳細列表
+
+> [!CAUTION]
+> 
+> Linux仅测试了 Linux Kernel > 5.x 版本的支援情况，Windows仅测试了Windows 10 与 11 的支援情况
+
+<div align="center">
+
+|       硬體資訊       |  Linux  | Windows |
+|:----------------:| :-----: | :-----: |
+|       CPU名稱        |  ✅支援  |  ✅支援  |
+|      CPU使用率      |  ✅支援  |  ✅支援  |
+|      CPU數量       |  ✅支援  |  ✅支援  |
+|     CPU核心數      |  ✅支援  |  ✅支援  |
+|      CPU頻率     |  ✅支援  |  ✅支援  |
+|      CPU溫度     |  ✅支援  | ❌不支援 |
+|      內存使用率  |  ✅支援  |  ✅支援  |
+|     Swap使用率   |  ✅支援  |  ✅支援  |
+|   NVIDIA GPU名稱   |  ✅支援  |  ✅支援  |
+|   NVIDIA GPU數量   |  ✅支援  |  ✅支援  |
+|   NVIDIA GPU使用率   |  ✅支援  |  ✅支援  |
+|   NVIDIA GPU功耗   |  ✅支援  |  ✅支援  |
+| NVIDIA GPU顯存使用率 |  ✅支援  |  ✅支援  |
+|  NVIDIA GPU風扇轉速  |  ✅支援  |  ✅支援  |
+|    AMD GPU資訊   | ❌不支援 | ❌不支援 |
+|   Intel GPU資訊  | ❌不支援 | ❌不支援 |
+| 其他品牌GPU資訊 | ❌不支援 | ❌不支援 |
+
+</div >

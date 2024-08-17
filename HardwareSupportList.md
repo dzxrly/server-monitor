@@ -1,29 +1,29 @@
-# 操作系统与硬件支持情况详细列表
+# OS and Hardware Support
 
 > [!CAUTION]
 > 
-> Linux系统仅测试了 Linux Kernel > 5.x 版本的支持情况，Windows系统仅测试了Windows 10 与 11 的支持情况
+> Linux have only been tested with Linux Kernel > 5.x versions, while Windows have only been tested with Windows 10 and 11.
 
 <div align="center">
 
-|       硬件信息       |  Linux  | Windows |
-| :------------------: | :-----: | :-----: |
-|       CPU型号        |  ✅支持  |  ✅支持  |
-|      CPU使用率       |  ✅支持  |  ✅支持  |
-|       CPU数量        |  ✅支持  |  ✅支持  |
-|     CPU核心规模      |  ✅支持  |  ✅支持  |
-|       CPU频率        |  ✅支持  |  ✅支持  |
-|       CPU温度        |  ✅支持  | ❌不支持 |
-|      内存使用率      |  ✅支持  |  ✅支持  |
-|      Swap使用率      |  ✅支持  |  ✅支持  |
-|    NVIDIA GPU型号    |  ✅支持  |  ✅支持  |
-|    NVIDIA GPU数量    |  ✅支持  |  ✅支持  |
-|    NVIDIA GPU负载    |  ✅支持  |  ✅支持  |
-|    NVIDIA GPU功耗    |  ✅支持  |  ✅支持  |
-| NVIDIA GPU显存使用率 |  ✅支持  |  ✅支持  |
-|  NVIDIA GPU风扇转速  |  ✅支持  |  ✅支持  |
-|     AMD GPU信息      | ❌不支持 | ❌不支持 |
-|    Intel GPU信息     | ❌不支持 | ❌不支持 |
-|   其他品牌GPU信息    | ❌不支持 | ❌不支持 |
+|       Hardware        |    Linux     |   Windows    |
+| :-------------------: | :----------: | :----------: |
+|       CPU Name        |   ✅Support   |   ✅Support   |
+|       CPU Usage       |   ✅Support   |   ✅Support   |
+|      CPU Number       |   ✅Support   |   ✅Support   |
+|       CPU Core        |   ✅Support   |   ✅Support   |
+|     CPU Frequency     |   ✅Support   |   ✅Support   |
+|    CPU Temperature    |   ✅Support   | ❌Not Support |
+|     Memory Usage      |   ✅Support   |   ✅Support   |
+|      Swap Usage       |   ✅Support   |   ✅Support   |
+|    NVIDIA GPU Name    |   ✅Support   |   ✅Support   |
+|   NVIDIA GPU Number   |   ✅Support   |   ✅Support   |
+|   NVIDIA GPU Usage    |   ✅Support   |   ✅Support   |
+|   NVIDIA GPU Power    |   ✅Support   |   ✅Support   |
+| NVIDIA GPU VRAM Usage |   ✅Support   |   ✅Support   |
+| NVIDIA GPU Fan Speed  |   ✅Support   |   ✅Support   |
+|     AMD GPU Info      | ❌Not Support | ❌Not Support |
+|    Intel GPU Info     | ❌Not Support | ❌Not Support |
+|    Other GPU Info     | ❌Not Support | ❌Not Support |
 
 </div >

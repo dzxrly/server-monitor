@@ -18,47 +18,51 @@
 
 <div align="center">
 
-轻量化服务器硬件状态集中监控网站
+Lightweight server hardware status monitoring website
 
 </div>
 
+<div align="center">
 
+[简体中文](./docs/zh-CN/README.md) | [繁體中文](./docs/zh-TW/README.md) | [English](./README.md)
 
-## 前后端部署请参考以下文档
+</div>
 
-- [前端部署](https://github.com/dzxrly/server-monitor/blob/frontend/README.md)
-- [后端部署](https://github.com/dzxrly/server-monitor/blob/backend/README.md)
+## Please refer to the following documents for frontend and backend deployment
 
-## 操作系统与硬件支持情况
+- [Frontend](https://github.com/dzxrly/server-monitor/blob/frontend/README.md)
+- [Backend](https://github.com/dzxrly/server-monitor/blob/backend/README.md)
+
+## OS and Hardware Support
 
 > [!CAUTION]
 > 
-> Linux系统仅测试了 Linux Kernel > 5.x 版本的支持情况，Windows系统仅测试了Windows 10 与 11 的支持情况
+> Linux have only been tested with Linux Kernel > 5.x versions, while Windows have only been tested with Windows 10 and 11.
 
 <div align="center">
 
-|    硬件信息    |   Linux   |  Windows  |
-| :------------: | :-------: | :-------: |
-|    CPU信息     | ✅完全支持 | ⚠️部分支持 |
-|    内存信息    | ✅完全支持 | ✅完全支持 |
-|    Swap信息    | ✅完全支持 | ✅完全支持 |
-| NVIDIA GPU信息 | ✅完全支持 | ✅完全支持 |
-|  AMD GPU信息   |  ❌不支持  |  ❌不支持  |
-| Intel GPU信息  |  ❌不支持  |  ❌不支持  |
-|  其他GPU信息   |  ❌不支持  |  ❌不支持  |
+|  Hardware  |     Linux      |  Windows  |
+|:----------:|:--------------:| :-------: |
+|    CPU     | ✅Fully Support | ⚠️Partial support |
+|   Memory   |     ✅Fully Support      | ✅Fully Support |
+|    Swap    |     ✅Fully Support      | ✅Fully Support |
+| NVIDIA GPU |     ✅Fully Support      | ✅Fully Support |
+|  AMD GPU   |      ❌Not Support      |  ❌Not Support  |
+| Intel GPU  |      ❌Not Support      |  ❌Not Support  |
+| Other GPU  |      ❌Not Support      |  ❌Not Support  |
 
 </div >
 
-> 详细的操作系统与硬件支持情况请查看[详细支持列表](./HardwareSupportList.md)
+> For detailed information on OS and hardware support, please refer to the [Detailed List](./HardwareSupportList.md)
 
-## 运行时截图
+## Screenshots
 
 <div align="center">
 
-![main page](./img/zh-CN/main_page.jpeg)
-![server  details](./img/zh-CN/server_details.jpeg)
-![add server](./img/zh-CN/add_server.jpeg)
-![server edit](./img/zh-CN/server_edit.jpeg)
+![main page](./img/en-US/main_page.jpeg)
+![server  details](./img/en-US/server_details.jpeg)
+![add server](./img/en-US/add_server.jpeg)
+![server edit](./img/en-US/server_edit.jpeg)
 
 </div>
 

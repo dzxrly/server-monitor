@@ -53,7 +53,7 @@
 
 </div >
 
-> 詳細的操作系統與硬體支援情況請查看[詳細支援列表](./docs/zh-TW/HardwareSupportList.md)
+> 詳細的操作系統與硬體支援情況請查看[詳細支援列表](./HardwareSupportList.md)
 
 ## 執行時截圖
 

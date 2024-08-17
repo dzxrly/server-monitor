@@ -93,18 +93,6 @@ This is the frontend of an online server hardware status monitoring website, whi
 - Due to browser security settings, please ensure that both the frontend and backend use the same protocol, such as both using http or both using https. Mixing protocols may cause requests to be blocked by the browser.
 - Similarly, due to browser security settings, if the frontend is deployed in a public network segment while the backend is deployed in a private network segment, communication cannot be established properly.
 
-## i18n
-
-<div align="center">
-
-| Language Code | Support |           Language File         |
-| :------: | :------: | :-----------------------------------------: |
-|  en-US   |    ✅    | [en-US/index.ts](./src/i18n/en-US/index.ts) |
-|  zh-CN   |    ✅    | [zh-CN/index.ts](./src/i18n/zh-CN/index.ts) |
-|  zh-TW   |    ✅    | [zh-TW/index.ts](./src/i18n/zh-TW/index.ts) |
-
-</div>
-
 ---
 
 <div align="center">

@@ -12,86 +12,86 @@
 
 <div align="center">
 
-這是一個線上伺服器硬體狀態監控網站的前端部分，可以透過`docker`構建與部署。
+这是一个在线服务器硬件状态监控网站的前端部分，可以通过`docker`构建与部署。
 
 </div>
 
 <div align="center">
 
-[简体中文](../../docs/zh-CN/README_zh-CN.md) | [繁體中文](../../docs/zh-TW/README_zh-TW.md) | [English](../../README.md)
+[简体中文](../../docs/zh-CN/README.md) | [繁體中文](../../docs/zh-TW/README.md) | [English](../../README.md)
 
 </div>
 
 > [!CAUTION]
 >
-> 在前端監控伺服器狀態需要在每台被監控的伺服器上部署[後端服務](https://github.com/dzxrly/server-monitor/blob/backend/README.md)！
+> 在前端监控服务器状态需要在每台被监控上部署[后端服务](https://github.com/dzxrly/server-monitor/blob/backend/README.md)！
 
 ## 部署
 
-### 從 Docker 構建（推薦）
+### 从 Docker 构建（推荐）
 
-1. 拉取前端部分原始碼
+1. 拉取前端部分源码
 
    ```bash
    git clone -b frontend https://github.com/dzxrly/server-monitor.git
    ```
 
-2. 進入原始碼根目錄
+2. 进入源码根目录
 
    ```bash
    cd server-monitor
    ```
 
-3. 使用`docker buildx`構建鏡像
+3. 使用`docker buildx`构建镜像
 
    ```bash
    docker buildx build -t eggtargaryen/server-monitor .
    ```
 
-4. 運行該鏡像
+4. 运行该镜像
 
    ```bash
    docker run -p 80:80 eggtargaryen/server-monitor
    ```
 
-### 從原始碼手動構建
+### 从源码手动构建
 
-1. 拉取前端部分原始碼
+1. 拉取前端部分源码
 
    ```bash
    git clone -b frontend https://github.com/dzxrly/server-monitor.git
    ```
 
-2. 進入原始碼根目錄
+2. 进入源码根目录
 
    ```bash
    cd server-monitor
    ```
 
-3. 安裝`quasar/cli`
+3. 安装`quasar/cli`
 
    ```bash
    npm install -g @quasar/cli
    ```
 
-4. 安裝其他依賴庫
+4. 安装其他依赖库
 
    ```bash
    npm install
    ```
 
-5. 使用`quasar/cli`構建
+5. 使用`quasar/cli`构建
 
    ```bash
    quasar build
    ```
 
-6. 入口文件`index.html`位於`./dist/spa`目錄下
+6. 入口文件`index.html`位于`./dist/spa`目录下
 
-## 注意事項
+## 注意事项
 
-- 受限於瀏覽器安全設置，請確保前端與後端均採用同一協議，例如前端與後端均為`http`或均為`https`，混用協議可能導致請求被瀏覽器攔截。
-- 同樣受限於瀏覽器安全設置，如果前端部署於公網網段，而後端部署於內網網段，則無法正常建立通信。
+- 受限于浏览器安全设置，请确保前端与后端均采用同一协议，例如前端与后端均为`http`或均为`https`，混用协议可能导致请求被浏览器拦截。
+- 同样受限于浏览器安全设置，如果前端部署于公网网段，而后端部署于内网网段，则无法正常建立通信。
 
 ---
 

@@ -18,7 +18,7 @@ This is the frontend of an online server hardware status monitoring website, whi
 
 <div align="center">
 
-[简体中文](./docs/zh-CN/README_zh-CN.md) | [繁體中文](./docs/zh-TW/README_zh-TW.md) | [English](./README.md)
+[简体中文](./docs/zh-CN/README.md) | [繁體中文](./docs/zh-TW/README.md) | [English](./README.md)
 
 </div>
 

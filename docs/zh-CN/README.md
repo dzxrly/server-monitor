@@ -1,6 +1,6 @@
 <div align="center">
 
-![Server Monitor Logo](./icon/Server_Monitor.svg)
+![Server Monitor Logo](../../icon/Server_Monitor.svg)
 
 </div>
 

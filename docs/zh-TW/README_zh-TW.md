@@ -1,6 +1,6 @@
 <div align="center">
 
-# Server Monitor Frontend
+# Server Monitor 前端
 
 </div>
 
@@ -12,96 +12,96 @@
 
 <div align="center">
 
-This is the frontend of an online server hardware status monitoring website, which can be built and deployed using `docker`.
+這是一個線上伺服器硬體狀態監控網站的前端部分，可以透過`docker`構建與部署。
 
 </div>
 
 <div align="center">
 
-[简体中文](./docs/zh-CN/README_zh-CN.md) | [繁體中文](./docs/zh-TW/README_zh-TW.md) | [English](./README.md)
+[简体中文](../../docs/zh-CN/README_zh-CN.md) | [繁體中文](../../docs/zh-TW/README_zh-TW.md) | [English](../../README.md)
 
 </div>
 
 > [!CAUTION]
 >
-> To monitor the server status on the frontend, the [Backend Service](https://github.com/dzxrly/server-monitor/blob/backend/README.md) needs to be deployed on each monitored server.！
+> 在前端監控伺服器狀態需要在每台被監控的伺服器上部署[後端服務](https://github.com/dzxrly/server-monitor/blob/backend/README.md)！
 
-## Deployment
+## 部署
 
-### Build from Docker (Recommend)
+### 從 Docker 構建（推薦）
 
-1. Pull the frontend source code
+1. 拉取前端部分原始碼
 
    ```bash
    git clone -b frontend https://github.com/dzxrly/server-monitor.git
    ```
 
-2. Enter the root directory of the source code
+2. 進入原始碼根目錄
 
    ```bash
    cd server-monitor
    ```
 
-3. Run `docker buildx` to build container
+3. 使用`docker buildx`構建鏡像
 
    ```bash
    docker buildx build -t eggtargaryen/server-monitor .
    ```
 
-4. Run the container
+4. 運行該鏡像
 
    ```bash
    docker run -p 80:80 eggtargaryen/server-monitor
    ```
 
-### Build from the source code
+### 從原始碼手動構建
 
-1. Pull the frontend source code
+1. 拉取前端部分原始碼
 
    ```bash
    git clone -b frontend https://github.com/dzxrly/server-monitor.git
    ```
 
-2. Enter the root directory of the source code
+2. 進入原始碼根目錄
 
    ```bash
    cd server-monitor
    ```
 
-3. Install `quasar/cli`
+3. 安裝`quasar/cli`
 
    ```bash
    npm install -g @quasar/cli
    ```
 
-4. Install other dependences
+4. 安裝其他依賴庫
 
    ```bash
    npm install
    ```
 
-5. Build by `quasar/cli`
+5. 使用`quasar/cli`構建
 
    ```bash
    quasar build
    ```
 
-6. Entry file `index.html` is in the `./dist/spa`
+6. 入口文件`index.html`位於`./dist/spa`目錄下
 
-## Notes
+## 注意事項
 
-- Due to browser security settings, please ensure that both the frontend and backend use the same protocol, such as both using http or both using https. Mixing protocols may cause requests to be blocked by the browser.
-- Similarly, due to browser security settings, if the frontend is deployed in a public network segment while the backend is deployed in a private network segment, communication cannot be established properly.
+- 受限於瀏覽器安全設置，請確保前端與後端均採用同一協議，例如前端與後端均為`http`或均為`https`，混用協議可能導致請求被瀏覽器攔截。
+- 同樣受限於瀏覽器安全設置，如果前端部署於公網網段，而後端部署於內網網段，則無法正常建立通信。
 
 ## i18n
 
 <div align="center">
 
-| Language Code | Support |           Language File         |
+| 語言代碼 | 支持情況 |                文本文件位置                 |
 | :------: | :------: | :-----------------------------------------: |
-|  en-US   |    ✅    | [en-US/index.ts](./src/i18n/en-US/index.ts) |
-|  zh-CN   |    ✅    | [zh-CN/index.ts](./src/i18n/zh-CN/index.ts) |
-|  zh-TW   |    ✅    | [zh-TW/index.ts](./src/i18n/zh-TW/index.ts) |
+|  en-US   |    ✅    | [en-US/index.ts](../../src/i18n/en-US/index.ts) |
+|  zh-CN   |    ✅    | [zh-CN/index.ts](../../src/i18n/zh-CN/index.ts) |
+|  zh-TW   |    ✅    | [zh-TW/index.ts](../../src/i18n/zh-TW/index.ts) |
 
 </div>
 

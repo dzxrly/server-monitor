@@ -86,3 +86,11 @@ export interface NetworkStateResponse {
   dropIn: number;
   dropOut: number;
 }
+
+export interface OSInfoResponse {
+  osName: string;
+  osBits: string;
+  osArchitecture: string;
+  osSign: string;
+  osNode: string;
+}

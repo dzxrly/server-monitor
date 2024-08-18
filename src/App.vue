@@ -1,7 +1,3 @@
-<template>
-  <router-view />
-</template>
-
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
 import { computed, onMounted, provide } from 'vue';
@@ -26,3 +22,7 @@ onMounted(() => {
   locale.value = defaultLanguage.value;
 });
 </script>
+
+<template>
+  <router-view />
+</template>

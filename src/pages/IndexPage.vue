@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { useConfigStore } from 'stores/user-config';
+import { inject, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import AddServerDialog from 'components/index-page/AddServerDialog.vue';
+import ServerCard from 'components/index-page/ServerCard.vue';
+
+const configStore = useConfigStore();
+const { t } = useI18n();
+
+const showAddServerDialog = ref(false);
+const isLtSm = inject('isLtSm');
+
+configStore.initConfig();
+</script>
+
 <template>
   <q-page class="index-page-wrapper" :class="{ 'q-ma-xs': isLtSm }">
     <div class="full-width row wrap justify-start items-stretch">
@@ -45,22 +61,6 @@
     </q-dialog>
   </q-page>
 </template>
-
-<script setup lang="ts">
-import { useConfigStore } from 'stores/user-config';
-import { inject, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-import AddServerDialog from 'components/index-page/AddServerDialog.vue';
-import ServerCard from 'components/index-page/ServerCard.vue';
-
-const configStore = useConfigStore();
-const { t } = useI18n();
-
-const showAddServerDialog = ref(false);
-const isLtSm = inject('isLtSm');
-
-configStore.initConfig();
-</script>
 
 <style lang="sass" scoped>
 .index-page-wrapper

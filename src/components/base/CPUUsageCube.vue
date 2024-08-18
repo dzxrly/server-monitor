@@ -1,18 +1,3 @@
-<template>
-  <div
-    class="cpu-usage-cube-wrapper column justify-center items-center no-wrap bg-transparent"
-  >
-    <div
-      class="cpu-usage-text-wrapper text-default-color bg-default-color column justify-center items-center no-wrap"
-    >
-      <span>{{ `${rounded(props.cpuUsage, 0)}%` }}</span>
-      <span v-if="props.cpuFreq > 0">{{
-        `${rounded(props.cpuFreq / 1000, 1)}GHz`
-      }}</span>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import { getUsageColor, rounded } from 'src/utils/utils';
@@ -84,6 +69,21 @@ const cpuUsageTranslateY = computed(() => {
   }
 });
 </script>
+
+<template>
+  <div
+    class="cpu-usage-cube-wrapper column justify-center items-center no-wrap bg-transparent"
+  >
+    <div
+      class="cpu-usage-text-wrapper text-default-color bg-default-color column justify-center items-center no-wrap"
+    >
+      <span>{{ `${rounded(props.cpuUsage, 0)}%` }}</span>
+      <span v-if="props.cpuFreq > 0">{{
+        `${rounded(props.cpuFreq / 1000, 1)}GHz`
+      }}</span>
+    </div>
+  </div>
+</template>
 
 <style lang="sass" scoped>
 .cpu-usage-cube-wrapper

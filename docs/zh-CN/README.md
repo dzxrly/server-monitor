@@ -12,7 +12,7 @@
 
 <div align="center">
 
-这是一个在线服务器硬件状态监控网站的前端部分，可以通过`docker`构建与部署。
+这是一个 Server Monitor 的前端部分，可以通过`docker`构建与部署。
 
 </div>
 
@@ -24,7 +24,7 @@
 
 > [!CAUTION]
 >
-> 在前端监控服务器状态需要在每台被监控上部署[后端服务](https://github.com/dzxrly/server-monitor/blob/backend/README.md)！
+> 在前端监控服务器状态需要在每台被监控上部署[后端服务](https://github.com/dzxrly/server-monitor/blob/backend/docs/zh-CN/README.md)！
 
 ## 部署
 

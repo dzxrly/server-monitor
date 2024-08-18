@@ -1,3 +1,73 @@
+<script setup lang="ts">
+import { computed, PropType } from 'vue';
+import { GPUStateResponse } from 'src/interface/api';
+import { useI18n } from 'vue-i18n';
+import { getDegreeUnit, getUsageColorClass, rounded } from 'src/utils/utils';
+import FanIcon from 'components/base/FanIcon.vue';
+import CircularProgressWithTitle from 'components/base/CircularProgressWithTitle.vue';
+import { ByteUnit } from 'src/module/config';
+
+const props = defineProps({
+  gpuState: {
+    type: Object as PropType<GPUStateResponse>,
+    required: true,
+  },
+  showLayout: {
+    type: String,
+    default: 'sm',
+    validator(val: string) {
+      return ['sm', 'md', 'lg'].includes(val);
+    },
+  },
+  freeUsageThreshold: {
+    type: Number,
+    default: 20,
+    validator(val: number) {
+      return val >= 0 && val <= 100;
+    },
+  },
+  midUsageThreshold: {
+    type: Number,
+    default: 60,
+    validator(val: number) {
+      return val >= 0 && val <= 100;
+    },
+  },
+  useFahrenheitUnit: {
+    type: Boolean,
+    default: false,
+  },
+  isError: {
+    type: Boolean,
+    default: false,
+  },
+  size: {
+    type: Number,
+    default: 4,
+  },
+  innerTextSizePercentage: {
+    type: Number,
+    default: 0.2,
+    validator: (value: number) => {
+      return value >= 0 && value <= 1;
+    },
+  },
+  gpuMemoryUnit: {
+    type: String,
+    default: ByteUnit.GB,
+  },
+});
+
+const { t } = useI18n();
+
+const progressSize = computed(() => {
+  return `${props.size}rem`;
+});
+const gpuMemoryDigit = computed(() => {
+  return props.gpuMemoryUnit === ByteUnit.TB ? 2 : 0;
+});
+</script>
+
 <template>
   <div
     class="gpu-info-row-wrapper column justify-center items-center no-wrap full-width"
@@ -152,76 +222,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, PropType } from 'vue';
-import { GPUStateResponse } from 'src/interface/api';
-import { useI18n } from 'vue-i18n';
-import { getDegreeUnit, getUsageColorClass, rounded } from 'src/utils/utils';
-import FanIcon from 'components/base/FanIcon.vue';
-import CircularProgressWithTitle from 'components/base/CircularProgressWithTitle.vue';
-import { ByteUnit } from 'src/module/config';
-
-const props = defineProps({
-  gpuState: {
-    type: Object as PropType<GPUStateResponse>,
-    required: true,
-  },
-  showLayout: {
-    type: String,
-    default: 'sm',
-    validator(val: string) {
-      return ['sm', 'md', 'lg'].includes(val);
-    },
-  },
-  freeUsageThreshold: {
-    type: Number,
-    default: 20,
-    validator(val: number) {
-      return val >= 0 && val <= 100;
-    },
-  },
-  midUsageThreshold: {
-    type: Number,
-    default: 60,
-    validator(val: number) {
-      return val >= 0 && val <= 100;
-    },
-  },
-  useFahrenheitUnit: {
-    type: Boolean,
-    default: false,
-  },
-  isError: {
-    type: Boolean,
-    default: false,
-  },
-  size: {
-    type: Number,
-    default: 4,
-  },
-  innerTextSizePercentage: {
-    type: Number,
-    default: 0.2,
-    validator: (value: number) => {
-      return value >= 0 && value <= 1;
-    },
-  },
-  gpuMemoryUnit: {
-    type: String,
-    default: ByteUnit.GB,
-  },
-});
-
-const { t } = useI18n();
-
-const progressSize = computed(() => {
-  return `${props.size}rem`;
-});
-const gpuMemoryDigit = computed(() => {
-  return props.gpuMemoryUnit === ByteUnit.TB ? 2 : 0;
-});
-</script>
 
 <style lang="sass" scoped>
 .gpu-info-row-wrapper

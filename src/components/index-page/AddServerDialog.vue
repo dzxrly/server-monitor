@@ -1,3 +1,101 @@
+<script setup lang="ts">
+import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { GPUType, ServerConfig } from 'src/module/config';
+import { useI18n } from 'vue-i18n';
+import { getUUID } from 'src/utils/utils';
+import { useConfigStore } from 'stores/user-config';
+
+const showAddServerDialog = defineModel('showAddServerDialog', {
+  required: true,
+  type: Boolean,
+});
+const serverConfig = reactive<ServerConfig>(new ServerConfig());
+const { t } = useI18n();
+const configStore = useConfigStore();
+const serverNameInputRef = ref();
+const serverUrlInputRef = ref();
+const tagColorInputRef = ref();
+const tagColorInputError = computed(
+  () => tagColorInputRef.value && tagColorInputRef.value.hasError
+);
+const serverUrlPrependUrlSelect = ref('https://');
+const serverUrlInput = ref('');
+const gpuTypeSelect = ref(GPUType.NoneGPU);
+
+const serverUrlPrependSelectOptions = [
+  {
+    label: 'https://',
+    value: 'https://',
+  },
+  {
+    label: 'http://',
+    value: 'http://',
+  },
+];
+// convert GPUType enum to map, like { label: 'NVIDIA', value: GPUType.NVIDIA }
+const gpuTypeSelectOptions = (
+  Object.keys(GPUType) as (keyof typeof GPUType)[]
+).map((key) => {
+  return {
+    label: t(key),
+    value: GPUType[key],
+    // TODO: Only support NVIDIA GPU
+    disable:
+      GPUType[key] !== GPUType.NoneGPU && GPUType[key] !== GPUType.NVIDIA,
+  };
+});
+
+const isValid = computed(() => {
+  return (
+    serverConfig.tagColor &&
+    serverConfig.tagColor !== '' &&
+    serverConfig.uniqueId &&
+    serverConfig.uniqueId !== '' &&
+    serverConfig.serverUrl &&
+    serverConfig.serverUrl !== '' &&
+    serverConfig.customName &&
+    serverConfig.customName !== '' &&
+    tagColorInputRef.value &&
+    !tagColorInputRef.value.hasError &&
+    serverNameInputRef.value &&
+    !serverNameInputRef.value.hasError &&
+    serverUrlInputRef.value &&
+    !serverUrlInputRef.value.hasError
+  );
+});
+
+function addServer() {
+  const serverList = configStore.config.serverListConfig;
+  serverList.push(serverConfig);
+  configStore.setConfig({
+    ...configStore.config,
+    serverListConfig: serverList,
+  });
+  showAddServerDialog.value = false;
+}
+
+function generateRandomColor(): string {
+  const randomHex = () =>
+    Math.floor(Math.random() * 0x1000000)
+      .toString(16)
+      .padStart(6, '0');
+  return `#${randomHex()}`;
+}
+
+onMounted(() => {
+  serverConfig.uniqueId = getUUID();
+  serverConfig.tagColor = generateRandomColor();
+});
+
+watch(serverUrlPrependUrlSelect, (newVal) => {
+  serverConfig.serverUrl = `${newVal}${serverUrlInput.value}`;
+});
+
+watch(gpuTypeSelect, (newVal) => {
+  serverConfig.gpuServer.setGPUType(newVal);
+});
+</script>
+
 <template>
   <div
     class="add-server-dialog-wrapper full-width bg-transparent text-card-color"
@@ -125,104 +223,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue';
-import { GPUType, ServerConfig } from 'src/module/config';
-import { useI18n } from 'vue-i18n';
-import { getUUID } from 'src/utils/utils';
-import { useConfigStore } from 'stores/user-config';
-
-const showAddServerDialog = defineModel('showAddServerDialog', {
-  required: true,
-  type: Boolean,
-});
-const serverConfig = reactive<ServerConfig>(new ServerConfig());
-const { t } = useI18n();
-const configStore = useConfigStore();
-const serverNameInputRef = ref();
-const serverUrlInputRef = ref();
-const tagColorInputRef = ref();
-const tagColorInputError = computed(
-  () => tagColorInputRef.value && tagColorInputRef.value.hasError
-);
-const serverUrlPrependUrlSelect = ref('https://');
-const serverUrlInput = ref('');
-const gpuTypeSelect = ref(GPUType.NoneGPU);
-
-const serverUrlPrependSelectOptions = [
-  {
-    label: 'https://',
-    value: 'https://',
-  },
-  {
-    label: 'http://',
-    value: 'http://',
-  },
-];
-// convert GPUType enum to map, like { label: 'NVIDIA', value: GPUType.NVIDIA }
-const gpuTypeSelectOptions = (
-  Object.keys(GPUType) as (keyof typeof GPUType)[]
-).map((key) => {
-  return {
-    label: t(key),
-    value: GPUType[key],
-    // TODO: Only support NVIDIA GPU
-    disable:
-      GPUType[key] !== GPUType.NoneGPU && GPUType[key] !== GPUType.NVIDIA,
-  };
-});
-
-const isValid = computed(() => {
-  return (
-    serverConfig.tagColor &&
-    serverConfig.tagColor !== '' &&
-    serverConfig.uniqueId &&
-    serverConfig.uniqueId !== '' &&
-    serverConfig.serverUrl &&
-    serverConfig.serverUrl !== '' &&
-    serverConfig.customName &&
-    serverConfig.customName !== '' &&
-    tagColorInputRef.value &&
-    !tagColorInputRef.value.hasError &&
-    serverNameInputRef.value &&
-    !serverNameInputRef.value.hasError &&
-    serverUrlInputRef.value &&
-    !serverUrlInputRef.value.hasError
-  );
-});
-
-function addServer() {
-  const serverList = configStore.config.serverListConfig;
-  serverList.push(serverConfig);
-  configStore.setConfig({
-    ...configStore.config,
-    serverListConfig: serverList,
-  });
-  showAddServerDialog.value = false;
-}
-
-function generateRandomColor(): string {
-  const randomHex = () =>
-    Math.floor(Math.random() * 0x1000000)
-      .toString(16)
-      .padStart(6, '0');
-  return `#${randomHex()}`;
-}
-
-onMounted(() => {
-  serverConfig.uniqueId = getUUID();
-  serverConfig.tagColor = generateRandomColor();
-});
-
-watch(serverUrlPrependUrlSelect, (newVal) => {
-  serverConfig.serverUrl = `${newVal}${serverUrlInput.value}`;
-});
-
-watch(gpuTypeSelect, (newVal) => {
-  serverConfig.gpuServer.setGPUType(newVal);
-});
-</script>
 
 <style lang="sass" scoped>
 .add-server-dialog-wrapper

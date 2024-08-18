@@ -1,3 +1,41 @@
+<script setup lang="ts">
+import { getDegreeUnit, rounded } from 'src/utils/utils';
+import CPUTemperatureRow from 'components/base/CPUTemperatureRow.vue';
+import CPUUsageCube from 'components/base/CPUUsageCube.vue';
+import { CPUNameResponse, CPUStatePerCPUResponse } from 'src/interface/api';
+import { computed, inject, PropType } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useConfigStore } from 'stores/user-config';
+
+const props = defineProps({
+  cpuState: {
+    type: Object as PropType<CPUStatePerCPUResponse>,
+    required: true,
+  },
+  cpuName: {
+    type: Object as PropType<CPUNameResponse>,
+    required: true,
+  },
+  cpuUsageCubeSize: {
+    type: Number,
+    required: true,
+  },
+  cpuUsageInnerTextPercentage: {
+    type: Number,
+    required: true,
+  },
+});
+
+const { t } = useI18n();
+const configStore = useConfigStore();
+
+const isLtSm = inject('isLtSm', false);
+
+const cpuUsageCubeGridSizeComputed = computed(() => {
+  return `${props.cpuUsageCubeSize}rem`;
+});
+</script>
+
 <template>
   <div
     class="cpu-info-card-wrapper bg-card-color full-width column justify-center items-center no-wrap rounded-borders q-pa-md"
@@ -101,44 +139,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { getDegreeUnit, rounded } from 'src/utils/utils';
-import CPUTemperatureRow from 'components/base/CPUTemperatureRow.vue';
-import CPUUsageCube from 'components/base/CPUUsageCube.vue';
-import { CPUNameResponse, CPUStatePerCPUResponse } from 'src/interface/api';
-import { computed, inject, PropType } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useConfigStore } from 'stores/user-config';
-
-const props = defineProps({
-  cpuState: {
-    type: Object as PropType<CPUStatePerCPUResponse>,
-    required: true,
-  },
-  cpuName: {
-    type: Object as PropType<CPUNameResponse>,
-    required: true,
-  },
-  cpuUsageCubeSize: {
-    type: Number,
-    required: true,
-  },
-  cpuUsageInnerTextPercentage: {
-    type: Number,
-    required: true,
-  },
-});
-
-const { t } = useI18n();
-const configStore = useConfigStore();
-
-const isLtSm = inject('isLtSm', false);
-
-const cpuUsageCubeGridSizeComputed = computed(() => {
-  return `${props.cpuUsageCubeSize}rem`;
-});
-</script>
 
 <style scoped lang="sass">
 .cpu-info-card-wrapper

@@ -1,123 +1,3 @@
-<template>
-  <div class="server-card-wrapper q-pa-sm bg-transparent">
-    <div
-      class="server-card full-height column justify-center items-center no-wrap bg-card-color rounded-borders q-px-md q-pt-lg"
-    >
-      <div class="row justify-center items-center full-width">
-        <q-icon
-          class="cursor-pointer"
-          name="dns"
-          :style="{ color: server.tagColor }"
-          size="md"
-        >
-          <q-tooltip>
-            {{ server.serverUrl }}
-          </q-tooltip>
-        </q-icon>
-        <div class="col-grow row justify-center items-center">
-          <span class="text-h6 text-card-color">{{ server.customName }}</span>
-        </div>
-        <div class="row justify-center items-center">
-          <q-icon
-            v-if="loadingError.hasError()"
-            class="q-mr-xs"
-            name="error"
-            color="negative"
-            size="md"
-          >
-            <q-tooltip>
-              {{ t('loadingFailedTooltip') }}
-            </q-tooltip>
-          </q-icon>
-          <q-btn
-            icon="more_vert"
-            size="md"
-            :to="`/server/${server.uniqueId}`"
-            flat
-            round
-          />
-        </div>
-      </div>
-      <div
-        class="col-grow column justify-start items-center full-width full-height no-wrap q-pt-md"
-      >
-        <div class="row justify-between items-start no-wrap full-width">
-          <CircularProgressWithTitle
-            :title="t('cpuUsage')"
-            :color="
-              getUsageColorClass(
-                cpuState?.cpuUsage.avg,
-                props.freeUsageThreshold,
-                props.midUsageThreshold
-              )
-            "
-            :value="rounded(cpuState?.cpuUsage.avg, 0)"
-            :show-value-text="`${rounded(cpuState?.cpuUsage.avg, 0)}%`"
-            :is-error="loadingError.cpuStateFetchError"
-            :size="cpuProgressSize"
-            :inner-text-size-percentage="innerTextSizePercentage"
-          />
-          <CircularProgressWithTitle
-            :title="t('memoryUsage')"
-            :color="
-              getUsageColorClass(
-                memoryState?.memoryPercent,
-                props.freeUsageThreshold,
-                props.midUsageThreshold
-              )
-            "
-            :value="rounded(memoryState?.memoryPercent, 0)"
-            :show-value-text="`${rounded(memoryState?.memoryPercent, 0)}%`"
-            :is-error="loadingError.memoryStateFetchError"
-            :size="cpuProgressSize"
-            :inner-text-size-percentage="innerTextSizePercentage"
-          />
-          <CircularProgressWithTitle
-            :title="t('swapUsage')"
-            :color="
-              getUsageColorClass(
-                memoryState?.swapPercent,
-                props.freeUsageThreshold,
-                props.midUsageThreshold
-              )
-            "
-            :value="rounded(memoryState?.swapPercent, 0)"
-            :show-value-text="`${rounded(memoryState?.swapPercent, 0)}%`"
-            :is-error="loadingError.memoryStateFetchError"
-            :size="cpuProgressSize"
-            :inner-text-size-percentage="innerTextSizePercentage"
-          />
-        </div>
-        <CpuInfoRow
-          class="q-mt-md"
-          v-if="props.showLayout !== 'sm' && cpuState && cpuName"
-          :cpu-name="cpuName"
-          :cpu-state="cpuState"
-          :show-layout="showLayout"
-          :free-usage-threshold="props.freeUsageThreshold"
-          :mid-usage-threshold="props.midUsageThreshold"
-          :use-fahrenheit-unit="props.useFahrenheitUnit"
-        />
-        <div
-          v-if="server.gpuServer.gpuType !== GPUType.NoneGPU && gpuState"
-          class="row justify-center items-center no-wrap full-width q-mt-md"
-        >
-          <GpuInfoRow
-            :gpu-state="gpuState"
-            :show-layout="props.showLayout"
-            :free-usage-threshold="props.freeUsageThreshold"
-            :mid-usage-threshold="props.midUsageThreshold"
-            :size="gpuProgressSize"
-            :inner-text-size-percentage="innerTextSizePercentage"
-            :is-error="loadingError.gpuStateFetchError"
-            :gpu-memory-unit="props.gpuMemoryUnit"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ByteUnit, GPUType, ServerConfig } from 'src/module/config';
 import {
@@ -357,6 +237,126 @@ onBeforeUnmount(() => {
   gpuStateRemoveInterval();
 });
 </script>
+
+<template>
+  <div class="server-card-wrapper q-pa-sm bg-transparent">
+    <div
+      class="server-card full-height column justify-center items-center no-wrap bg-card-color rounded-borders q-px-md q-pt-lg"
+    >
+      <div class="row justify-center items-center full-width">
+        <q-icon
+          class="cursor-pointer"
+          name="dns"
+          :style="{ color: server.tagColor }"
+          size="md"
+        >
+          <q-tooltip>
+            {{ server.serverUrl }}
+          </q-tooltip>
+        </q-icon>
+        <div class="col-grow row justify-center items-center">
+          <span class="text-h6 text-card-color">{{ server.customName }}</span>
+        </div>
+        <div class="row justify-center items-center">
+          <q-icon
+            v-if="loadingError.hasError()"
+            class="q-mr-xs"
+            name="error"
+            color="negative"
+            size="md"
+          >
+            <q-tooltip>
+              {{ t('loadingFailedTooltip') }}
+            </q-tooltip>
+          </q-icon>
+          <q-btn
+            icon="more_vert"
+            size="md"
+            :to="`/server/${server.uniqueId}`"
+            flat
+            round
+          />
+        </div>
+      </div>
+      <div
+        class="col-grow column justify-start items-center full-width full-height no-wrap q-pt-md"
+      >
+        <div class="row justify-between items-start no-wrap full-width">
+          <CircularProgressWithTitle
+            :title="t('cpuUsage')"
+            :color="
+              getUsageColorClass(
+                cpuState?.cpuUsage.avg,
+                props.freeUsageThreshold,
+                props.midUsageThreshold
+              )
+            "
+            :value="rounded(cpuState?.cpuUsage.avg, 0)"
+            :show-value-text="`${rounded(cpuState?.cpuUsage.avg, 0)}%`"
+            :is-error="loadingError.cpuStateFetchError"
+            :size="cpuProgressSize"
+            :inner-text-size-percentage="innerTextSizePercentage"
+          />
+          <CircularProgressWithTitle
+            :title="t('memoryUsage')"
+            :color="
+              getUsageColorClass(
+                memoryState?.memoryPercent,
+                props.freeUsageThreshold,
+                props.midUsageThreshold
+              )
+            "
+            :value="rounded(memoryState?.memoryPercent, 0)"
+            :show-value-text="`${rounded(memoryState?.memoryPercent, 0)}%`"
+            :is-error="loadingError.memoryStateFetchError"
+            :size="cpuProgressSize"
+            :inner-text-size-percentage="innerTextSizePercentage"
+          />
+          <CircularProgressWithTitle
+            :title="t('swapUsage')"
+            :color="
+              getUsageColorClass(
+                memoryState?.swapPercent,
+                props.freeUsageThreshold,
+                props.midUsageThreshold
+              )
+            "
+            :value="rounded(memoryState?.swapPercent, 0)"
+            :show-value-text="`${rounded(memoryState?.swapPercent, 0)}%`"
+            :is-error="loadingError.memoryStateFetchError"
+            :size="cpuProgressSize"
+            :inner-text-size-percentage="innerTextSizePercentage"
+          />
+        </div>
+        <CpuInfoRow
+          class="q-mt-md"
+          v-if="props.showLayout !== 'sm' && cpuState && cpuName"
+          :cpu-name="cpuName"
+          :cpu-state="cpuState"
+          :show-layout="showLayout"
+          :free-usage-threshold="props.freeUsageThreshold"
+          :mid-usage-threshold="props.midUsageThreshold"
+          :use-fahrenheit-unit="props.useFahrenheitUnit"
+        />
+        <div
+          v-if="server.gpuServer.gpuType !== GPUType.NoneGPU && gpuState"
+          class="row justify-center items-center no-wrap full-width q-mt-md"
+        >
+          <GpuInfoRow
+            :gpu-state="gpuState"
+            :show-layout="props.showLayout"
+            :free-usage-threshold="props.freeUsageThreshold"
+            :mid-usage-threshold="props.midUsageThreshold"
+            :size="gpuProgressSize"
+            :inner-text-size-percentage="innerTextSizePercentage"
+            :is-error="loadingError.gpuStateFetchError"
+            :gpu-memory-unit="props.gpuMemoryUnit"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="sass" scoped>
 .server-card-wrapper

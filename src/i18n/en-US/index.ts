@@ -50,6 +50,10 @@ export default {
   memoryAndSwap: 'Memory and Swap',
   memoryUnit: 'Memory Unit',
   gpuMemoryUnit: 'VRAM Unit',
+  osCardTitle: 'OS Info',
+  osNameTitle: 'OS Name',
+  osArchitectureTitle: 'OS Architecture',
+  deviceNameTitle: 'Devices Name',
 
   settings: 'Settings',
   darkMode: 'Dark Mode',

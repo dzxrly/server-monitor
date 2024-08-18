@@ -1,3 +1,26 @@
+<script setup lang="ts">
+import { MemoryStateResponse } from 'src/interface/api';
+import { PropType } from 'vue';
+import { useConfigStore } from 'stores/user-config';
+import { useI18n } from 'vue-i18n';
+import { getUsageColorClass, rounded } from 'src/utils/utils';
+import { ByteUnit } from 'src/module/config';
+
+const props = defineProps({
+  memoryState: {
+    type: Object as PropType<MemoryStateResponse>,
+    required: true,
+  },
+  memoryUnit: {
+    type: String,
+    default: ByteUnit.GB,
+  },
+});
+
+const configStore = useConfigStore();
+const { t } = useI18n();
+</script>
+
 <template>
   <div
     class="memory-info-card-wrapper bg-card-color full-width column justify-center items-center no-wrap rounded-borders q-pa-md"
@@ -68,26 +91,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { MemoryStateResponse } from 'src/interface/api';
-import { PropType } from 'vue';
-import { useConfigStore } from 'stores/user-config';
-import { useI18n } from 'vue-i18n';
-import { getUsageColorClass, rounded } from 'src/utils/utils';
-import { ByteUnit } from 'src/module/config';
-
-const props = defineProps({
-  memoryState: {
-    type: Object as PropType<MemoryStateResponse>,
-    required: true,
-  },
-  memoryUnit: {
-    type: String,
-    default: ByteUnit.GB,
-  },
-});
-
-const configStore = useConfigStore();
-const { t } = useI18n();
-</script>

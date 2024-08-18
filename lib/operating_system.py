@@ -14,7 +14,7 @@ def get_operating_system_info() -> dict:
     if psutil.WINDOWS:
         return {
             'osName': '{} {} NT.Ver.{}'.format(uname.system, platform.win32_edition(), uname.version),
-            'osBit': bits,
+            'osBits': bits,
             'osArchitecture': architecture,
             'osSign': uname.system,
             'osNode': uname.node,
@@ -23,7 +23,7 @@ def get_operating_system_info() -> dict:
         _freedesktop_os_release = platform.freedesktop_os_release()
         return {
             'osName': '{} {}'.format(_freedesktop_os_release['NAME'], _freedesktop_os_release['VERSION']),
-            'osBit': bits,
+            'osBits': bits,
             'osArchitecture': architecture,
             'osSign': uname.system,
             'osNode': uname.node,

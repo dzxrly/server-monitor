@@ -7,6 +7,7 @@ from lib.cpu import get_cpu_state, get_cpu_temperature, get_cpu_name
 from lib.gpu import get_nv_gpu_state
 from lib.memory import get_memory_state
 from lib.network import get_net_state
+from lib.operating_system import get_operating_system_info
 from lib.utils.utils import flask_request_arg_bool
 
 app = Flask(__name__)
@@ -93,5 +94,13 @@ def get_network_state():
     try:
         network_state = get_net_state(unit=unit)
         return jsonify(network_state)
+    except Exception as e:
+        abort(400)
+
+
+@app.route('/os_info', methods=['GET'])
+def get_os_info():
+    try:
+        return jsonify(get_operating_system_info())
     except Exception as e:
         abort(400)

@@ -1,5 +1,3 @@
-import pynvml
-
 from lib.utils.utils import unit_convert, temperature_convert
 
 
@@ -18,6 +16,7 @@ def get_nv_gpu_state(
         'Only support B, KB, MB, GB, TB. Got {}'.format(unit))
 
     try:
+        import pynvml
         pynvml.nvmlInit()
         res = {
             'driverVersion': pynvml.nvmlSystemGetDriverVersion(),

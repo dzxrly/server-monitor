@@ -1,6 +1,6 @@
 <div align="center">
 
-# Server Monitor 后端
+# Server Monitor Backend
 
 </div>
 
@@ -12,101 +12,101 @@
 
 <div align="center">
 
-这是一个在线多服务器硬件状态监控网站的轻量化后端。请在需要监控硬件状态的服务器上部署该后端，默认状态下后端使用`6543`
-端口，请确保防火墙放行该端口！
+This is the backend of Server Monitor. Please deploy this backend on the servers where hardware status needs to be
+monitored. By default, the backend uses port `6543`. Please ensure that this port is allowed through the firewall!
+
+</div>
+
+<div align="center">
+
+[简体中文](./docs/zh-CN/README.md) | [繁體中文](./docs/zh-TW/README.md) | [English](./README.md)
 
 </div>
 
 > [!CAUTION]
 >
-> 完成后端部署后需要部署[前端网站](https://github.com/dzxrly/server-monitor/blob/frontend/README.md)以监控服务器硬件状态！
+> After completing the backend deployment, you need to deploy
+> the [Frontend Website](https://github.com/dzxrly/server-monitor/blob/frontend/README.md) to monitor the hardware status
+> of the server !
 
-## 操作系统支持
+## Deployment
 
-<div align="center">
+### Use deployment script (Recommend)
 
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
-
-</div>
-
-## 后端部署
-
-### 使用一键部署脚本
-
-1. 使用`git clone`拉取后端源码
+1. Run `git clone` to pull the source code
 
    ```bash
    git clone -b backend https://github.com/dzxrly/server-monitor.git
    ```
 
-2. 进入源码目录
+2. Enter the source code root
 
    ```bash
    cd server-monitor
    ```
 
 3.
-    - 对于**Linux系统**
+   - For **Linux**
 
       ```bash
-      # 授予脚本可执行权限
+      # Add executable permission
       chmod +x deploy.sh
-      # 运行部署脚本
+      # Run deployment script
       ./deploy.sh
       ```
 
-    - 对于**Windows系统**
+   - For **Windows**
 
-      ```bash
-      # 直接运行以下命令
-      ./deploy.bat
-      ```
+     ```bash
+     # Run the command below
+     ./deploy.bat
+     ```
 
-### 手动构建（可选）
+### Run as Python program
 
-1. 使用`git clone`拉取后端源码
+1. Run `git clone` to pull the source code
 
    ```bash
    git clone -b backend https://github.com/dzxrly/server-monitor.git
    ```
 
-2. 进入源码目录
+2. Enter the source code root
 
    ```bash
    cd server-monitor
    ```
 
-3. 创建虚拟环境（此处使用`conda`举例，并非一定要使用该虚拟环境管理器）
+3. Create Python virtual environment (In this case, using `conda` as venv manager)
 
    ```bash
    conda create -n server-monitor
    ```
 
-4. 切换至步骤1创建的虚拟环境
+4. Change to the venv created in Step.1
 
    ```bash
    conda activate server-monitor
    ```
 
-5. 安装依赖库
+5. Install dependences
 
    ```bash
    pip install -r requirements.txt
    ```
 
-6. 运行`server.py`开启后端服务器
+6. Run `server.py`
 
    ```bash
    python server.py
    ```
 
-7. 完成部署后在网站输入`你的服务器IP:端口号`即可
+7. Input `<your server IP>:<port>` in Serve Monitor website
 
-## 配置文件设置
+## Config File
 
-配置文件位于`./server_config.py`中，其中字段均为`waitress`的`serve`
-函数可接受字段，默认仅设置了`host`与`port`
-，具体配置请参考：[waitress serve arguments docs](https://docs.pylonsproject.org/projects/waitress/en/latest/arguments.html#arguments)。
+Config file is in the `./server_config.py`, all arguments are from the `serve` of `waitress`. Only
+setting `host` & `port` by default. More config file info
+in [waitress serve arguments docs](https://docs.pylonsproject.org/projects/waitress/en/latest/arguments.html#arguments).
 
 ---
 

@@ -24,7 +24,7 @@
 
 > [!CAUTION]
 >
-> 在前端監控伺服器狀態需要在每台被監控的伺服器上部署[後端服務](https://github.com/dzxrly/server-monitor/blob/backend/README.md)！
+> 在前端監控伺服器狀態需要在每台被監控的伺服器上部署[後端服務](https://github.com/dzxrly/server-monitor/blob/backend/docs/zh-TW/README.md)！
 
 ## 部署
 

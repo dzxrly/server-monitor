@@ -1,4 +1,4 @@
-FROM node:20.14 as builder
+FROM node:20.14 AS builder
 
 WORKDIR /src
 COPY ./ /src

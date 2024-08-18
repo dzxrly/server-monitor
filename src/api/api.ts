@@ -26,7 +26,7 @@ export default {
     );
   },
   getOSInfo<T>(serverUrl: string) {
-    return axiosRequest<T>(`${serverUrl}/os_info`, 'GET', {}, {});
+    return axiosRequest<T>(`${serverUrl}/os_info`, 'GET');
   },
   getNVGPUState<T>(serverUrl: string, unit: string, fahrenheit: boolean) {
     return axiosRequest<T>(

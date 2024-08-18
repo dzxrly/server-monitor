@@ -12,7 +12,7 @@
 
 <div align="center">
 
-這是一個線上伺服器硬體狀態監控網站的前端部分，可以透過`docker`構建與部署。
+這是Server Monitor的前端部分，可以透過`docker`構建與部署。
 
 </div>
 

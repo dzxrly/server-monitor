@@ -12,7 +12,7 @@
 
 <div align="center">
 
-This is the frontend of an online server hardware status monitoring website, which can be built and deployed using `docker`.
+This is the frontend of Server Monitor, which can be built and deployed using `docker`.
 
 </div>
 

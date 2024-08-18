@@ -12,7 +12,7 @@
 
 <div align="center">
 
-这是一个在线服务器硬件状态监控网站的前端部分，可以通过`docker`构建与部署。
+这是一个Server Monitor的前端部分，可以通过`docker`构建与部署。
 
 </div>
 

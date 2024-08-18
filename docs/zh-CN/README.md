@@ -31,7 +31,7 @@
 ## 前后端部署请参考以下文档
 
 - [前端部署](https://github.com/dzxrly/server-monitor/blob/frontend/docs/zh-CN/README.md)
-- [后端部署](https://github.com/dzxrly/server-monitor/blob/backend/README.md)
+- [后端部署](https://github.com/dzxrly/server-monitor/blob/backend/docs/zh-CN/README.md)
 
 ## 操作系统与硬件支持情况
 

@@ -46,6 +46,7 @@ Lightweight server hardware status monitoring website
 |    CPU     | ✅Fully Support | ⚠️Partial support |
 |   Memory   |     ✅Fully Support      | ✅Fully Support |
 |    Swap    |     ✅Fully Support      | ✅Fully Support |
+| OS Info | ✅Fully Support | ✅Fully Support |
 | NVIDIA GPU |     ✅Fully Support      | ✅Fully Support |
 |  AMD GPU   |      ❌Not Support      |  ❌Not Support  |
 | Intel GPU  |      ❌Not Support      |  ❌Not Support  |

@@ -16,6 +16,11 @@
 |    CPU Temperature    |   ✅Support   | ❌Not Support |
 |     Memory Usage      |   ✅Support   |   ✅Support   |
 |      Swap Usage       |   ✅Support   |   ✅Support   |
+|        OS Name        |   ✅Support   |   ✅Support   |
+|        OS Bits        |   ✅Support   |   ✅Support   |
+|      OS Version       |   ✅Support   |   ✅Support   |
+|    OS Architecture    |   ✅Support   |   ✅Support   |
+|     Devices Name      |   ✅Support   |   ✅Support   |
 |    NVIDIA GPU Name    |   ✅Support   |   ✅Support   |
 |   NVIDIA GPU Number   |   ✅Support   |   ✅Support   |
 |   NVIDIA GPU Usage    |   ✅Support   |   ✅Support   |

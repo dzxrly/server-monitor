@@ -1,17 +1,3 @@
-<template>
-  <div
-    class="gpu-info-card-wrapper bg-card-color full-width column justify-center items-center no-wrap rounded-borders q-pa-md"
-  >
-    <GPUInfoRow
-      :gpu-state="props.gpuState"
-      :is-error="props.isError"
-      :use-fahrenheit-unit="props.useFahrenheitUnit"
-      :gpu-memory-unit="props.gpuMemoryUnit"
-      show-layout="lg"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import GPUInfoRow from 'components/base/GPUInfoRow.vue';
 import { PropType } from 'vue';
@@ -37,3 +23,17 @@ const props = defineProps({
   },
 });
 </script>
+
+<template>
+  <div
+    class="gpu-info-card-wrapper bg-card-color full-width column justify-center items-center no-wrap rounded-borders q-pa-md"
+  >
+    <GPUInfoRow
+      :gpu-state="props.gpuState"
+      :is-error="props.isError"
+      :use-fahrenheit-unit="props.useFahrenheitUnit"
+      :gpu-memory-unit="props.gpuMemoryUnit"
+      show-layout="lg"
+    />
+  </div>
+</template>

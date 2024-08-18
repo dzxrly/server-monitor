@@ -46,6 +46,10 @@ export default {
   memoryAndSwap: '記憶體和Swap',
   memoryUnit: '記憶體單位',
   gpuMemoryUnit: '顯存單位',
+  osCardTitle: '系統資訊',
+  osNameTitle: '系統名稱',
+  osArchitectureTitle: '系統架構',
+  deviceNameTitle: '設備名稱',
 
   settings: '設置',
   darkMode: '暗黑模式',

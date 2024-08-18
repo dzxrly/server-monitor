@@ -1,9 +1,3 @@
-<template>
-  <div class="fan-icon-wrapper text-base-color">
-    <q-icon class="fan-icon" name="mdi-fan" :size="props.size" />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 
@@ -31,6 +25,12 @@ const fanSpeed = computed(() => {
   return `${props.functionCoeffA * props.fanSpeed + props.functionCoeffB}s`;
 });
 </script>
+
+<template>
+  <div class="fan-icon-wrapper text-base-color">
+    <q-icon class="fan-icon" name="mdi-fan" :size="props.size" />
+  </div>
+</template>
 
 <style scoped lang="sass">
 .fan-icon-wrapper

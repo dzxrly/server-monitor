@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const switchValue = defineModel('switchValue', {
+  required: true,
+  type: Boolean,
+});
+const props = defineProps({
+  title: { required: true, type: String },
+});
+</script>
+
 <template>
   <div class="clickable-switch-row-wrapper full-width bg-transparent">
     <label
@@ -8,16 +18,6 @@
     </label>
   </div>
 </template>
-
-<script setup lang="ts">
-const switchValue = defineModel('switchValue', {
-  required: true,
-  type: Boolean,
-});
-const props = defineProps({
-  title: { required: true, type: String },
-});
-</script>
 
 <style scoped lang="sass">
 .clickable-switch-row-wrapper

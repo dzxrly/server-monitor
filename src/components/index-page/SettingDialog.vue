@@ -1,162 +1,3 @@
-<template>
-  <q-card
-    class="setting-dialog-wrapper full-width bg-card-color rounded-borders"
-  >
-    <q-card-section class="column justify-center items-center no-wrap">
-      <div
-        class="card-header-row row justify-between items-center full-width bg-card-color"
-      >
-        <div class="row justify-start items-center">
-          <q-icon class="text-card-color q-pr-sm" name="settings" size="sm" />
-          <span class="text-card-color text-h6">{{ t('settings') }}</span>
-        </div>
-        <q-btn
-          icon="close"
-          class="text-btn-color"
-          color="btn-color"
-          @click="showSettingDialog = false"
-          round
-          flat
-        />
-      </div>
-      <ClickableSwitchRow
-        class="q-mt-md"
-        v-model:switch-value="config.darkMode"
-        :title="t('darkMode')"
-      />
-      <ClickableSwitchRow
-        class="q-mt-sm"
-        v-model:switch-value="config.useFahrenheitUnit"
-        :title="t('useFahrenheitUnit')"
-      />
-      <SelectRow
-        class="q-mt-sm"
-        v-model:select-value="config.indexPageServerPanelLayout"
-        :title="t('indexPageServerPanelLayout')"
-        :options="layoutSettingOptions"
-      />
-      <SelectRow
-        class="q-mt-sm"
-        v-model:select-value="config.defaultLanguage"
-        :title="t('language')"
-        :options="langSettingOptions"
-        v-on:update:select-value="(val) => (locale = val)"
-      />
-      <SelectRow
-        class="q-mt-sm"
-        v-model:select-value="config.memoryUnit"
-        :title="t('memoryUnit')"
-        :options="memoryUnitSettingOptions"
-      />
-      <SelectRow
-        class="q-mt-sm"
-        v-model:select-value="config.gpuMemoryUnit"
-        :title="t('gpuMemoryUnit')"
-        :options="gpuMemoryUnitSettingOptions"
-      />
-      <NumberInputRow
-        class="q-mt-sm"
-        :title="t('refreshTimeSec')"
-        v-model:value="config.refreshTimeSec"
-        :max="3600"
-        :min="1"
-        :step="1"
-      />
-      <NumberInputRow
-        class="q-mt-sm"
-        :title="t('freeUsageThreshold')"
-        v-model:value="config.freeUsageThreshold"
-        :max="100"
-        :min="0"
-        :step="1"
-      />
-      <NumberInputRow
-        class="q-mt-sm"
-        :title="t('midUsageThreshold')"
-        v-model:value="config.midUsageThreshold"
-        :max="100"
-        :min="0"
-        :step="1"
-      />
-      <div class="row justify-evenly items-center full-width no-wrap q-mt-md">
-        <q-btn
-          :label="t('resetSettingBtn')"
-          color="negative"
-          @click="showResetConfirmDialog = true"
-          icon="restart_alt"
-          flat
-          rounded
-          no-caps
-        />
-        <q-btn
-          :label="t('exportSettingBtn')"
-          color="btn-color"
-          @click="configToJsonFile()"
-          icon="file_upload"
-          flat
-          rounded
-          no-caps
-        />
-        <q-btn
-          :label="t('importSettingBtn')"
-          color="btn-color"
-          @click="importConfigFromJsonFile()"
-          icon="file_download"
-          flat
-          rounded
-          no-caps
-        />
-      </div>
-    </q-card-section>
-  </q-card>
-
-  <q-dialog
-    v-model="showResetConfirmDialog"
-    backdrop-filter="blur(5px)"
-    transition-duration="250"
-    persistent
-    no-shake
-  >
-    <q-card
-      class="bg-transparent text-card-color bg-card-color full-width rounded-borders"
-    >
-      <q-card-section class="column no-wrap justify-center items-center">
-        <div class="row justify-start items-center full-width">
-          <span class="text-h6 text-card-color">{{
-            t('resetSettingConfirmTitle')
-          }}</span>
-        </div>
-        <span class="text-body1 text-card-color q-mt-md">{{
-          t('resetSettingConfirm')
-        }}</span>
-        <div class="row justify-evenly items-center full-width q-mt-md">
-          <q-btn
-            :label="t('confirmBtn')"
-            color="negative"
-            @click="
-              () => {
-                resetSettings();
-                showResetConfirmDialog = false;
-              }
-            "
-            flat
-            rounded
-            no-caps
-          />
-          <q-btn
-            :label="t('cancelBtn')"
-            color="btn-color"
-            @click="showResetConfirmDialog = false"
-            flat
-            rounded
-            no-caps
-          />
-        </div>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
-</template>
-
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import ClickableSwitchRow from 'components/base/ClickableSwitchRow.vue';
@@ -325,6 +166,165 @@ watch(
   { deep: true }
 );
 </script>
+
+<template>
+  <q-card
+    class="setting-dialog-wrapper full-width bg-card-color rounded-borders"
+  >
+    <q-card-section class="column justify-center items-center no-wrap">
+      <div
+        class="card-header-row row justify-between items-center full-width bg-card-color"
+      >
+        <div class="row justify-start items-center">
+          <q-icon class="text-card-color q-pr-sm" name="settings" size="sm" />
+          <span class="text-card-color text-h6">{{ t('settings') }}</span>
+        </div>
+        <q-btn
+          icon="close"
+          class="text-btn-color"
+          color="btn-color"
+          @click="showSettingDialog = false"
+          round
+          flat
+        />
+      </div>
+      <ClickableSwitchRow
+        class="q-mt-md"
+        v-model:switch-value="config.darkMode"
+        :title="t('darkMode')"
+      />
+      <ClickableSwitchRow
+        class="q-mt-sm"
+        v-model:switch-value="config.useFahrenheitUnit"
+        :title="t('useFahrenheitUnit')"
+      />
+      <SelectRow
+        class="q-mt-sm"
+        v-model:select-value="config.indexPageServerPanelLayout"
+        :title="t('indexPageServerPanelLayout')"
+        :options="layoutSettingOptions"
+      />
+      <SelectRow
+        class="q-mt-sm"
+        v-model:select-value="config.defaultLanguage"
+        :title="t('language')"
+        :options="langSettingOptions"
+        v-on:update:select-value="(val) => (locale = val)"
+      />
+      <SelectRow
+        class="q-mt-sm"
+        v-model:select-value="config.memoryUnit"
+        :title="t('memoryUnit')"
+        :options="memoryUnitSettingOptions"
+      />
+      <SelectRow
+        class="q-mt-sm"
+        v-model:select-value="config.gpuMemoryUnit"
+        :title="t('gpuMemoryUnit')"
+        :options="gpuMemoryUnitSettingOptions"
+      />
+      <NumberInputRow
+        class="q-mt-sm"
+        :title="t('refreshTimeSec')"
+        v-model:value="config.refreshTimeSec"
+        :max="3600"
+        :min="1"
+        :step="1"
+      />
+      <NumberInputRow
+        class="q-mt-sm"
+        :title="t('freeUsageThreshold')"
+        v-model:value="config.freeUsageThreshold"
+        :max="100"
+        :min="0"
+        :step="1"
+      />
+      <NumberInputRow
+        class="q-mt-sm"
+        :title="t('midUsageThreshold')"
+        v-model:value="config.midUsageThreshold"
+        :max="100"
+        :min="0"
+        :step="1"
+      />
+      <div class="row justify-evenly items-center full-width no-wrap q-mt-md">
+        <q-btn
+          :label="t('resetSettingBtn')"
+          color="negative"
+          @click="showResetConfirmDialog = true"
+          icon="restart_alt"
+          flat
+          rounded
+          no-caps
+        />
+        <q-btn
+          :label="t('exportSettingBtn')"
+          color="btn-color"
+          @click="configToJsonFile()"
+          icon="file_upload"
+          flat
+          rounded
+          no-caps
+        />
+        <q-btn
+          :label="t('importSettingBtn')"
+          color="btn-color"
+          @click="importConfigFromJsonFile()"
+          icon="file_download"
+          flat
+          rounded
+          no-caps
+        />
+      </div>
+    </q-card-section>
+  </q-card>
+
+  <q-dialog
+    v-model="showResetConfirmDialog"
+    backdrop-filter="blur(5px)"
+    transition-duration="250"
+    persistent
+    no-shake
+  >
+    <q-card
+      class="bg-transparent text-card-color bg-card-color full-width rounded-borders"
+    >
+      <q-card-section class="column no-wrap justify-center items-center">
+        <div class="row justify-start items-center full-width">
+          <span class="text-h6 text-card-color">{{
+            t('resetSettingConfirmTitle')
+          }}</span>
+        </div>
+        <span class="text-body1 text-card-color q-mt-md">{{
+          t('resetSettingConfirm')
+        }}</span>
+        <div class="row justify-evenly items-center full-width q-mt-md">
+          <q-btn
+            :label="t('confirmBtn')"
+            color="negative"
+            @click="
+              () => {
+                resetSettings();
+                showResetConfirmDialog = false;
+              }
+            "
+            flat
+            rounded
+            no-caps
+          />
+          <q-btn
+            :label="t('cancelBtn')"
+            color="btn-color"
+            @click="showResetConfirmDialog = false"
+            flat
+            rounded
+            no-caps
+          />
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+</template>
 
 <style lang="sass" scoped>
 .setting-dialog-wrapper

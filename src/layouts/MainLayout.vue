@@ -1,3 +1,54 @@
+<script setup lang="ts">
+import SettingDialog from 'components/index-page/SettingDialog.vue';
+import { onMounted, provide, ref } from 'vue';
+import { openURL } from 'quasar';
+import { useRoute, useRouter } from 'vue-router';
+import { ServerConfig } from 'src/module/config';
+import { useConfigStore } from 'stores/user-config';
+import { useI18n } from 'vue-i18n';
+import ServerEditDialog from 'components/server-detail-page/ServerEditDialog.vue';
+
+const $route = useRoute();
+const $router = useRouter();
+const configStore = useConfigStore();
+const { t } = useI18n();
+
+const showSettingDialog = ref(false);
+const pauseFetch = ref<boolean>(false);
+const showDeleteServerDialog = ref(false);
+const showServerEditDialog = ref(false);
+const showBackendDeployDialog = ref(true);
+const noMoreBackendDeployTips = ref(false);
+
+function deleteServer() {
+  const newServerList = configStore.config.serverListConfig.filter(
+    (server: ServerConfig) => server.uniqueId !== ($route.params.uid as string)
+  );
+  configStore.setConfig({
+    ...configStore.config,
+    serverListConfig: newServerList,
+  });
+  showDeleteServerDialog.value = false;
+  $router.push('/');
+}
+
+function closeBackendDeployDialog() {
+  showBackendDeployDialog.value = false;
+  if (noMoreBackendDeployTips.value) {
+    configStore.setConfig({
+      ...configStore.config,
+      showBackendTipsDialog: false,
+    });
+  }
+}
+
+provide('pauseFetch', pauseFetch);
+
+onMounted(() => {
+  showBackendDeployDialog.value = configStore.config.showBackendTipsDialog;
+});
+</script>
+
 <template>
   <q-layout view="hHh lpR fff">
     <q-page-container>
@@ -205,56 +256,6 @@
     </q-dialog>
   </q-layout>
 </template>
-<script setup lang="ts">
-import SettingDialog from 'components/index-page/SettingDialog.vue';
-import { onMounted, provide, ref } from 'vue';
-import { openURL } from 'quasar';
-import { useRoute, useRouter } from 'vue-router';
-import { ServerConfig } from 'src/module/config';
-import { useConfigStore } from 'stores/user-config';
-import { useI18n } from 'vue-i18n';
-import ServerEditDialog from 'components/server-detail-page/ServerEditDialog.vue';
-
-const $route = useRoute();
-const $router = useRouter();
-const configStore = useConfigStore();
-const { t } = useI18n();
-
-const showSettingDialog = ref(false);
-const pauseFetch = ref<boolean>(false);
-const showDeleteServerDialog = ref(false);
-const showServerEditDialog = ref(false);
-const showBackendDeployDialog = ref(true);
-const noMoreBackendDeployTips = ref(false);
-
-function deleteServer() {
-  const newServerList = configStore.config.serverListConfig.filter(
-    (server: ServerConfig) => server.uniqueId !== ($route.params.uid as string)
-  );
-  configStore.setConfig({
-    ...configStore.config,
-    serverListConfig: newServerList,
-  });
-  showDeleteServerDialog.value = false;
-  $router.push('/');
-}
-
-function closeBackendDeployDialog() {
-  showBackendDeployDialog.value = false;
-  if (noMoreBackendDeployTips.value) {
-    configStore.setConfig({
-      ...configStore.config,
-      showBackendTipsDialog: false,
-    });
-  }
-}
-
-provide('pauseFetch', pauseFetch);
-
-onMounted(() => {
-  showBackendDeployDialog.value = configStore.config.showBackendTipsDialog;
-});
-</script>
 
 <style lang="sass" scoped>
 .sticky-btn

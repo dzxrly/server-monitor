@@ -1,22 +1,3 @@
-<template>
-  <div
-    class="cpu-temperature-row-wrapper"
-    :class="isLtSm ? 'q-px-sm q-pb-sm' : 'q-px-md q-px-md'"
-  >
-    <q-table
-      :rows="coreTemperature"
-      :columns="tableColumns"
-      row-key="coreLabel"
-      :bordered="false"
-      table-class="text-card-color bg-card-color"
-      card-class="text-card-color bg-card-color"
-      :dense="isLtSm"
-      :rows-per-page-label="t('rowsPerPage')"
-      flat
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed, inject, PropType } from 'vue';
 import { CPUCoreTemperature, CPUTemperature } from 'src/interface/api';
@@ -97,3 +78,22 @@ const tableColumns = [
   },
 ] as QTableColumn[];
 </script>
+
+<template>
+  <div
+    class="cpu-temperature-row-wrapper"
+    :class="isLtSm ? 'q-px-sm q-pb-sm' : 'q-px-md q-px-md'"
+  >
+    <q-table
+      :rows="coreTemperature"
+      :columns="tableColumns"
+      row-key="coreLabel"
+      :bordered="false"
+      table-class="text-card-color bg-card-color"
+      card-class="text-card-color bg-card-color"
+      :dense="isLtSm"
+      :rows-per-page-label="t('rowsPerPage')"
+      flat
+    />
+  </div>
+</template>

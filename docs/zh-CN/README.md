@@ -12,7 +12,7 @@
 
 <div align="center">
 
-这是Server Monitor的前端部分，可以通过`docker`构建与部署。
+这是 Server Monitor 的前端部分，可以通过`docker`构建与部署。
 
 </div>
 

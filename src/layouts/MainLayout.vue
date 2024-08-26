@@ -218,8 +218,8 @@ onMounted(() => {
             class="row justify-start items-center no-wrap full-width q-mt-md"
           >
             <span class="text-card-color text-body1"
-              >{{ t('backendDeployDesc') }}
-              <span
+              >{{ t('backendDeployDesc')
+              }}<span
                 class="cursor-pointer"
                 style="text-decoration: underline"
                 @click="
@@ -227,9 +227,8 @@ onMounted(() => {
                     'https://github.com/dzxrly/server-monitor/blob/backend/README.md'
                   )
                 "
+                >{{ t('backendDeployDocs') }}</span
               >
-                {{ t('backendDeployDocs') }}
-              </span>
             </span>
           </div>
           <div class="row justify-end items-center no-wrap full-width q-mt-md">

@@ -60,10 +60,8 @@
 
 <div align="center">
 
-![main page](../../img/zh-TW/main_page.jpeg)
-![server  details](../../img/zh-TW/server_details.jpeg)
-![add server](../../img/zh-TW/add_server.jpeg)
-![server edit](../../img/zh-TW/server_edit.jpeg)
+![main page](../../img/zh-TW/main_page.png)
+![server details](../../img/zh-TW/server_detail.png)
 
 </div>
 

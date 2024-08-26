@@ -60,10 +60,8 @@ Lightweight server hardware status monitoring website
 
 <div align="center">
 
-![main page](./img/en-US/main_page.jpeg)
-![server  details](./img/en-US/server_details.jpeg)
-![add server](./img/en-US/add_server.jpeg)
-![server edit](./img/en-US/server_edit.jpeg)
+![main page](./img/en-US/main_page.png)
+![server details](./img/en-US/server_detail.png)
 
 </div>
 

@@ -11,7 +11,7 @@ const props = defineProps({
 <template>
   <div class="clickable-switch-row-wrapper full-width bg-transparent">
     <label
-      class="clickable-switch-row row justify-between items-center no-wrap cursor-pointer q-px-md"
+      class="clickable-switch-row row justify-between items-center no-wrap cursor-pointer q-px-md rounded-borders"
     >
       <span class="text-base-color text-subtitle1">{{ props.title }}</span>
       <q-toggle v-model="switchValue" color="primary" size="md" />

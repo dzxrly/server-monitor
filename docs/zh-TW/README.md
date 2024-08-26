@@ -56,7 +56,7 @@
 
 > 詳細的操作系統與硬體支援情況請查看[詳細支援列表](./HardwareSupportList.md)
 
-## 執行時截圖
+## 截圖
 
 <div align="center">
 
@@ -64,6 +64,10 @@
 ![server details](../../img/zh-TW/server_detail.png)
 
 </div>
+
+## 隱私政策
+
+[Server Monitor Privacy Police](./Privacy.md)
 
 ---
 

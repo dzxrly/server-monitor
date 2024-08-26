@@ -65,6 +65,10 @@ Lightweight server hardware status monitoring website
 
 </div>
 
+## Privacy Police
+
+[Server Monitor Privacy Police](./Privacy.md)
+
 ---
 
 <div align="center">

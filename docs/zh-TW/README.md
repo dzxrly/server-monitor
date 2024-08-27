@@ -67,7 +67,7 @@
 
 ## 隱私政策
 
-[Server Monitor Privacy Police](../../Privacy.md)
+[Server Monitor隱私政策](../../Privacy.md)
 
 ---
 

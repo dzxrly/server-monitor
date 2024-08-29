@@ -45,7 +45,7 @@
 3. 使用`docker buildx`構建鏡像
 
    ```bash
-   docker buildx build -t eggtargaryen/server-monitor .
+   docker buildx build --no-chache -t eggtargaryen/server-monitor .
    ```
 
 4. 運行該鏡像

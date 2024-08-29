@@ -45,7 +45,7 @@ This is the frontend of Server Monitor, which can be built and deployed using `d
 3. Run `docker buildx` to build container
 
    ```bash
-   docker buildx build -t eggtargaryen/server-monitor .
+   docker buildx build --no-chache -t eggtargaryen/server-monitor .
    ```
 
 4. Run the container

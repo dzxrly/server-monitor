@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import ClickableSwitchRow from 'components/base/ClickableSwitchRow.vue';
+import ClickableSwitchRow from 'components/ui/ClickableSwitchRow.vue';
 import { useConfigStore } from 'stores/user-config';
 import { computed, ref, watch } from 'vue';
 import { languageMap } from 'boot/i18n';
-import SelectRow from 'components/base/SelectRow.vue';
-import NumberInputRow from 'components/base/NumberInputRow.vue';
+import SelectRow from 'components/ui/SelectRow.vue';
+import NumberInputRow from 'components/ui/NumberInputRow.vue';
 import { useQuasar } from 'quasar';
 import { ByteUnit, Config, configZod } from 'src/module/config';
 import { isUUID } from 'src/utils/utils';

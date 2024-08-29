@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { getUsageColor, rounded } from 'src/utils/utils';
+import {computed} from 'vue';
+import {getUsageColor, rounded} from 'src/utils/utils';
 
 const props = defineProps({
   cpuUsage: {
@@ -38,6 +38,10 @@ const props = defineProps({
       return val >= 0 && val <= 100;
     },
   },
+  animationSpeedSec: {
+    type: Number,
+    default: 0.1
+  }
 });
 
 const cubeSize = computed(() => {
@@ -59,6 +63,7 @@ const bgColor = computed(() => {
     props.midUsageThreshold
   );
 });
+
 const cpuUsageTranslateY = computed(() => {
   if (100 - props.cpuUsage <= 0) {
     return 'translateY(1%)';
@@ -68,6 +73,10 @@ const cpuUsageTranslateY = computed(() => {
     return `translateY(${100 - props.cpuUsage}%)`;
   }
 });
+
+const animationSpeed = computed(() => {
+  return `${props.animationSpeedSec}s`
+})
 </script>
 
 <template>
@@ -109,6 +118,6 @@ const cpuUsageTranslateY = computed(() => {
   height: v-bind(cubeSize)
   background-color: v-bind(bgColor)
   transform: v-bind(cpuUsageTranslateY)
-  transition: all 0.1s linear
+  transition: all v-bind(animationSpeed) linear
   z-index: 1
 </style>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import { computed } from 'vue';
+import {useI18n} from 'vue-i18n';
+import {computed} from 'vue';
 
 const props = defineProps({
   title: {
@@ -34,6 +34,10 @@ const props = defineProps({
       return value >= 0 && value <= 1;
     },
   },
+  animationSpeedSec: {
+    type: Number,
+    default: 0.1
+  }
 });
 
 const { t } = useI18n();
@@ -67,6 +71,7 @@ const innerTextSize = computed(() => {
         :class="props.color"
         :thickness="props.size * 0.05"
         track-color="grey-6"
+        :animation-speed="props.animationSpeedSec * 1000"
       >
         <span class="inner-text-span text-card-color">{{
           props.showValueText

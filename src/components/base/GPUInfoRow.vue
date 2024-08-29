@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
-import { GPUStateResponse } from 'src/interface/api';
-import { useI18n } from 'vue-i18n';
-import { getDegreeUnit, getUsageColorClass, rounded } from 'src/utils/utils';
-import FanIcon from 'components/base/FanIcon.vue';
-import CircularProgressWithTitle from 'components/base/CircularProgressWithTitle.vue';
-import { ByteUnit } from 'src/module/config';
+import {computed, PropType} from 'vue';
+import {GPUStateResponse} from 'src/interface/api';
+import {useI18n} from 'vue-i18n';
+import {getDegreeUnit, getUsageColorClass, rounded} from 'src/utils/utils';
+import FanIcon from 'components/ui/FanIcon.vue';
+import CircularProgressWithTitle from 'components/ui/CircularProgressWithTitle.vue';
+import {ByteUnit} from 'src/module/config';
 
 const props = defineProps({
   gpuState: {
@@ -56,6 +56,10 @@ const props = defineProps({
     type: String,
     default: ByteUnit.GB,
   },
+  animationSpeedSec: {
+    type: Number,
+    default: 0.1
+  }
 });
 
 const { t } = useI18n();
@@ -143,6 +147,7 @@ const gpuMemoryDigit = computed(() => {
             "
             track-color="grey-6"
             size="1.2rem"
+            :animation-speed="props.animationSpeedSec * 1000"
           >
             <div class="absolute-full flex flex-center">
               <q-badge
@@ -171,6 +176,7 @@ const gpuMemoryDigit = computed(() => {
             "
             track-color="grey-6"
             size="1.2rem"
+            :animation-speed="props.animationSpeedSec * 1000"
           >
             <div class="absolute-full flex flex-center">
               <q-badge

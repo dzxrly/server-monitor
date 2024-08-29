@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {MemoryStateResponse} from 'src/interface/api';
-import {PropType} from 'vue';
-import {useConfigStore} from 'stores/user-config';
-import {useI18n} from 'vue-i18n';
-import {ByteUnit} from 'src/module/config';
-import MemoryInfoRow from "components/base/MemoryInfoRow.vue";
+import { MemoryStateResponse } from 'src/interface/api';
+import { PropType } from 'vue';
+import { useConfigStore } from 'stores/user-config';
+import { useI18n } from 'vue-i18n';
+import { ByteUnit } from 'src/module/config';
+import MemoryInfoRow from 'components/base/MemoryInfoRow.vue';
 
 const props = defineProps({
   memoryState: {
@@ -17,8 +17,8 @@ const props = defineProps({
   },
   animationSpeedSec: {
     type: Number,
-    default: 0.1
-  }
+    default: 0.1,
+  },
 });
 
 const configStore = useConfigStore();

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {computed, PropType} from 'vue';
-import {GPUStateResponse} from 'src/interface/api';
-import {useI18n} from 'vue-i18n';
-import {getDegreeUnit, getUsageColorClass, rounded} from 'src/utils/utils';
+import { computed, PropType } from 'vue';
+import { GPUStateResponse } from 'src/interface/api';
+import { useI18n } from 'vue-i18n';
+import { getDegreeUnit, getUsageColorClass, rounded } from 'src/utils/utils';
 import FanIcon from 'components/ui/FanIcon.vue';
 import CircularProgressWithTitle from 'components/ui/CircularProgressWithTitle.vue';
-import {ByteUnit} from 'src/module/config';
+import { ByteUnit } from 'src/module/config';
 
 const props = defineProps({
   gpuState: {
@@ -58,8 +58,8 @@ const props = defineProps({
   },
   animationSpeedSec: {
     type: Number,
-    default: 0.1
-  }
+    default: 0.1,
+  },
 });
 
 const { t } = useI18n();

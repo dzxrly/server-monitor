@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {useI18n} from "vue-i18n";
-import {ByteUnit} from "src/module/config";
-import {PropType} from "vue";
-import {MemoryStateResponse} from "src/interface/api";
-import {getUsageColorClass, rounded} from "src/utils/utils";
+import { useI18n } from 'vue-i18n';
+import { ByteUnit } from 'src/module/config';
+import { PropType } from 'vue';
+import { MemoryStateResponse } from 'src/interface/api';
+import { getUsageColorClass, rounded } from 'src/utils/utils';
 
 const props = defineProps({
   memoryState: {
@@ -30,19 +30,21 @@ const props = defineProps({
   },
   animationSpeedSec: {
     type: Number,
-    default: 0.1
-  }
+    default: 0.1,
+  },
 });
 
-const {t} = useI18n();
+const { t } = useI18n();
 </script>
 
 <template>
-  <div class="ram-info-row-wrapper column justify-between items-center full-width no-wrap">
+  <div
+    class="ram-info-row-wrapper column justify-between items-center full-width no-wrap"
+  >
     <div class="row justify-between items-center full-width no-wrap">
       <span class="col-4 text-card-color text-body2">{{
-          t('memoryUsage')
-        }}</span>
+        t('memoryUsage')
+      }}</span>
       <q-linear-progress
         class="col-grow q-ml-xs rounded-borders"
         :value="props.memoryState.memoryPercent / 100"
@@ -100,6 +102,4 @@ const {t} = useI18n();
   </div>
 </template>
 
-<style scoped lang="sass">
-
-</style>
+<style scoped lang="sass"></style>

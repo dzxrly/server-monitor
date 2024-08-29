@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {computed} from 'vue';
-import {getUsageColor, rounded} from 'src/utils/utils';
+import { computed } from 'vue';
+import { getUsageColor, rounded } from 'src/utils/utils';
 
 const props = defineProps({
   cpuUsage: {
@@ -40,8 +40,8 @@ const props = defineProps({
   },
   animationSpeedSec: {
     type: Number,
-    default: 0.1
-  }
+    default: 0.1,
+  },
 });
 
 const cubeSize = computed(() => {
@@ -75,8 +75,8 @@ const cpuUsageTranslateY = computed(() => {
 });
 
 const animationSpeed = computed(() => {
-  return `${props.animationSpeedSec}s`
-})
+  return `${props.animationSpeedSec}s`;
+});
 </script>
 
 <template>

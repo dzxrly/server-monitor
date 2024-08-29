@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {useI18n} from 'vue-i18n';
-import {computed} from 'vue';
+import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
 
 const props = defineProps({
   title: {
@@ -36,8 +36,8 @@ const props = defineProps({
   },
   animationSpeedSec: {
     type: Number,
-    default: 0.1
-  }
+    default: 0.1,
+  },
 });
 
 const { t } = useI18n();

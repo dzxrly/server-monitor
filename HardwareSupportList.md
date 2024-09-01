@@ -12,7 +12,7 @@
 |       CPU Usage       |   ✅Support   |   ✅Support   |
 |      CPU Number       |   ✅Support   |   ✅Support   |
 |       CPU Core        |   ✅Support   |   ✅Support   |
-|     CPU Frequency     |   ✅Support   |   ✅Support   |
+|     CPU Frequency     |   ✅Support   | ❌Not Support |
 |    CPU Temperature    |   ✅Support   | ❌Not Support |
 |     Memory Usage      |   ✅Support   |   ✅Support   |
 |      Swap Usage       |   ✅Support   |   ✅Support   |

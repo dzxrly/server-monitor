@@ -109,6 +109,7 @@ const animationSpeed = computed(() => {
     font-size: v-bind(textSize)
     padding: 0 v-bind(paddingSize)
     border-radius: v-bind(paddingSize)
+    transition: all v-bind(animationSpeed) linear
     z-index: 2
 
 .cpu-usage-cube-wrapper::before

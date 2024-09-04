@@ -1,11 +1,14 @@
 FROM node:20.14 AS builder
 
 WORKDIR /src
+COPY package*.json ./
+
+RUN npm i -g @quasar/cli
+RUN npm install
+
 COPY ./ /src
 
-RUN npm i -g @quasar/cli \
-    && npm install \
-    && quasar build
+RUN quasar build
 
 FROM nginx:latest
 

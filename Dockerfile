@@ -1,7 +1,9 @@
-FROM node:20.14 AS builder
+FROM node:latest AS builder
 
 WORKDIR /src
 COPY ./ /src
+
+RUN rm -rf /src/dist
 
 RUN npm i -g @quasar/cli \
     && npm install \

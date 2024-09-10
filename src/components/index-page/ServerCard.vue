@@ -272,7 +272,12 @@ onBeforeUnmount(() => {
           <q-btn
             icon="more_vert"
             size="md"
-            :to="`/server/${server.uniqueId}`"
+            :to="{
+              name: 'ServerDetail',
+              params: {
+                uid: server.uniqueId,
+              },
+            }"
             flat
             round
           />

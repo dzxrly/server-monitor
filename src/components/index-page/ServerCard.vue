@@ -19,7 +19,7 @@ import API from 'src/api/api';
 import { useI18n } from 'vue-i18n';
 import { useInterval } from 'quasar';
 import { getUsageColorClass, rounded } from 'src/utils/utils';
-import CircularProgressWithTitle from 'components/base/CircularProgressWithTitle.vue';
+import CircularProgressWithTitle from 'components/ui/CircularProgressWithTitle.vue';
 import { LoadingError } from 'src/module/loading-error';
 import GpuInfoRow from 'components/base/GPUInfoRow.vue';
 import CpuInfoRow from 'components/base/CPUInfoRow.vue';
@@ -272,7 +272,12 @@ onBeforeUnmount(() => {
           <q-btn
             icon="more_vert"
             size="md"
-            :to="`/server/${server.uniqueId}`"
+            :to="{
+              name: 'ServerDetail',
+              params: {
+                uid: server.uniqueId,
+              },
+            }"
             flat
             round
           />

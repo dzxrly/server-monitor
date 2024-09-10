@@ -38,6 +38,10 @@ const props = defineProps({
       return val >= 0 && val <= 100;
     },
   },
+  animationSpeedSec: {
+    type: Number,
+    default: 0.1,
+  },
 });
 
 const cubeSize = computed(() => {
@@ -59,6 +63,7 @@ const bgColor = computed(() => {
     props.midUsageThreshold
   );
 });
+
 const cpuUsageTranslateY = computed(() => {
   if (100 - props.cpuUsage <= 0) {
     return 'translateY(1%)';
@@ -67,6 +72,10 @@ const cpuUsageTranslateY = computed(() => {
   } else {
     return `translateY(${100 - props.cpuUsage}%)`;
   }
+});
+
+const animationSpeed = computed(() => {
+  return `${props.animationSpeedSec}s`;
 });
 </script>
 
@@ -100,6 +109,7 @@ const cpuUsageTranslateY = computed(() => {
     font-size: v-bind(textSize)
     padding: 0 v-bind(paddingSize)
     border-radius: v-bind(paddingSize)
+    transition: all v-bind(animationSpeed) linear
     z-index: 2
 
 .cpu-usage-cube-wrapper::before
@@ -109,6 +119,6 @@ const cpuUsageTranslateY = computed(() => {
   height: v-bind(cubeSize)
   background-color: v-bind(bgColor)
   transform: v-bind(cpuUsageTranslateY)
-  transition: all 0.1s linear
+  transition: all v-bind(animationSpeed) linear
   z-index: 1
 </style>

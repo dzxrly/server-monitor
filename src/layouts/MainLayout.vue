@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SettingDialog from 'components/index-page/SettingDialog.vue';
-import { onMounted, provide, ref } from 'vue';
-import { openURL } from 'quasar';
+import { computed, onMounted, provide, ref } from 'vue';
+import { openURL, useQuasar } from 'quasar';
 import { useRoute, useRouter } from 'vue-router';
 import { ServerConfig } from 'src/module/config';
 import { useConfigStore } from 'stores/user-config';
@@ -12,6 +12,7 @@ const $route = useRoute();
 const $router = useRouter();
 const configStore = useConfigStore();
 const { t } = useI18n();
+const $q = useQuasar();
 
 const showSettingDialog = ref(false);
 const pauseFetch = ref<boolean>(false);
@@ -19,6 +20,10 @@ const showDeleteServerDialog = ref(false);
 const showServerEditDialog = ref(false);
 const showBackendDeployDialog = ref(true);
 const noMoreBackendDeployTips = ref(false);
+
+const isLtSm = computed(() => {
+  return $q.screen.lt.sm;
+});
 
 function deleteServer() {
   const newServerList = configStore.config.serverListConfig.filter(
@@ -98,35 +103,63 @@ onMounted(() => {
     <q-footer
       class="bg-transparent text-secondary column justify-center items-center q-py-sm"
     >
-      <div class="row justify-center items-center full-width">
-        <div class="row justify-center items-center q-mr-sm">
-          <q-icon class="q-mr-xs" name="mdi-license" size="xs" />
-          <span>APL-2.0</span>
-        </div>
-        <div
-          class="link-row row justify-center items-center cursor-pointer"
-          @click="openURL('https://github.com/dzxrly/server-monitor')"
-        >
-          <q-icon class="q-mr-xs" name="fa-brands fa-github" size="xs" />
-          <span>{{ t('sourceCode') }}</span>
-        </div>
+      <div class="row justify-center items-center full-width q-gutter-sm wrap">
+        <q-btn
+          href="https://github.com/dzxrly/server-monitor/blob/main/LICENSE"
+          target="_blank"
+          label="APL-2.0"
+          size="sm"
+          dense
+          flat
+          rounded
+          no-caps
+        />
+        <q-btn
+          href="https://github.com/dzxrly/server-monitor"
+          target="_blank"
+          :label="t('sourceCode')"
+          size="sm"
+          dense
+          flat
+          rounded
+          no-caps
+        />
+        <q-btn
+          href="https://github.com/dzxrly/server-monitor/blob/main/Privacy.md"
+          target="_blank"
+          :label="t('privacyPolicy')"
+          size="sm"
+          dense
+          flat
+          rounded
+          no-caps
+        />
+        <q-btn
+          v-if="!isLtSm"
+          href="https://eggtargaryen.com"
+          target="_blank"
+          label="by Egg Targaryen"
+          size="sm"
+          dense
+          flat
+          rounded
+          no-caps
+        />
       </div>
-      <div class="row justify-center items-center full-width">
-        <span
-          class="link-row cursor-pointer"
-          @click="
-            openURL(
-              'https://github.com/dzxrly/server-monitor/blob/main/Privacy.md'
-            )
-          "
-          >{{ t('privacyPolicy') }}
-        </span>
-        <span>&nbsp;|&nbsp;by&nbsp;</span>
-        <span
-          class="link-row cursor-pointer"
-          @click="openURL('https://dzxrly.github.io/')"
-          >Egg Targaryen</span
-        >
+      <div
+        v-if="isLtSm"
+        class="row justify-center items-center full-width q-gutter-sm wrap"
+      >
+        <q-btn
+          href="https://eggtargaryen.com"
+          target="_blank"
+          label="by Egg Targaryen"
+          size="sm"
+          dense
+          flat
+          rounded
+          no-caps
+        />
       </div>
     </q-footer>
 
@@ -154,13 +187,9 @@ onMounted(() => {
               t('deleteThisServer')
             }}</span>
           </div>
-          <div
-            class="row justify-start items-center no-wrap full-width q-mt-md"
-          >
-            <span class="text-card-color text-body1">{{
-              t('deleteThisServerConfirm')
-            }}</span>
-          </div>
+          <span class="text-card-color text-body1 q-mt-md">{{
+            t('deleteThisServerConfirm')
+          }}</span>
           <div
             class="row justify-evenly items-center no-wrap full-width q-mt-md"
           >
@@ -218,8 +247,8 @@ onMounted(() => {
             class="row justify-start items-center no-wrap full-width q-mt-md"
           >
             <span class="text-card-color text-body1"
-              >{{ t('backendDeployDesc') }}
-              <span
+              >{{ t('backendDeployDesc')
+              }}<span
                 class="cursor-pointer"
                 style="text-decoration: underline"
                 @click="
@@ -227,9 +256,8 @@ onMounted(() => {
                     'https://github.com/dzxrly/server-monitor/blob/backend/README.md'
                   )
                 "
+                >{{ t('backendDeployDocs') }}</span
               >
-                {{ t('backendDeployDocs') }}
-              </span>
             </span>
           </div>
           <div class="row justify-end items-center no-wrap full-width q-mt-md">

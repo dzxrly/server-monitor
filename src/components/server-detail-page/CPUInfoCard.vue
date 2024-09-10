@@ -84,7 +84,9 @@ const cpuUsageCubeGridSizeComputed = computed(() => {
           props.cpuState &&
           props.cpuState.cpuFreq &&
           props.cpuState.cpuFreq.percpu &&
-          props.cpuState.cpuFreq.percpu[index]
+          props.cpuState.cpuFreq.percpu[index] &&
+          props.cpuState.cpuUsage.percpu.length ===
+            props.cpuState.cpuFreq.percpu.length
             ? props.cpuState.cpuFreq.percpu[index].current
             : -1
         "

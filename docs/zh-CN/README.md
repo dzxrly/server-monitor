@@ -12,7 +12,7 @@
 
 <div align="center">
 
-这是一个 Server Monitor 的前端部分，可以通过`docker`构建与部署。
+这是 Server Monitor 的前端部分，可以通过`docker`构建与部署。
 
 </div>
 
@@ -45,7 +45,7 @@
 3. 使用`docker buildx`构建镜像
 
    ```bash
-   docker buildx build -t eggtargaryen/server-monitor .
+   docker buildx build --no-cache -t eggtargaryen/server-monitor .
    ```
 
 4. 运行该镜像

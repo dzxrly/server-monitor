@@ -1,4 +1,13 @@
 // app global css in SCSS form
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/Noto_Sans_SC/NotoSansSC-VariableFont_wght.ttf')
+      format('truetype'),
+    url('../fonts/Noto_Sans_TC/NotoSansTC-VariableFont_wght.ttf')
+      format('truetype');
+  font-display: swap;
+}
+
 html,
 body {
   margin: 0;
@@ -16,6 +25,8 @@ body {
   --max-color: #ff595e;
 
   background: var(--bg-default-color);
+  font-family: 'Noto Sans', serif;
+  font-synthesis: weight style small-caps;
 }
 
 .rounded-borders {

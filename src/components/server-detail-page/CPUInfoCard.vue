@@ -115,6 +115,7 @@ const cpuUsageCubeGridSizeComputed = computed(() => {
     >
       <q-expansion-item
         class="full-width"
+        header-class="rounded-borders"
         v-for="(cpuTemp, index) of props.cpuState.cpuTemperature"
         :key="cpuTemp.numaLabel ?? index"
         switch-toggle-side

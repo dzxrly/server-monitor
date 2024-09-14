@@ -25,6 +25,61 @@ const { t } = useI18n();
 
 const isLtSm = inject('isLtSm', false);
 
+const rowsPerPageOptions = computed(() => {
+  if (
+    props.cpuTemperature.coresTemperature &&
+    typeof props.cpuTemperature.coresTemperature !== 'undefined'
+  ) {
+    const coreCount = props.cpuTemperature.coresTemperature.length;
+    if (coreCount <= 32) {
+      return [
+        Math.floor(coreCount / 4),
+        Math.floor(coreCount / 2),
+        coreCount,
+        0,
+      ];
+    } else if (coreCount > 32 && coreCount <= 64) {
+      return [
+        Math.floor(coreCount / 8),
+        Math.floor(coreCount / 4),
+        Math.floor(coreCount / 2),
+        coreCount,
+        0,
+      ];
+    } else if (coreCount > 64 && coreCount <= 128) {
+      return [
+        Math.floor(coreCount / 16),
+        Math.floor(coreCount / 8),
+        Math.floor(coreCount / 4),
+        Math.floor(coreCount / 2),
+        coreCount,
+        0,
+      ];
+    } else if (coreCount > 128 && coreCount <= 256) {
+      return [
+        Math.floor(coreCount / 32),
+        Math.floor(coreCount / 16),
+        Math.floor(coreCount / 8),
+        Math.floor(coreCount / 4),
+        Math.floor(coreCount / 2),
+        coreCount,
+        0,
+      ];
+    } else {
+      return [
+        Math.floor(coreCount / 64),
+        Math.floor(coreCount / 32),
+        Math.floor(coreCount / 16),
+        Math.floor(coreCount / 8),
+        Math.floor(coreCount / 4),
+        Math.floor(coreCount / 2),
+        coreCount,
+        0,
+      ];
+    }
+  } else return [4, 8, 16, 32, 64, 0];
+});
+
 const coreTemperature = computed(() => {
   if (
     props.cpuTemperature.coresTemperature &&
@@ -88,12 +143,15 @@ const tableColumns = [
       :rows="coreTemperature"
       :columns="tableColumns"
       row-key="coreLabel"
-      :bordered="false"
       table-class="text-card-color bg-card-color"
-      card-class="text-card-color bg-card-color"
+      card-class="text-card-color bg-card-color rounded-borders"
       :dense="isLtSm"
       :rows-per-page-label="t('rowsPerPage')"
+      :rows-per-page-options="rowsPerPageOptions"
+      separator="none"
+      bordered
       flat
+      grid
     />
   </div>
 </template>

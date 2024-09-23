@@ -11,6 +11,7 @@ def get_operating_system_info() -> dict:
     try:
         bits = platform.architecture()[0]
         architecture = platform.machine()
+        kernel = platform.platform()
         uname = platform.uname()
         if psutil.WINDOWS:
             return {
@@ -19,16 +20,28 @@ def get_operating_system_info() -> dict:
                 'osArchitecture': architecture,
                 'osSign': uname.system,
                 'osNode': uname.node,
+                'osKernel': kernel,
             }
         elif psutil.LINUX:
-            _freedesktop_os_release = platform.freedesktop_os_release()
-            return {
-                'osName': '{} {}'.format(_freedesktop_os_release['NAME'], _freedesktop_os_release['VERSION']),
-                'osBits': bits,
-                'osArchitecture': architecture,
-                'osSign': uname.system,
-                'osNode': uname.node,
-            }
+            try:
+                _freedesktop_os_release = platform.freedesktop_os_release()
+                return {
+                    'osName': '{} {}'.format(_freedesktop_os_release['NAME'], _freedesktop_os_release['VERSION']),
+                    'osBits': bits,
+                    'osArchitecture': architecture,
+                    'osSign': uname.system,
+                    'osNode': uname.node,
+                    'osKernel': kernel,
+                }
+            except Exception:
+                return {
+                    'osName': '{}'.format(uname.version),
+                    'osBits': bits,
+                    'osArchitecture': architecture,
+                    'osSign': uname.system,
+                    'osNode': uname.node,
+                    'osKernel': kernel,
+                }
         else:
             raise NotImplementedError('Unsupported system')
     except Exception as e:

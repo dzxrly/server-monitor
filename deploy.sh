@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm -rf ./env
 echo "Creating virtual environment: ./env"
 python -m venv ./env
 echo "Activating virtual environment: ./env"

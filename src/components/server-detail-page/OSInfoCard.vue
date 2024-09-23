@@ -23,6 +23,10 @@ const props = defineProps({
     type: String,
     default: 'Unknown',
   },
+  osKernel: {
+    type: String,
+    default: 'Unknown',
+  },
 });
 
 const { t } = useI18n();
@@ -64,6 +68,12 @@ const getOSIcon = computed(() => {
     >
       <span>{{ t('deviceNameTitle') }}</span
       ><span>{{ props.osNode }}</span>
+    </div>
+    <div
+      class="row justify-between items-center full-width no-wrap q-mt-md text-card-color text-body2"
+    >
+      <span>{{ t('osKernel') }}</span
+      ><span>{{ props.osKernel }}</span>
     </div>
   </div>
 </template>

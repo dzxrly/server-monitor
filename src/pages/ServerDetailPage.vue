@@ -306,6 +306,7 @@ onBeforeUnmount(() => {
         :os-sign="osInfo.osSign"
         :os-node="osInfo.osNode"
         :os-bits="osInfo.osBits"
+        :os-kernel="osInfo.osKernel"
       />
     </div>
   </q-page>

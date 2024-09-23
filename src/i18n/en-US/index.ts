@@ -54,6 +54,7 @@ export default {
   osNameTitle: 'OS Name',
   osArchitectureTitle: 'OS Architecture',
   deviceNameTitle: 'Devices Name',
+  osKernel: 'OS Kernel',
 
   settings: 'Settings',
   darkMode: 'Dark Mode',

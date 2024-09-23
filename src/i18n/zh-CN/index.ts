@@ -50,6 +50,7 @@ export default {
   osNameTitle: '系统名称',
   osArchitectureTitle: '系统架构',
   deviceNameTitle: '设备名称',
+  osKernel: '系统内核',
 
   settings: '设置',
   darkMode: '暗黑模式',

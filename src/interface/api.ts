@@ -93,4 +93,5 @@ export interface OSInfoResponse {
   osArchitecture: string;
   osSign: string;
   osNode: string;
+  osKernel: string;
 }

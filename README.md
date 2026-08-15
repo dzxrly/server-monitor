@@ -1,8 +1,30 @@
+<div align="center">
+
 # Server Monitor Backend
+
+</div>
+
+<div align="center">
+
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdzxrly%2Fserver-monitor%2Fbackend%2Finfo.json&query=%24.version&prefix=V&style=flat-square&label=Version)
+
+</div>
+
+<div align="center">
 
 The Server Monitor backend exposes one versioned API for CPU, memory, NVIDIA GPU, temperature, disk, network, operating-system, and top-process metrics. It runs on Windows and Linux without administrator/root privileges.
 
-[简体中文](./docs/zh-CN/README.md) | [繁體中文](./docs/zh-TW/README.md) | English
+</div>
+
+<div align="center">
+
+[简体中文](./docs/zh-CN/README.md) | [繁體中文](./docs/zh-TW/README.md) | [English](./README.md)
+
+</div>
+
+> [!CAUTION]
+>
+> After deploying the backend, deploy the [Frontend Website](https://github.com/dzxrly/server-monitor/blob/frontend/README.md) to view and manage server metrics.
 
 ## Highlights
 
@@ -27,13 +49,13 @@ The old unversioned API has been removed. The frontend must support API v1.
 For a fresh installation or an update, run the one-line bootstrap as the ordinary user that should own the service:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/dzxrly/server-monitor/backend-dev/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/dzxrly/server-monitor/backend/install.sh | SERVER_MONITOR_REF=backend bash
 ```
 
-The bootstrap downloads the `backend-dev` source into `~/server-monitor`, backs up an existing source tree, preserves its `venv` and logs, and runs the service installer. To deploy from an existing checkout instead:
+The bootstrap downloads the `backend` source into `~/server-monitor`, backs up an existing source tree, preserves its `venv` and logs, and runs the service installer. To deploy from an existing checkout instead:
 
 ```bash
-git clone -b backend-dev https://github.com/dzxrly/server-monitor.git
+git clone -b backend https://github.com/dzxrly/server-monitor.git
 cd server-monitor
 ```
 
@@ -138,3 +160,17 @@ python -m ruff check .
 ```
 
 The API has no built-in authentication. Restrict port `6543` to trusted networks or place it behind an authenticated reverse proxy before exposing it publicly.
+
+---
+
+<div align="center">
+
+[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/eggtargaryen)
+
+</div>
+
+<div align="center">
+
+by Egg Targaryen
+
+</div>

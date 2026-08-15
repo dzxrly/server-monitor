@@ -1,8 +1,30 @@
+<div align="center">
+
 # Server Monitor 後端
+
+</div>
+
+<div align="center">
+
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdzxrly%2Fserver-monitor%2Fbackend%2Finfo.json&query=%24.version&prefix=V&style=flat-square&label=Version)
+
+</div>
+
+<div align="center">
 
 Server Monitor 後端透過一個具版本號的統一 API 提供 CPU、記憶體、NVIDIA GPU、溫度、硬碟、網路、作業系統和高佔用程序指標。Windows 與 Linux 均可在一般使用者權限下執行。
 
-[简体中文](../zh-CN/README.md) | [繁體中文](./README.md) | [English](../../README.md)
+</div>
+
+<div align="center">
+
+[简体中文](../../docs/zh-CN/README.md) | [繁體中文](../../docs/zh-TW/README.md) | [English](../../README.md)
+
+</div>
+
+> [!CAUTION]
+>
+> 完成後端部署後，需要部署[前端網站](https://github.com/dzxrly/server-monitor/blob/frontend/docs/zh-TW/README.md)以檢視和管理伺服器指標！
 
 ## 主要功能
 
@@ -27,13 +49,13 @@ Server Monitor 後端透過一個具版本號的統一 API 提供 CPU、記憶�
 一般使用者可透過一行指令完成首次安裝或更新：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/dzxrly/server-monitor/backend-dev/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/dzxrly/server-monitor/backend/install.sh | SERVER_MONITOR_REF=backend bash
 ```
 
-引導腳本會將 `backend-dev` 原始碼下載至 `~/server-monitor`，備份既有原始碼，保留原有 `venv` 和日誌，然後安裝服務。若已經拉取原始碼，也可以在儲存庫中執行：
+引導腳本會將 `backend` 原始碼下載至 `~/server-monitor`，備份既有原始碼，保留原有 `venv` 和日誌，然後安裝服務。若已經拉取原始碼，也可以在儲存庫中執行：
 
 ```bash
-git clone -b backend-dev https://github.com/dzxrly/server-monitor.git
+git clone -b backend https://github.com/dzxrly/server-monitor.git
 cd server-monitor
 ```
 
@@ -138,3 +160,17 @@ python -m ruff check .
 ```
 
 API 本身不包含驗證。請僅向可信任網路開放 `6543` 連接埠，或在公網部署時使用具驗證功能的反向代理。
+
+---
+
+<div align="center">
+
+[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/eggtargaryen)
+
+</div>
+
+<div align="center">
+
+by Egg Targaryen
+
+</div>

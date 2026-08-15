@@ -1,108 +1,72 @@
-<div align="center">
-
 # Server Monitor 前端
 
-</div>
+基於 Vue 3 與 Quasar 的多伺服器監控面板，可同時監控 Windows 和 Linux 主機。目前前端使用後端統一的 API v1 指標快照，並完整支援明亮與暗黑主題。
 
-<div align="center">
+[简体中文](../zh-CN/README.md) | [繁體中文](./README.md) | [English](../../README.md)
 
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdzxrly%2Fserver-monitor%2Ffrontend%2Fpackage.json&query=%24.version&prefix=V&style=flat-square&label=Version) ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdzxrly%2Fserver-monitor%2Ffrontend%2Fpackage.json&query=%24.dependencies.vue&style=flat-square&logo=vuedotjs&label=Vue&color=41a172) ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fdzxrly%2Fserver-monitor%2Ffrontend%2Fpackage.json&query=%24.dependencies.quasar&style=flat-square&logo=quasar&label=Quasar&color=2fb6fd)
+## 主要功能
 
-</div>
+- 緊湊且自適應的伺服器卡片，可在同一畫面顯示更多主機。
+- 頁面、對話框、表格、控制項、載入和錯誤狀態均支援明亮與暗黑主題。
+- 顯示 CPU、記憶體、NVIDIA GPU、溫度、所有掛載磁碟區、硬碟 I/O、所有網路介面和即時傳輸速率。
+- 可設定 CPU、記憶體和 GPU 各自顯示的高佔用程序數量，並在對應資源面板下顯示。
+- 提供緊湊、標準和詳細三種儀表板密度。
+- 可設定更新週期、容量單位、溫度單位、使用率閾值和三種介面語言。
+- 每台伺服器的每個更新週期只請求一次 `GET /api/v1/metrics`。
 
-<div align="center">
+前端要求後端支援 API v1，未帶版本號的舊介面不再相容。
 
-這是 Server Monitor 的前端部分，可以透過`docker`構建與部署。
+## 環境需求
 
-</div>
+- Node.js 24 或更新版本。
+- npm 11 或更新版本。
+- 每台受監控主機均已部署 [Server Monitor 後端](https://github.com/dzxrly/server-monitor/tree/backend-dev)。
 
-<div align="center">
+## 本機開發
 
-[简体中文](../../docs/zh-CN/README.md) | [繁體中文](../../docs/zh-TW/README.md) | [English](../../README.md)
+```bash
+git clone -b frontend-dev https://github.com/dzxrly/server-monitor.git
+cd server-monitor
+npm ci
+npm run dev
+```
 
-</div>
+開發伺服器會輸出本機網址。在介面中新增後端基礎 URL，例如 `http://192.168.1.10:6543`；前端會自動附加 `/api/v1/metrics`。
 
-> [!CAUTION]
->
-> 在前端監控伺服器狀態需要在每台被監控的伺服器上部署[後端服務](https://github.com/dzxrly/server-monitor/blob/backend/docs/zh-TW/README.md)！
+## 正式環境建置
 
-## 部署
+```bash
+npm ci
+npm run typecheck
+npm test
+npm run build
+```
 
-### 從 Docker 構建（推薦）
+靜態 SPA 會輸出至 `dist/spa`。隨附的 Nginx 設定已包含 history 模式回退，直接開啟伺服器詳細資料 URL 也能正常載入。
 
-1. 拉取前端部分原始碼
+## Docker 部署
 
-   ```bash
-   git clone -b frontend https://github.com/dzxrly/server-monitor.git
-   ```
+```bash
+docker build -t server-monitor-frontend .
+docker run --rm -p 80:80 server-monitor-frontend
+```
 
-2. 進入原始碼根目錄
+開啟 `http://localhost`，然後新增一個或多個後端基礎 URL。
 
-   ```bash
-   cd server-monitor
-   ```
+## 設定與相容性
 
-3. 使用`docker buildx`構建鏡像
+- 「每類資源顯示的高佔用程序數」會控制 `processLimit` 查詢參數，允許範圍為 `1`–`50`。
+- 可以遷移舊版前端匯出的設定；舊 GPU 類型欄位僅為匯入相容而保留，API v1 會自動辨識 NVIDIA 硬體。
+- 設定和伺服器清單儲存在瀏覽器本機儲存空間，並可匯入或匯出為 JSON。
+- 瀏覽器會阻擋混合內容。HTTPS 前端無法直接請求 HTTP 後端，請統一通訊協定或使用反向代理。
+- 使用者瀏覽器必須能路由到每個後端位址。將前端部署至公網並不會讓公網使用者自動存取內網後端。
 
-   ```bash
-   docker buildx build --no-cache -t eggtargaryen/server-monitor .
-   ```
+## 品質檢查
 
-4. 運行該鏡像
-
-   ```bash
-   docker run -p 80:80 eggtargaryen/server-monitor
-   ```
-
-### 從原始碼手動構建
-
-1. 拉取前端部分原始碼
-
-   ```bash
-   git clone -b frontend https://github.com/dzxrly/server-monitor.git
-   ```
-
-2. 進入原始碼根目錄
-
-   ```bash
-   cd server-monitor
-   ```
-
-3. 安裝`quasar/cli`
-
-   ```bash
-   npm install -g @quasar/cli
-   ```
-
-4. 安裝其他依賴庫
-
-   ```bash
-   npm install
-   ```
-
-5. 使用`quasar/cli`構建
-
-   ```bash
-   quasar build
-   ```
-
-6. 入口文件`index.html`位於`./dist/spa`目錄下
-
-## 注意事項
-
-- 受限於瀏覽器安全設置，請確保前端與後端均採用同一協議，例如前端與後端均為`http`或均為`https`，混用協議可能導致請求被瀏覽器攔截。
-- 同樣受限於瀏覽器安全設置，如果前端部署於公網網段，而後端部署於內網網段，則無法正常建立通信。
-
----
-
-<div align="center">
-
-[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/eggtargaryen)
-
-</div>
-
-<div align="center">
-
-by [Egg Targaryen](https://eggtargaryen.com)
-
-</div>
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run format:check
+npm audit
+```

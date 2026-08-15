@@ -1,22 +1,15 @@
-FROM node:latest AS builder
+FROM node:24-alpine AS builder
 
 WORKDIR /src
-COPY ./ /src
+COPY package.json package-lock.json ./
+RUN npm ci
 
-RUN rm -rf /src/dist
+COPY . .
+RUN npm run build
 
-RUN npm i -g @quasar/cli \
-    && npm install \
-    && quasar build
+FROM nginx:alpine
 
-FROM nginx:latest
-
-RUN mkdir /usr/share/nginx/front \
-    && mkdir /usr/share/nginx/front/dist \
-    && rm -rf /etc/nginx/nginx.conf
-
-COPY --from=builder /src/nginx.conf /etc/nginx/nginx.conf
-
-COPY --from=builder /src/dist/spa /usr/share/nginx/front/dist
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /src/dist/spa /usr/share/nginx/html
 
 EXPOSE 80

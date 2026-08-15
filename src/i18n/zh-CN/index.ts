@@ -25,6 +25,7 @@ export default {
   cpuInfo: 'CPU信息',
   cpuFreq: 'CPU频率',
   cpuTemp: 'CPU温度',
+  memory: '内存',
   memoryUsage: '内存使用率',
   swapUsage: 'Swap使用率',
   gpuUsage: 'GPU使用率',
@@ -89,7 +90,9 @@ export default {
 
   apiV1UrlHint: '后端基础 URL；前端将请求 /api/v1/metrics',
   gpuAutoDetectionHint: 'v1 后端会自动识别 NVIDIA 硬件。',
-  processLimit: '每类资源显示的高占用进程数',
+  processLimit: '每类资源纳入进程表的数量',
+  processUsage: '进程资源占用',
+  processUsageSubtitle: '汇总 CPU、内存与 GPU 高占用进程',
   topCpuProcesses: 'CPU 占用最高的进程',
   topMemoryProcesses: '内存占用最高的进程',
   topGpuProcesses: 'GPU 占用最高的进程',

@@ -29,6 +29,7 @@ export default {
   cpuInfo: 'CPU Information',
   cpuFreq: 'CPU Frequency',
   cpuTemp: 'CPU Temperature',
+  memory: 'Memory',
   memoryUsage: 'RAM Usage',
   swapUsage: 'Swap Usage',
   gpuUsage: 'GPU Usage',
@@ -98,7 +99,9 @@ export default {
   apiV1UrlHint: 'Backend base URL; the UI calls /api/v1/metrics',
   gpuAutoDetectionHint:
     'NVIDIA hardware is detected automatically by the v1 backend.',
-  processLimit: 'Top processes per resource',
+  processLimit: 'Processes per resource included in the table',
+  processUsage: 'Process resource usage',
+  processUsageSubtitle: 'Combined high-usage CPU, memory and GPU processes',
   topCpuProcesses: 'Highest CPU processes',
   topMemoryProcesses: 'Highest memory processes',
   topGpuProcesses: 'Highest GPU processes',

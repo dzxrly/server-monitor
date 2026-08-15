@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   formatBytes,
+  formatCpuFrequency,
   formatRate,
   formatTemperature,
   usageColor,
@@ -17,6 +18,12 @@ describe('metric formatters', () => {
   it('converts Celsius to Fahrenheit only in the UI', () => {
     expect(formatTemperature(50, false)).toBe('50 °C');
     expect(formatTemperature(50, true)).toBe('122 °F');
+  });
+
+  it('formats CPU frequency for compact readouts', () => {
+    expect(formatCpuFrequency(3200)).toBe('3.20 GHz');
+    expect(formatCpuFrequency(800)).toBe('800 MHz');
+    expect(formatCpuFrequency(null)).toBe('—');
   });
 
   it('uses the configured usage thresholds', () => {

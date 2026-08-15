@@ -7,6 +7,7 @@ import CpuPanel from '@/features/monitoring/components/detail/CpuPanel.vue';
 import GpuPanel from '@/features/monitoring/components/detail/GpuPanel.vue';
 import MemoryPanel from '@/features/monitoring/components/detail/MemoryPanel.vue';
 import NetworkPanel from '@/features/monitoring/components/detail/NetworkPanel.vue';
+import ProcessPanel from '@/features/monitoring/components/detail/ProcessPanel.vue';
 import StoragePanel from '@/features/monitoring/components/detail/StoragePanel.vue';
 import SystemPanel from '@/features/monitoring/components/detail/SystemPanel.vue';
 import TemperaturePanel from '@/features/monitoring/components/detail/TemperaturePanel.vue';
@@ -89,26 +90,24 @@ const { metrics, error, loading, refreshing, refresh } = useServerMetrics({
       <div v-else-if="metrics" class="detail-grid">
         <CpuPanel
           :cpu="metrics.cpu"
-          :processes="metrics.processes.cpu"
           :fahrenheit="configStore.config.useFahrenheitUnit"
           :free-threshold="configStore.config.freeUsageThreshold"
           :mid-threshold="configStore.config.midUsageThreshold"
         />
         <MemoryPanel
           :memory="metrics.memory"
-          :processes="metrics.processes.memory"
           :unit="configStore.config.memoryUnit"
           :free-threshold="configStore.config.freeUsageThreshold"
           :mid-threshold="configStore.config.midUsageThreshold"
         />
         <GpuPanel
           :gpu="metrics.gpu"
-          :processes="metrics.processes.gpu"
           :unit="configStore.config.gpuMemoryUnit"
           :fahrenheit="configStore.config.useFahrenheitUnit"
           :free-threshold="configStore.config.freeUsageThreshold"
           :mid-threshold="configStore.config.midUsageThreshold"
         />
+        <ProcessPanel :processes="metrics.processes" />
         <StoragePanel
           :storage="metrics.storage"
           :unit="configStore.config.memoryUnit"

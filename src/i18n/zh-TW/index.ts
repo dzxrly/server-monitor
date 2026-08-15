@@ -25,6 +25,7 @@ export default {
   cpuInfo: 'CPU資訊',
   cpuFreq: 'CPU頻率',
   cpuTemp: 'CPU溫度',
+  memory: '記憶體',
   memoryUsage: '記憶體使用率',
   swapUsage: 'Swap使用率',
   gpuUsage: 'GPU使用率',
@@ -89,7 +90,9 @@ export default {
 
   apiV1UrlHint: '後端基礎 URL；前端將請求 /api/v1/metrics',
   gpuAutoDetectionHint: 'v1 後端會自動識別 NVIDIA 硬體。',
-  processLimit: '每類資源顯示的高佔用程序數',
+  processLimit: '每類資源納入程序表的數量',
+  processUsage: '程序資源佔用',
+  processUsageSubtitle: '彙總 CPU、記憶體與 GPU 高佔用程序',
   topCpuProcesses: 'CPU 佔用最高的程序',
   topMemoryProcesses: '記憶體佔用最高的程序',
   topGpuProcesses: 'GPU 佔用最高的程序',

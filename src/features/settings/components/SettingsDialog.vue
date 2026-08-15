@@ -313,12 +313,17 @@ function updateLanguage(value: string): void {
   width: min(94vw, 38rem);
   max-height: 88vh;
   overflow: auto;
-  border: 1px solid var(--border-color);
+  border: 0;
 }
 
 .settings-list {
   display: grid;
   gap: 0.25rem;
+
+  :deep(.q-item) {
+    border-radius: 12px;
+    background: var(--bg-section-color);
+  }
 }
 
 .setting-control {

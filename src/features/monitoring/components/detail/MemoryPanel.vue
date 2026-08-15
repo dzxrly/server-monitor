@@ -3,14 +3,12 @@ import { useI18n } from 'vue-i18n';
 
 import type { MetricsSnapshot } from '@/features/monitoring/api/metrics-types';
 import MetricCard from '@/features/monitoring/components/shared/MetricCard.vue';
-import ProcessTable from '@/features/monitoring/components/shared/ProcessTable.vue';
 import UsageRing from '@/features/monitoring/components/shared/UsageRing.vue';
 import type { ByteUnit } from '@/features/settings/model/config';
 import { formatBytes } from '@/shared/format/metrics';
 
 defineProps<{
   memory: MetricsSnapshot['memory'];
-  processes: MetricsSnapshot['processes']['memory'];
   unit: ByteUnit;
   freeThreshold: number;
   midThreshold: number;
@@ -54,6 +52,5 @@ const { t } = useI18n();
         <strong>{{ formatBytes(memory.availableBytes, unit) }}</strong>
       </div>
     </div>
-    <ProcessTable :rows="processes" metric="memory" />
   </MetricCard>
 </template>

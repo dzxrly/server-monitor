@@ -32,11 +32,9 @@ defineProps<{
 <style scoped lang="scss">
 .metric-card {
   height: 100%;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--card-shadow);
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
+  border: 0;
+  box-shadow: none;
+  transition: background-color 0.2s ease;
 }
 
 .min-width-zero {

@@ -30,6 +30,16 @@ export function formatRate(bytesPerSecond: number | null | undefined): string {
   return bytesPerSecond == null ? '—' : `${formatBytes(bytesPerSecond)}/s`;
 }
 
+export function formatCpuFrequency(
+  megahertz: number | null | undefined,
+): string {
+  if (megahertz == null || !Number.isFinite(megahertz) || megahertz <= 0) {
+    return '—';
+  }
+  if (megahertz >= 1000) return `${(megahertz / 1000).toFixed(2)} GHz`;
+  return `${rounded(megahertz)} MHz`;
+}
+
 export function formatTemperature(
   celsius: number | null | undefined,
   fahrenheit: boolean,

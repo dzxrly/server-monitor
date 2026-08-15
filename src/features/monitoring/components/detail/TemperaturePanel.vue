@@ -55,8 +55,8 @@ const { t } = useI18n();
   align-items: center;
   gap: 1rem;
   padding: 0.55rem 0.65rem;
-  border: 1px solid var(--border-color);
   border-radius: 10px;
+  background: var(--bg-section-color);
 }
 
 .min-width-zero {

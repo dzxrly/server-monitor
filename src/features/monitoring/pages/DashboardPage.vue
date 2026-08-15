@@ -77,17 +77,19 @@ const showAddServer = ref(false);
 
 .add-server-card {
   min-height: 12rem;
-  border: 1px dashed var(--border-strong-color);
+  border: 0;
+  background: var(--bg-section-color) !important;
   box-shadow: none;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
+  transition: background-color 0.2s ease;
 
   &:hover,
   &:focus-visible {
-    transform: translateY(-2px);
-    border-color: var(--text-card-color);
-    outline: none;
+    background: var(--bg-section-strong-color) !important;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-muted-color);
+    outline-offset: 2px;
   }
 }
 </style>

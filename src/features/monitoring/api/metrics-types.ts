@@ -51,6 +51,7 @@ export interface MetricsSnapshot {
       currentMhz: number | null;
       minMhz: number | null;
       maxMhz: number | null;
+      perCoreCurrentMhz?: Array<number | null>;
     };
     temperatures: TemperatureSensor[];
   };

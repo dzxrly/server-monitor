@@ -3,7 +3,6 @@ import { useI18n } from 'vue-i18n';
 
 import type { MetricsSnapshot } from '@/features/monitoring/api/metrics-types';
 import MetricCard from '@/features/monitoring/components/shared/MetricCard.vue';
-import ProcessTable from '@/features/monitoring/components/shared/ProcessTable.vue';
 import UsageRing from '@/features/monitoring/components/shared/UsageRing.vue';
 import type { ByteUnit } from '@/features/settings/model/config';
 import {
@@ -14,7 +13,6 @@ import {
 
 defineProps<{
   gpu: MetricsSnapshot['gpu'];
-  processes: MetricsSnapshot['processes']['gpu'];
   unit: ByteUnit;
   fahrenheit: boolean;
   freeThreshold: number;
@@ -85,7 +83,6 @@ const { t } = useI18n();
           </div>
         </div>
       </section>
-      <ProcessTable :rows="processes" metric="gpu" />
     </template>
     <div v-else class="empty-state text-muted-color">
       <q-icon name="mdi-expansion-card-off" size="md" />
@@ -97,7 +94,6 @@ const { t } = useI18n();
 <style scoped lang="scss">
 .gpu-device + .gpu-device {
   margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
+  padding-top: 0;
 }
 </style>

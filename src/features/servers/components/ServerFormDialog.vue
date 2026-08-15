@@ -172,6 +172,6 @@ watch(visible, (isVisible) => {
 <style scoped>
 .dialog-card {
   width: min(92vw, 34rem);
-  border: 1px solid var(--border-color);
+  border: 0;
 }
 </style>

@@ -111,8 +111,8 @@ const activeInterfaces = computed(
     align-items: center;
     gap: 0.15rem 0.45rem;
     padding: 0.65rem;
-    border: 1px solid var(--border-color);
     border-radius: 12px;
+    background: var(--bg-section-color);
   }
 
   strong,
@@ -131,15 +131,14 @@ const activeInterfaces = computed(
 }
 
 .interface-header {
-  border: 1px solid var(--border-color);
+  background: var(--bg-section-color);
 }
 
 .interface-detail {
-  margin: 0 0.75rem 0.5rem;
+  margin: 0.2rem 0 0.5rem;
   padding: 0.65rem;
-  border: 1px solid var(--border-color);
-  border-top: 0;
-  border-radius: 0 0 12px 12px;
+  border-radius: 12px;
+  background: var(--bg-section-strong-color);
 }
 
 .address-row {

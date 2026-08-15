@@ -163,16 +163,12 @@ const fullestVolume = computed(() => {
 <style scoped lang="scss">
 .server-card {
   min-height: 12rem;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--card-shadow);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+  border: 0;
+  box-shadow: none;
+  transition: background-color 0.2s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--card-shadow-hover);
+    background: var(--bg-card-hover-color) !important;
   }
 }
 
@@ -195,7 +191,7 @@ const fullestVolume = computed(() => {
 
 .status-online {
   background: var(--free-color);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--free-color), transparent 78%);
+  box-shadow: none;
 }
 
 .compact-facts {
@@ -209,14 +205,18 @@ const fullestVolume = computed(() => {
     align-items: center;
     gap: 0.35rem;
     min-width: 0;
+    padding: 0.35rem 0.45rem;
+    border-radius: 9px;
+    background: var(--bg-section-color);
   }
 }
 
 .detail-strip {
   display: grid;
   gap: 0.2rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--border-color);
+  padding: 0.55rem 0.65rem;
+  border-radius: 9px;
+  background: var(--bg-section-color);
   color: var(--text-muted-color);
   font-size: 0.74rem;
 }

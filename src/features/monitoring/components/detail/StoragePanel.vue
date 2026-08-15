@@ -98,8 +98,8 @@ const { t } = useI18n();
 
 .volume-item {
   padding: 0.7rem;
-  border: 1px solid var(--border-color);
   border-radius: 12px;
+  background: var(--bg-section-color);
 }
 
 .min-width-zero {

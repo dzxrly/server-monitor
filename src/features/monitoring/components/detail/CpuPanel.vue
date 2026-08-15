@@ -3,10 +3,10 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type { MetricsSnapshot } from '@/features/monitoring/api/metrics-types';
+import CpuUsageTile from '@/features/monitoring/components/detail/CpuUsageTile.vue';
 import MetricCard from '@/features/monitoring/components/shared/MetricCard.vue';
-import ProcessTable from '@/features/monitoring/components/shared/ProcessTable.vue';
-import UsageRing from '@/features/monitoring/components/shared/UsageRing.vue';
 import {
+  formatCpuFrequency,
   formatTemperature,
   rounded,
   usageColor,
@@ -14,7 +14,6 @@ import {
 
 const props = defineProps<{
   cpu: MetricsSnapshot['cpu'];
-  processes: MetricsSnapshot['processes']['cpu'];
   fahrenheit: boolean;
   freeThreshold: number;
   midThreshold: number;
@@ -25,6 +24,13 @@ const packageTemperature = computed(() => {
   const values = props.cpu.temperatures.map((sensor) => sensor.currentCelsius);
   return values.length > 0 ? Math.max(...values) : null;
 });
+
+function frequencyForCore(index: number): number | null {
+  return (
+    props.cpu.frequency.perCoreCurrentMhz?.[index] ??
+    props.cpu.frequency.currentMhz
+  );
+}
 </script>
 
 <template>
@@ -34,70 +40,108 @@ const packageTemperature = computed(() => {
     :title="cpu.name"
     :subtitle="`${cpu.physicalCores ?? '—'}C / ${cpu.logicalCores ?? '—'}T`"
   >
-    <div class="row items-center q-col-gutter-md">
-      <div class="col-auto">
-        <UsageRing
-          :label="t('cpuUsage')"
-          :value="cpu.usagePercent"
-          :free-threshold="freeThreshold"
-          :mid-threshold="midThreshold"
-          size="5.25rem"
-        />
+    <div class="cpu-summary">
+      <div class="cpu-summary__item cpu-summary__item--primary">
+        <span>{{ t('cpuUsage') }}</span>
+        <strong
+          :class="`text-${usageColor(cpu.usagePercent, freeThreshold, midThreshold)}`"
+          >{{ rounded(cpu.usagePercent) }}%</strong
+        >
       </div>
-      <div class="col metric-facts">
-        <div class="fact-row">
-          <span>{{ t('cpuFreq') }}</span>
-          <strong>{{ rounded(cpu.frequency.currentMhz, 0) }} MHz</strong>
-        </div>
-        <div class="fact-row">
-          <span>{{ t('cpuTemp') }}</span>
-          <strong>{{
-            formatTemperature(packageTemperature, fahrenheit)
-          }}</strong>
-        </div>
+      <div class="cpu-summary__item">
+        <span>{{ t('cpuFreq') }}</span>
+        <strong>{{ formatCpuFrequency(cpu.frequency.currentMhz) }}</strong>
+      </div>
+      <div class="cpu-summary__item">
+        <span>{{ t('cpuTemp') }}</span>
+        <strong>{{ formatTemperature(packageTemperature, fahrenheit) }}</strong>
       </div>
     </div>
 
-    <div class="text-caption text-muted-color q-mt-md q-mb-xs">
-      {{ t('perCoreUsage') }}
+    <div class="cpu-grid-heading q-mt-md q-mb-xs">
+      <span>{{ t('perCoreUsage') }}</span>
+      <span>{{ t('usage') }} · {{ t('cpuFreq') }}</span>
     </div>
     <div class="core-grid">
-      <div
+      <CpuUsageTile
         v-for="(usage, index) in cpu.perCoreUsagePercent"
         :key="index"
-        class="core-cell"
-      >
-        <div class="row justify-between text-caption q-mb-xs">
-          <span>#{{ index + 1 }}</span
-          ><span>{{ rounded(usage) }}%</span>
-        </div>
-        <q-linear-progress
-          rounded
-          :value="usage / 100"
-          :color="usageColor(usage, freeThreshold, midThreshold)"
-          track-color="progress-track"
-          size="6px"
-        />
-      </div>
+        :index="index"
+        :usage="usage"
+        :frequency-mhz="frequencyForCore(index)"
+        :free-threshold="freeThreshold"
+        :mid-threshold="midThreshold"
+      />
     </div>
-    <ProcessTable :rows="processes" metric="cpu" />
   </MetricCard>
 </template>
 
 <style scoped lang="scss">
 .core-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
-  gap: 0.45rem;
+  grid-template-columns: repeat(auto-fill, minmax(4.75rem, 1fr));
+  gap: 0.4rem;
 }
 
-.core-cell {
-  padding: 0.45rem 0.55rem;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
+.cpu-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.2rem;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
-.metric-facts {
-  min-width: 10rem;
+.cpu-summary__item {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0.65rem 0.8rem;
+  background: var(--bg-section-color);
+
+  span {
+    color: var(--text-muted-color);
+    font-size: 0.72rem;
+  }
+
+  strong {
+    overflow: hidden;
+    font-size: 1.05rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.cpu-summary__item--primary {
+  background: var(--bg-section-strong-color);
+}
+
+.cpu-grid-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: var(--text-muted-color);
+  font-size: 0.75rem;
+
+  span:last-child {
+    text-align: right;
+  }
+}
+
+@media (max-width: 420px) {
+  .core-grid {
+    grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
+  }
+
+  .cpu-summary__item {
+    padding-inline: 0.55rem;
+
+    span {
+      font-size: 0.66rem;
+    }
+
+    strong {
+      font-size: 0.9rem;
+    }
+  }
 }
 </style>

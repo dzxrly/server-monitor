@@ -18,6 +18,7 @@ const showEdit = ref(false);
 const showDelete = ref(false);
 const showBackendTip = ref(false);
 const hideBackendTip = ref(false);
+const actionsExpanded = ref(false);
 const currentServerId = computed(() => String(route.params.uid ?? ''));
 const onDetailPage = computed(() => route.name === 'ServerDetail');
 
@@ -47,44 +48,49 @@ onMounted(() => {
         position="bottom-right"
         :offset="[14, 58]"
         class="floating-actions"
+        :class="{ 'floating-actions--active': actionsExpanded }"
       >
-        <div class="column q-gutter-sm">
-          <q-btn
-            round
-            class="shadow-3 text-btn-color"
+        <q-fab
+          v-model="actionsExpanded"
+          class="text-btn-color"
+          icon="more_vert"
+          active-icon="close"
+          direction="up"
+          color="btn-color"
+          unelevated
+          :aria-label="onDetailPage ? t('serverSettings') : t('settings')"
+        >
+          <q-fab-action
+            class="text-btn-color"
             color="btn-color"
             :icon="paused ? 'play_arrow' : 'pause'"
             :aria-label="paused ? t('resume') : t('pause')"
             @click="paused = !paused"
           />
-          <q-btn
+          <q-fab-action
             v-if="!onDetailPage"
-            round
-            class="shadow-3 text-btn-color"
+            class="text-btn-color"
             color="btn-color"
             icon="settings"
             :aria-label="t('settings')"
             @click="showSettings = true"
           />
           <template v-else>
-            <q-btn
-              round
-              class="shadow-3 text-btn-color"
+            <q-fab-action
+              class="text-btn-color"
               color="btn-color"
               icon="edit"
               :aria-label="t('serverSettings')"
               @click="showEdit = true"
             />
-            <q-btn
-              round
-              class="shadow-3"
+            <q-fab-action
               color="negative"
               icon="delete_forever"
               :aria-label="t('deleteThisServer')"
               @click="showDelete = true"
             />
           </template>
-        </div>
+        </q-fab>
       </q-page-sticky>
     </q-page-container>
 
@@ -177,24 +183,48 @@ onMounted(() => {
 <style scoped lang="scss">
 .floating-actions {
   z-index: 10;
-}
-
-.floating-actions :deep(.q-btn) {
-  opacity: 0.88;
+  opacity: 1;
+  animation: floating-actions-idle 5s ease forwards;
   transition: opacity 0.2s ease;
 }
 
-.floating-actions :deep(.q-btn:hover),
-.floating-actions :deep(.q-btn:focus-visible) {
+.floating-actions:hover,
+.floating-actions:focus-within,
+.floating-actions--active {
+  animation: none;
   opacity: 1;
 }
 
 .backend-tip {
   width: min(92vw, 32rem);
-  border: 1px solid var(--border-color);
+  border: 0;
 
   a {
     color: currentColor;
+  }
+}
+
+@keyframes floating-actions-idle {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-actions {
+    opacity: 0.2;
+    animation: none;
+    transition: none;
+  }
+
+  .floating-actions:hover,
+  .floating-actions:focus-within,
+  .floating-actions--active {
+    opacity: 1;
   }
 }
 </style>

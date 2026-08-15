@@ -14,15 +14,19 @@
   --bg-default-color: #e4e4e4;
   --text-default-color: #191919;
   --bg-card-color: #f9f9f9;
+  --bg-card-hover-color: #ffffff;
+  --bg-section-color: #ececec;
+  --bg-section-strong-color: #dedede;
   --text-card-color: #191919;
   --text-muted-color: #696969;
   --bg-btn-color: #d4d4d4;
   --text-btn-color: #1b1b1b;
   --border-color: rgb(0 0 0 / 8%);
   --border-strong-color: rgb(0 0 0 / 24%);
+  --divider-color: rgb(0 0 0 / 10%);
   --progress-track-color: #d8d8d8;
-  --card-shadow: 0 1px 2px rgb(0 0 0 / 5%);
-  --card-shadow-hover: 0 5px 16px rgb(0 0 0 / 12%);
+  --card-shadow: none;
+  --card-shadow-hover: none;
   --free-color: #8ac926;
   --mid-color: #ffca3a;
   --max-color: #ff595e;
@@ -49,18 +53,22 @@ body {
 
 body.body--dark {
   color-scheme: dark;
-  --bg-default-color: #15181d;
+  --bg-default-color: #111318;
   --text-default-color: #f0f2f5;
-  --bg-card-color: #22262d;
+  --bg-card-color: #1d1f22;
+  --bg-card-hover-color: #25282c;
+  --bg-section-color: #292c30;
+  --bg-section-strong-color: #34373c;
   --text-card-color: #edf0f4;
   --text-muted-color: #a9b0ba;
-  --bg-btn-color: #343a44;
+  --bg-btn-color: #34373c;
   --text-btn-color: #f2f4f7;
   --border-color: rgb(255 255 255 / 9%);
   --border-strong-color: rgb(255 255 255 / 24%);
+  --divider-color: rgb(255 255 255 / 10%);
   --progress-track-color: #3a4049;
-  --card-shadow: 0 1px 2px rgb(0 0 0 / 22%);
-  --card-shadow-hover: 0 7px 20px rgb(0 0 0 / 35%);
+  --card-shadow: none;
+  --card-shadow-hover: none;
 }
 
 .rounded-borders {
@@ -111,6 +119,10 @@ body.body--dark {
   background: var(--bg-card-color) !important;
 }
 
+.bg-section-color {
+  background: var(--bg-section-color) !important;
+}
+
 .text-card-color {
   color: var(--text-card-color) !important;
 }
@@ -130,6 +142,9 @@ body.body--dark {
 .metric-facts {
   display: grid;
   gap: 0.45rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  background: var(--bg-section-color);
 }
 
 .fact-row {
@@ -155,13 +170,26 @@ body.body--dark {
   justify-content: center;
   gap: 0.5rem;
   min-height: 4rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  background: var(--bg-section-color);
   text-align: center;
 }
 
 .metric-table {
-  border: 1px solid var(--border-color);
+  border: 0;
   border-radius: 10px;
+  background: var(--bg-section-color) !important;
   overflow: hidden;
+}
+
+.q-card {
+  box-shadow: none !important;
+}
+
+.q-table th,
+.q-table td {
+  border-color: var(--divider-color) !important;
 }
 
 body.body--dark .q-menu,

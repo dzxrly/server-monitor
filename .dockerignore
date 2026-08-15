@@ -1,0 +1,16 @@
+.git
+.agents
+.claude
+.codex
+.vscode
+.env*
+.pytest_cache
+.pytest-tmp
+.ruff_cache
+.venv*
+__pycache__
+log
+tests
+venv
+vendor/librehardwaremonitor
+*.pyc

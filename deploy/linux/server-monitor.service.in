@@ -1,0 +1,18 @@
+[Unit]
+Description=Server Monitor backend
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=@WORKING_DIRECTORY@
+ExecStart=@PYTHON@ @SERVER@
+Environment="PYTHONUNBUFFERED=1"
+Environment=@LOG_ENVIRONMENT@
+Restart=on-failure
+RestartSec=5s
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target

@@ -58,14 +58,22 @@ class CpuCollector:
         psutil.cpu_percent(interval=None, percpu=False)
 
     @staticmethod
-    def _frequency() -> dict[str, float | None]:
+    def _frequency() -> dict[str, Any]:
         frequency = safe_call(lambda: psutil.cpu_freq(percpu=False), None)
+        per_core = safe_call(lambda: psutil.cpu_freq(percpu=True), []) or []
+        per_core_current_mhz = [float(item.current) if item.current else None for item in per_core]
         if frequency is None:
-            return {"currentMhz": None, "minMhz": None, "maxMhz": None}
+            return {
+                "currentMhz": None,
+                "minMhz": None,
+                "maxMhz": None,
+                "perCoreCurrentMhz": per_core_current_mhz,
+            }
         return {
             "currentMhz": float(frequency.current) if frequency.current else None,
             "minMhz": float(frequency.min) if frequency.min else None,
             "maxMhz": float(frequency.max) if frequency.max else None,
+            "perCoreCurrentMhz": per_core_current_mhz,
         }
 
     def collect(self) -> dict[str, Any]:

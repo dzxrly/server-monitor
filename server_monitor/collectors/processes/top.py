@@ -74,6 +74,29 @@ class TopProcessCollector:
             ):
                 continue
 
+        rows_by_pid = {row["pid"]: row for row in rows}
+        gpu: list[dict[str, Any]] = []
+        for record in gpu_processes or []:
+            pid = int(record["pid"])
+            process_row = rows_by_pid.get(pid)
+            name = process_row["name"] if process_row is not None else process_names.get(pid)
+            if name is None:
+                try:
+                    name = psutil.Process(pid).name()
+                except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
+                    name = f"PID {pid}"
+            gpu_fields = {
+                "gpuUsagePercent": record.get("gpuUsagePercent"),
+                "gpuMemoryBytes": record.get("gpuMemoryBytes", 0),
+                "deviceIndexes": record.get("deviceIndexes", []),
+                "types": record.get("types", []),
+            }
+            if process_row is not None:
+                process_row.update(gpu_fields)
+                gpu.append(dict(process_row))
+            else:
+                gpu.append({"pid": pid, "name": name, **gpu_fields})
+
         self._last_cpu_times = current_cpu_times
         self._last_sample_time = now
         cpu = sorted(
@@ -82,26 +105,6 @@ class TopProcessCollector:
         memory = sorted(
             rows, key=lambda row: (row["memoryBytes"], row["cpuUsagePercent"]), reverse=True
         )[:limit]
-
-        gpu: list[dict[str, Any]] = []
-        for record in gpu_processes or []:
-            pid = int(record["pid"])
-            name = process_names.get(pid)
-            if name is None:
-                try:
-                    name = psutil.Process(pid).name()
-                except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
-                    name = f"PID {pid}"
-            gpu.append(
-                {
-                    "pid": pid,
-                    "name": name,
-                    "gpuUsagePercent": record.get("gpuUsagePercent"),
-                    "gpuMemoryBytes": record.get("gpuMemoryBytes", 0),
-                    "deviceIndexes": record.get("deviceIndexes", []),
-                    "types": record.get("types", []),
-                }
-            )
         gpu.sort(
             key=lambda row: (
                 row["gpuUsagePercent"] if row["gpuUsagePercent"] is not None else -1,

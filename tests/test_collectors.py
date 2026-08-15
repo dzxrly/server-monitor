@@ -6,7 +6,7 @@ from types import SimpleNamespace
 from server_monitor.collectors.network.interfaces import NetworkCollector
 from server_monitor.collectors.processes.top import TopProcessCollector
 from server_monitor.collectors.storage.disks import DiskCollector
-from server_monitor.collectors.system.cpu import _linux_cpu_name
+from server_monitor.collectors.system.cpu import CpuCollector, _linux_cpu_name
 from server_monitor.collectors.temperature.windows_lhm import (
     LibreHardwareMonitorTemperatureProvider,
 )
@@ -109,6 +109,25 @@ def test_network_collector_reports_interfaces_and_rates(monkeypatch) -> None:
     assert second["totals"]["bytesReceived"] == 500
 
 
+def test_cpu_collector_reports_per_core_frequencies(monkeypatch) -> None:
+    average = SimpleNamespace(current=3200.0, min=800.0, max=5600.0)
+    per_core = [
+        SimpleNamespace(current=3100.0, min=800.0, max=5600.0),
+        SimpleNamespace(current=3300.0, min=800.0, max=5600.0),
+    ]
+    monkeypatch.setattr(
+        "server_monitor.collectors.system.cpu.psutil.cpu_freq",
+        lambda percpu: per_core if percpu else average,
+    )
+
+    assert CpuCollector._frequency() == {
+        "currentMhz": 3200.0,
+        "minMhz": 800.0,
+        "maxMhz": 5600.0,
+        "perCoreCurrentMhz": [3100.0, 3300.0],
+    }
+
+
 def test_librehardwaremonitor_missing_library_degrades_cleanly(tmp_path: Path) -> None:
     provider = LibreHardwareMonitorTemperatureProvider(tmp_path / "missing.dll")
     result = provider.collect()
@@ -154,10 +173,24 @@ def test_top_process_collector_excludes_windows_idle_process(monkeypatch) -> Non
         lambda attributes: [idle, inaccessible, worker],
     )
 
-    result = TopProcessCollector().collect(limit=5)
+    result = TopProcessCollector().collect(
+        limit=5,
+        gpu_processes=[
+            {
+                "pid": 42,
+                "gpuUsagePercent": 12.5,
+                "gpuMemoryBytes": 2048,
+                "deviceIndexes": [0],
+                "types": ["compute"],
+            }
+        ],
+    )
 
     assert [row["pid"] for row in result["cpu"]] == [42]
     assert [row["pid"] for row in result["memory"]] == [42]
+    assert result["cpu"][0]["gpuUsagePercent"] == 12.5
+    assert result["gpu"][0]["cpuUsagePercent"] == 0.0
+    assert result["gpu"][0]["memoryBytes"] == 1024
 
 
 def test_linux_cpu_name_prefers_model_over_processor_index() -> None:

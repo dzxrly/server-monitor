@@ -124,6 +124,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.venv*/
 env/
 venv/
 ENV/
@@ -162,3 +163,22 @@ cython_debug/
 .idea/
 
 log/
+
+# Downloaded Windows sensor runtime (installed by deploy/windows/install.ps1)
+vendor/librehardwaremonitor/*
+!vendor/librehardwaremonitor/README.md
+
+# Local AI assistants and editor state
+.codex/
+.claude/
+.agents/
+.vscode/
+
+# Local tool state
+.ruff_cache/
+.pytest-tmp/
+*.pid
+
+# Local environment overrides (keep a documented example if one is added)
+.env*
+!.env.example

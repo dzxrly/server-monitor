@@ -1,4 +1,4 @@
-echo "Creating virtual environment: ./env"
-python -m venv ./env
-echo "Activating virtual environment: ./env & Installing requirements && Deploying..."
-.\env\Scripts\activate.bat && pip install -r requirements.txt && python server.py
+@echo off
+setlocal
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0deploy\windows\install.ps1"
+if errorlevel 1 exit /b %errorlevel%

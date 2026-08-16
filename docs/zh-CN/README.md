@@ -12,7 +12,7 @@
 
 <div align="center">
 
-这是 Server Monitor 的前端部分，可以通过`docker`构建与部署。
+基于 Vue 3 与 Quasar 的多服务器监控面板，可同时监控 Windows 和 Linux 主机。当前前端使用后端统一的 API v1 指标快照，并完整支持明亮与暗黑主题。
 
 </div>
 
@@ -24,74 +24,74 @@
 
 > [!CAUTION]
 >
-> 在前端监控服务器状态需要在每台被监控上部署[后端服务](https://github.com/dzxrly/server-monitor/blob/backend/docs/zh-CN/README.md)！
+> 使用前端监控服务器状态前，需要在每台被监控主机上部署[后端服务](https://github.com/dzxrly/server-monitor/blob/backend/docs/zh-CN/README.md)！
 
-## 部署
+## 主要功能
 
-### 从 Docker 构建（推荐）
+- 紧凑且自适应的服务器卡片，可在同一屏幕展示更多主机。
+- 页面、对话框、表格、控件、加载和错误状态均支持明亮与暗黑主题。
+- 展示 CPU、内存、NVIDIA GPU、温度、所有挂载卷、硬盘 I/O、所有网卡和网络实时速率。
+- 可设置 CPU、内存和 GPU 各自纳入的高占用进程数量，合并至一张可排序表格，默认按 CPU 占用降序排列。
+- 提供紧凑、标准和详细三种仪表盘密度。
+- 可配置刷新周期、容量单位、温度单位、使用率阈值和三种界面语言。
+- 每台服务器的每个刷新周期只请求一次 `GET /api/v1/metrics`。
 
-1. 拉取前端部分源码
+前端要求后端支持 API v1，未带版本号的旧接口不再兼容。
 
-   ```bash
-   git clone -b frontend https://github.com/dzxrly/server-monitor.git
-   ```
+## 环境要求
 
-2. 进入源码根目录
+- Node.js 24 或更高版本。
+- npm 11 或更高版本。
+- 每台被监控主机均已部署 [Server Monitor 后端](https://github.com/dzxrly/server-monitor/tree/backend)。
 
-   ```bash
-   cd server-monitor
-   ```
+## 本地开发
 
-3. 使用`docker buildx`构建镜像
+```bash
+git clone -b frontend https://github.com/dzxrly/server-monitor.git
+cd server-monitor
+npm ci
+npm run dev
+```
 
-   ```bash
-   docker buildx build --no-cache -t eggtargaryen/server-monitor .
-   ```
+开发服务器会输出本地访问地址。在界面中添加后端基础 URL，例如 `http://192.168.1.10:6543`；前端会自动追加 `/api/v1/metrics`。
 
-4. 运行该镜像
+## 生产构建
 
-   ```bash
-   docker run -p 80:80 eggtargaryen/server-monitor
-   ```
+```bash
+npm ci
+npm run typecheck
+npm test
+npm run build
+```
 
-### 从源码手动构建
+静态 SPA 输出到 `dist/spa`。随附的 Nginx 配置已包含 history 模式回退，直接打开服务器详情 URL 也能正常加载。
 
-1. 拉取前端部分源码
+## Docker 部署
 
-   ```bash
-   git clone -b frontend https://github.com/dzxrly/server-monitor.git
-   ```
+```bash
+docker build -t server-monitor-frontend .
+docker run --rm -p 80:80 server-monitor-frontend
+```
 
-2. 进入源码根目录
+打开 `http://localhost`，随后添加一个或多个后端基础 URL。
 
-   ```bash
-   cd server-monitor
-   ```
+## 设置与兼容性
 
-3. 安装`quasar/cli`
+- “每类资源纳入进程表的数量”会控制 `processLimit` 查询参数，允许范围为 `1`–`50`。
+- 可以迁移旧版前端导出的配置；旧 GPU 类型字段仅为导入兼容而保留，API v1 会自动识别 NVIDIA 硬件。
+- 设置和服务器列表保存在浏览器本地存储中，并可导入或导出为 JSON。
+- 浏览器会拦截混合内容。HTTPS 前端不能直接请求 HTTP 后端，请统一协议或使用反向代理。
+- 用户浏览器必须能够路由到每个后端地址。将前端部署在公网并不会让公网用户自动访问到内网后端。
 
-   ```bash
-   npm install -g @quasar/cli
-   ```
+## 质量检查
 
-4. 安装其他依赖库
-
-   ```bash
-   npm install
-   ```
-
-5. 使用`quasar/cli`构建
-
-   ```bash
-   quasar build
-   ```
-
-6. 入口文件`index.html`位于`./dist/spa`目录下
-
-## 注意事项
-
-- 受限于浏览器安全设置，请确保前端与后端均采用同一协议，例如前端与后端均为`http`或均为`https`，混用协议可能导致请求被浏览器拦截。
-- 同样受限于浏览器安全设置，如果前端部署于公网网段，而后端部署于内网网段，则无法正常建立通信。
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run format:check
+npm audit
+```
 
 ---
 

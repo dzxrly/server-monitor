@@ -1,0 +1,13 @@
+.git
+.agents
+.claude
+.codex
+.vscode
+.quasar
+.playwright-cli
+.env*
+coverage
+dist
+node_modules
+output
+*.log

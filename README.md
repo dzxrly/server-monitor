@@ -12,7 +12,7 @@
 
 <div align="center">
 
-This is the frontend of Server Monitor, which can be built and deployed using `docker`.
+A Vue 3 and Quasar dashboard for monitoring multiple Windows and Linux servers. The current frontend uses the backend's single API v1 metrics snapshot and supports complete light and dark themes.
 
 </div>
 
@@ -24,74 +24,74 @@ This is the frontend of Server Monitor, which can be built and deployed using `d
 
 > [!CAUTION]
 >
-> To monitor the server status on the frontend, the [Backend Service](https://github.com/dzxrly/server-monitor/blob/backend/README.md) needs to be deployed on each monitored server.！
+> To monitor server status from the frontend, deploy the [Backend Service](https://github.com/dzxrly/server-monitor/blob/backend/README.md) on every monitored host.
 
-## Deployment
+## Highlights
 
-### Build from Docker (Recommend)
+- Compact responsive server cards for displaying more hosts on one screen.
+- Light and dark themes across pages, dialogs, tables, controls, and loading/error states.
+- CPU, memory, NVIDIA GPU, temperature, every mounted volume, disk I/O, every network interface, and transfer-rate panels.
+- Configurable top CPU, memory, and GPU process counts merged into one sortable table, ordered by CPU usage by default.
+- Compact, standard, and detailed dashboard density settings.
+- Configurable refresh interval, byte units, temperature units, thresholds, and three UI languages.
+- One `GET /api/v1/metrics` request per server per refresh cycle.
 
-1. Pull the frontend source code
+The frontend requires an API v1 backend. Legacy unversioned endpoints are no longer supported.
 
-   ```bash
-   git clone -b frontend https://github.com/dzxrly/server-monitor.git
-   ```
+## Requirements
 
-2. Enter the root directory of the source code
+- Node.js 24 or newer.
+- npm 11 or newer.
+- A deployed [Server Monitor backend](https://github.com/dzxrly/server-monitor/tree/backend) on each monitored host.
 
-   ```bash
-   cd server-monitor
-   ```
+## Local development
 
-3. Run `docker buildx` to build container
+```bash
+git clone -b frontend https://github.com/dzxrly/server-monitor.git
+cd server-monitor
+npm ci
+npm run dev
+```
 
-   ```bash
-   docker buildx build --no-cache -t eggtargaryen/server-monitor .
-   ```
+The development server prints its local URL. Add a server in the UI using the backend base URL, for example `http://192.168.1.10:6543`; the frontend appends `/api/v1/metrics` itself.
 
-4. Run the container
+## Production build
 
-   ```bash
-   docker run -p 80:80 eggtargaryen/server-monitor
-   ```
+```bash
+npm ci
+npm run typecheck
+npm test
+npm run build
+```
 
-### Build from the source code
+The static SPA is written to `dist/spa`. The included Nginx configuration has history-mode fallback for direct detail-page navigation.
 
-1. Pull the frontend source code
+## Docker deployment
 
-   ```bash
-   git clone -b frontend https://github.com/dzxrly/server-monitor.git
-   ```
+```bash
+docker build -t server-monitor-frontend .
+docker run --rm -p 80:80 server-monitor-frontend
+```
 
-2. Enter the root directory of the source code
+Open `http://localhost` and add one or more backend base URLs.
 
-   ```bash
-   cd server-monitor
-   ```
+## Settings and compatibility
 
-3. Install `quasar/cli`
+- `Processes per resource included in the table` controls the `processLimit` query parameter and accepts `1`–`50`.
+- Existing configuration exported by the previous frontend is migrated; the old GPU type field is retained only for import compatibility because API v1 auto-detects NVIDIA hardware.
+- Settings and server entries are stored in browser local storage and can be exported/imported as JSON.
+- Browsers block mixed content. An HTTPS frontend cannot directly request an HTTP backend; use matching protocols or a reverse proxy.
+- A user's browser must be able to route to every backend URL. A public frontend URL does not make private backend addresses reachable from outside that private network.
 
-   ```bash
-   npm install -g @quasar/cli
-   ```
+## Quality checks
 
-4. Install other dependences
-
-   ```bash
-   npm install
-   ```
-
-5. Build by `quasar/cli`
-
-   ```bash
-   quasar build
-   ```
-
-6. Entry file `index.html` is in the `./dist/spa`
-
-## Notes
-
-- Due to browser security settings, please ensure that both the frontend and backend use the same protocol, such as both using http or both using https. Mixing protocols may cause requests to be blocked by the browser.
-- Similarly, due to browser security settings, if the frontend is deployed in a public network segment while the backend is deployed in a private network segment, communication cannot be established properly.
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run format:check
+npm audit
+```
 
 ---
 

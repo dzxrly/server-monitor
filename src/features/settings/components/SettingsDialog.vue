@@ -255,7 +255,7 @@ function updateLanguage(value: string): void {
         </q-item>
       </q-list>
     </q-card-section>
-    <q-card-actions class="q-px-md q-pb-md" align="between">
+    <q-card-actions class="settings-actions q-px-md q-pb-md" align="between">
       <q-btn
         flat
         rounded
@@ -265,18 +265,22 @@ function updateLanguage(value: string): void {
         :label="t('resetSettingBtn')"
         @click="showResetConfirm = true"
       />
-      <div>
+      <div class="settings-actions__group">
         <q-btn
           flat
-          round
+          rounded
+          no-caps
           icon="file_upload"
+          :label="t('exportSettingBtn')"
           :aria-label="t('exportSettingBtn')"
           @click="exportConfig"
         />
         <q-btn
           flat
-          round
+          rounded
+          no-caps
           icon="file_download"
+          :label="t('importSettingBtn')"
           :aria-label="t('importSettingBtn')"
           @click="importConfig"
         />
@@ -330,9 +334,25 @@ function updateLanguage(value: string): void {
   width: 10rem;
 }
 
+.settings-actions {
+  gap: 0.5rem;
+}
+
+.settings-actions__group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
 @media (max-width: 520px) {
   .setting-control {
     width: 8rem;
+  }
+
+  .settings-actions__group {
+    flex: 1 1 100%;
   }
 }
 </style>

@@ -97,8 +97,6 @@ export default {
   saveEditBtn: 'Save',
 
   apiV1UrlHint: 'Backend base URL; the UI calls /api/v1/metrics',
-  gpuAutoDetectionHint:
-    'NVIDIA hardware is detected automatically by the v1 backend.',
   processLimit: 'Processes per resource included in the table',
   processUsage: 'Process resource usage',
   processUsageSubtitle: 'Combined high-usage CPU, memory and GPU processes',

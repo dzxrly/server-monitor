@@ -17,7 +17,7 @@ const rows = computed(() => mergeProcessRows(props.processes));
 
 <template>
   <MetricCard
-    class="detail-card detail-card-wide"
+    class="detail-card"
     icon="mdi-format-list-numbered"
     :title="t('processUsage')"
     :subtitle="t('processUsageSubtitle')"

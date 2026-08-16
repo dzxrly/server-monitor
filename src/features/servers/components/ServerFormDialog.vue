@@ -24,6 +24,18 @@ const server = reactive<ServerConfig>(emptyServer());
 const title = computed(() =>
   props.mode === 'add' ? t('addServer') : t('serverSettings'),
 );
+const gpuType = computed({
+  get: () => server.gpuServer?.gpuType ?? 'NoneGPU',
+  set: (value: string) => {
+    server.gpuServer = { gpuType: value };
+  },
+});
+const gpuTypeOptions = computed(() => [
+  { label: t('NoneGPU'), value: 'NoneGPU' },
+  { label: t('NVIDIA'), value: 'NVIDIA' },
+  { label: t('AMD'), value: 'AMD', disable: true },
+  { label: t('INTEL'), value: 'Intel', disable: true },
+]);
 
 function randomColor(): string {
   return `#${Math.floor(Math.random() * 0x1000000)
@@ -47,9 +59,7 @@ function copyServer(value: ServerConfig): ServerConfig {
     uniqueId: value.uniqueId,
     serverUrl: value.serverUrl,
     tagColor: value.tagColor,
-    ...(value.gpuServer
-      ? { gpuServer: { gpuType: value.gpuServer.gpuType } }
-      : {}),
+    gpuServer: { gpuType: value.gpuServer?.gpuType ?? 'NoneGPU' },
   };
 }
 
@@ -144,9 +154,15 @@ watch(visible, (isVisible) => {
             </q-icon>
           </template>
         </q-input>
-        <div class="text-caption text-muted-color q-mt-sm">
-          {{ t('gpuAutoDetectionHint') }}
-        </div>
+        <q-select
+          v-model="gpuType"
+          class="q-mt-md"
+          :options="gpuTypeOptions"
+          :label="t('serverGPUType')"
+          map-options
+          emit-value
+          outlined
+        />
       </q-card-section>
       <q-card-actions align="right" class="q-px-md q-pb-md">
         <q-btn

@@ -89,7 +89,6 @@ export default {
   saveEditBtn: '保存',
 
   apiV1UrlHint: '后端基础 URL；前端将请求 /api/v1/metrics',
-  gpuAutoDetectionHint: 'v1 后端会自动识别 NVIDIA 硬件。',
   processLimit: '每类资源纳入进程表的数量',
   processUsage: '进程资源占用',
   processUsageSubtitle: '汇总 CPU、内存与 GPU 高占用进程',

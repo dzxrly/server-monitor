@@ -15,7 +15,7 @@ const activeInterfaces = computed(
 
 <template>
   <MetricCard
-    class="detail-card detail-card-wide"
+    class="detail-card"
     icon="mdi-lan"
     :title="t('network')"
     :subtitle="`${activeInterfaces}/${network.interfaces.length} ${t('interfacesActive')}`"

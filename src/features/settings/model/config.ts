@@ -10,7 +10,7 @@ export interface ServerConfig {
   uniqueId: string;
   serverUrl: string;
   tagColor: string;
-  // Kept when importing older config files. The v1 backend now auto-detects NVIDIA.
+  // Kept compatible with the GPU type selector used by existing configurations.
   gpuServer?: { gpuType: string } | undefined;
 }
 

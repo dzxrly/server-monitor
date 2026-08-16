@@ -12,6 +12,7 @@ import StoragePanel from '@/features/monitoring/components/detail/StoragePanel.v
 import SystemPanel from '@/features/monitoring/components/detail/SystemPanel.vue';
 import TemperaturePanel from '@/features/monitoring/components/detail/TemperaturePanel.vue';
 import { POLLING_PAUSED_KEY } from '@/features/monitoring/composables/polling-context';
+import { useMasonryGrid } from '@/features/monitoring/composables/use-masonry-grid';
 import { useServerMetrics } from '@/features/monitoring/composables/use-server-metrics';
 import { useConfigStore } from '@/features/settings/stores/config-store';
 
@@ -19,6 +20,7 @@ const route = useRoute();
 const { t } = useI18n();
 const configStore = useConfigStore();
 const paused = inject(POLLING_PAUSED_KEY, ref(false));
+const detailGrid = ref<HTMLElement | null>(null);
 const server = computed(() =>
   configStore.config.serverListConfig.find(
     (item) => item.uniqueId === route.params.uid,
@@ -35,6 +37,8 @@ const { metrics, error, loading, refreshing, refresh } = useServerMetrics({
   processLimit,
   paused,
 });
+
+useMasonryGrid(detailGrid);
 </script>
 
 <template>
@@ -87,7 +91,7 @@ const { metrics, error, loading, refreshing, refresh } = useServerMetrics({
       <div v-if="loading && !metrics" class="column items-center q-pa-xl">
         <q-spinner color="primary" size="3rem" />
       </div>
-      <div v-else-if="metrics" class="detail-grid">
+      <div v-else-if="metrics" ref="detailGrid" class="detail-grid">
         <CpuPanel
           :cpu="metrics.cpu"
           :fahrenheit="configStore.config.useFahrenheitUnit"
@@ -139,9 +143,11 @@ const { metrics, error, loading, refreshing, refresh } = useServerMetrics({
 }
 
 .detail-grid {
+  --detail-grid-gap: 0.85rem;
+
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 0.85rem;
+  gap: var(--detail-grid-gap);
 
   :deep(.detail-card) {
     grid-column: span 4;
@@ -149,6 +155,21 @@ const { metrics, error, loading, refreshing, refresh } = useServerMetrics({
 
   :deep(.detail-card-wide) {
     grid-column: span 8;
+  }
+
+  :deep(.detail-card-full) {
+    grid-column: 1 / -1;
+  }
+}
+
+.detail-grid[data-masonry-grid] {
+  grid-auto-flow: dense;
+  grid-auto-rows: 1px;
+  row-gap: 0;
+  align-items: start;
+
+  :deep(.detail-card) {
+    height: auto;
   }
 }
 
@@ -165,6 +186,10 @@ const { metrics, error, loading, refreshing, refresh } = useServerMetrics({
     :deep(.detail-card),
     :deep(.detail-card-wide) {
       grid-column: span 6;
+    }
+
+    :deep(.detail-card-full) {
+      grid-column: 1 / -1;
     }
   }
 }

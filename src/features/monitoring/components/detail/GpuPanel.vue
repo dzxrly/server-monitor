@@ -24,11 +24,11 @@ const { t } = useI18n();
 
 <template>
   <MetricCard
-    class="detail-card"
+    class="detail-card detail-card-full"
     icon="mdi-expansion-card"
     :title="t('gpuInfo')"
   >
-    <template v-if="gpu.devices.length > 0">
+    <div v-if="gpu.devices.length > 0" class="gpu-device-grid">
       <section
         v-for="device in gpu.devices"
         :key="device.uuid || device.index"
@@ -83,7 +83,7 @@ const { t } = useI18n();
           </div>
         </div>
       </section>
-    </template>
+    </div>
     <div v-else class="empty-state text-muted-color">
       <q-icon name="mdi-expansion-card-off" size="md" />
       <span>{{ gpu.reason || t('noGpuData') }}</span>
@@ -92,8 +92,13 @@ const { t } = useI18n();
 </template>
 
 <style scoped lang="scss">
-.gpu-device + .gpu-device {
-  margin-top: 1rem;
-  padding-top: 0;
+.gpu-device-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+
+.gpu-device {
+  min-width: 0;
 }
 </style>

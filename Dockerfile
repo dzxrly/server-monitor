@@ -1,7 +1,7 @@
 FROM node:24-alpine AS builder
 
 WORKDIR /src
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json quasar.config.ts index.html ./
 RUN npm ci
 
 COPY . .

@@ -1,15 +1,12 @@
-import { fileURLToPath } from 'node:url';
+import { getTestingConfig } from '@quasar/app-vite/testing';
 
-import { defineConfig } from 'vitest/config';
+import { defineConfig, mergeConfig } from 'vitest/config';
 
-export default defineConfig({
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+export default defineConfig(async () =>
+  mergeConfig(await getTestingConfig(), {
+    test: {
+      environment: 'jsdom',
+      include: ['src/**/*.test.ts'],
     },
-  },
-  test: {
-    environment: 'jsdom',
-    include: ['src/**/*.test.ts'],
-  },
-});
+  }),
+);

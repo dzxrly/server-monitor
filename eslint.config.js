@@ -6,7 +6,13 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['.quasar/**', 'dist/**', 'node_modules/**', 'src/fonts/**'],
+    ignores: [
+      '.agents/**',
+      '.quasar/**',
+      'dist/**',
+      'node_modules/**',
+      'src/fonts/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

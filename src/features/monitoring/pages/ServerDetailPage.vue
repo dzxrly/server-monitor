@@ -150,6 +150,7 @@ useMasonryGrid(detailGrid);
   gap: var(--detail-grid-gap);
 
   :deep(.detail-card) {
+    min-width: 0;
     grid-column: span 4;
   }
 
@@ -196,7 +197,7 @@ useMasonryGrid(detailGrid);
 
 @media (max-width: 700px) {
   .detail-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
 
     :deep(.detail-card),
     :deep(.detail-card-wide) {

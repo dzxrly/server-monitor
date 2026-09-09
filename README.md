@@ -31,6 +31,7 @@ A Vue 3 and Quasar dashboard for monitoring multiple Windows and Linux servers. 
 - Compact responsive server cards for displaying more hosts on one screen.
 - Light and dark themes across pages, dialogs, tables, controls, and loading/error states.
 - CPU, memory, NVIDIA GPU, temperature, every mounted volume, disk I/O, every network interface, and transfer-rate panels.
+- Per-core CPU usage and frequency with solid backgrounds and no blur or animated fills.
 - Configurable top CPU, memory, and GPU process counts merged into one sortable table, ordered by CPU usage by default.
 - Compact, standard, and detailed dashboard density settings.
 - Configurable refresh interval, byte units, temperature units, thresholds, and three UI languages.
@@ -80,6 +81,7 @@ Open `http://localhost` and add one or more backend base URLs.
 - `Processes per resource included in the table` controls the `processLimit` query parameter and accepts `1`–`50`.
 - Existing configuration exported by the previous frontend is migrated; the old GPU type field is retained only for import compatibility because API v1 auto-detects NVIDIA hardware.
 - Settings and server entries are stored in browser local storage and can be exported/imported as JSON.
+- Open a server's detail-page menu to edit its name, base URL, tag color, or saved GPU type. Saving preserves its UUID; changing the URL starts a request to the new address immediately unless refreshing is paused.
 - Browsers block mixed content. An HTTPS frontend cannot directly request an HTTP backend; use matching protocols or a reverse proxy.
 - A user's browser must be able to route to every backend URL. A public frontend URL does not make private backend addresses reachable from outside that private network.
 

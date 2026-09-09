@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+import { Notify } from 'quasar';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import {
@@ -19,8 +20,21 @@ const props = withDefaults(
 
 const { t } = useI18n();
 const configStore = useConfigStore();
-const formRef = ref<{ validate: () => Promise<boolean> }>();
+const formRef = ref<{
+  validate: () => Promise<boolean>;
+  resetValidation: () => void;
+}>();
 const server = reactive<ServerConfig>(emptyServer());
+const saving = ref(false);
+const saveError = ref('');
+const existingServer = computed(() =>
+  configStore.config.serverListConfig.find(
+    (candidate) => candidate.uniqueId === props.serverId,
+  ),
+);
+const missingServer = computed(
+  () => props.mode === 'edit' && !existingServer.value,
+);
 const title = computed(() =>
   props.mode === 'add' ? t('addServer') : t('serverSettings'),
 );
@@ -64,23 +78,51 @@ function copyServer(value: ServerConfig): ServerConfig {
 }
 
 function load(): void {
-  const existing = configStore.config.serverListConfig.find(
-    (candidate) => candidate.uniqueId === props.serverId,
-  );
-  Object.assign(server, existing ? copyServer(existing) : emptyServer());
+  saveError.value = '';
+  if (props.mode === 'add') Object.assign(server, emptyServer());
+  else if (existingServer.value)
+    Object.assign(server, copyServer(existingServer.value));
+  void nextTick(() => formRef.value?.resetValidation());
 }
 
 async function save(): Promise<void> {
-  if (!(await formRef.value?.validate())) return;
-  server.serverUrl = server.serverUrl.replace(/\/+$/, '');
-  if (props.mode === 'edit') configStore.updateServer(copyServer(server));
-  else configStore.addServer(copyServer(server));
-  visible.value = false;
+  if (saving.value || missingServer.value) return;
+  const mode = props.mode;
+  const serverId = props.serverId;
+  saving.value = true;
+  saveError.value = '';
+  try {
+    if (!(await formRef.value?.validate())) return;
+    if (!visible.value || props.mode !== mode || props.serverId !== serverId)
+      return;
+
+    const updated = copyServer(server);
+    updated.serverUrl = updated.serverUrl.replace(/\/+$/, '');
+    if (mode === 'edit') {
+      if (!configStore.updateServer(serverId, updated)) {
+        saveError.value = t('serverNotFound');
+        return;
+      }
+    } else configStore.addServer(updated);
+    Notify.create({
+      message: t('settingsSaved'),
+      color: 'primary',
+      icon: 'check',
+      timeout: 1000,
+    });
+    visible.value = false;
+  } finally {
+    saving.value = false;
+  }
 }
 
-watch(visible, (isVisible) => {
-  if (isVisible) load();
-});
+watch(
+  [visible, () => props.mode, () => props.serverId],
+  ([isVisible]) => {
+    if (isVisible) load();
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
@@ -98,71 +140,84 @@ watch(visible, (isVisible) => {
           <span class="text-h6 col">{{ title }}</span>
           <q-btn round flat icon="close" @click="visible = false" />
         </header>
-        <q-input
-          v-model="server.uniqueId"
-          :label="t('serverUUID')"
-          outlined
-          readonly
-        />
-        <q-input
-          v-model.trim="server.serverUrl"
-          class="q-mt-md"
-          :label="t('serverUrl')"
-          :hint="t('apiV1UrlHint')"
-          :rules="[
-            (value) =>
-              /^https?:\/\/.+/i.test(value) ||
-              t('serverUrlInputFieldHintErrorMsg'),
-          ]"
-          outlined
-          clearable
-        />
-        <q-input
-          v-model.trim="server.customName"
-          class="q-mt-sm"
-          :label="t('customServerName')"
-          :rules="[
-            (value) =>
-              (value.length >= 1 && value.length <= 64) ||
-              t('customServerNameInputFieldHintErrorMsg'),
-          ]"
-          outlined
-          clearable
-        />
-        <q-input
-          v-model="server.tagColor"
-          class="q-mt-sm"
-          :label="t('serverTagColor')"
-          :rules="[
-            (value) =>
-              /^#[0-9a-f]{6}$/i.test(value) || t('serverTagColorHintErrorMsg'),
-          ]"
-          outlined
+        <q-banner
+          v-if="missingServer || saveError"
+          rounded
+          class="bg-negative text-white q-mb-md"
+          role="alert"
         >
-          <template #prepend>
-            <q-icon name="dns" :style="{ color: server.tagColor }" />
-          </template>
-          <template #append>
-            <q-icon name="colorize" class="cursor-pointer">
-              <q-popup-proxy
-                cover
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-color v-model="server.tagColor" />
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
-        <q-select
-          v-model="gpuType"
-          class="q-mt-md"
-          :options="gpuTypeOptions"
-          :label="t('serverGPUType')"
-          map-options
-          emit-value
-          outlined
-        />
+          {{ missingServer ? t('serverNotFound') : saveError }}
+        </q-banner>
+        <template v-if="!missingServer">
+          <q-input
+            v-model="server.uniqueId"
+            :label="t('serverUUID')"
+            outlined
+            readonly
+          />
+          <q-input
+            v-model.trim="server.serverUrl"
+            class="q-mt-md"
+            :label="t('serverUrl')"
+            :hint="t('apiV1UrlHint')"
+            :rules="[
+              (value) =>
+                /^https?:\/\/.+/i.test(value) ||
+                t('serverUrlInputFieldHintErrorMsg'),
+            ]"
+            outlined
+            clearable
+          />
+          <q-input
+            v-model.trim="server.customName"
+            class="q-mt-sm"
+            :label="t('customServerName')"
+            :rules="[
+              (value) =>
+                (typeof value === 'string' &&
+                  value.length >= 1 &&
+                  value.length <= 64) ||
+                t('customServerNameInputFieldHintErrorMsg'),
+            ]"
+            outlined
+            clearable
+          />
+          <q-input
+            v-model="server.tagColor"
+            class="q-mt-sm"
+            :label="t('serverTagColor')"
+            :rules="[
+              (value) =>
+                /^#[0-9a-f]{6}$/i.test(value) ||
+                t('serverTagColorHintErrorMsg'),
+            ]"
+            outlined
+          >
+            <template #prepend>
+              <q-icon name="dns" :style="{ color: server.tagColor }" />
+            </template>
+            <template #append>
+              <q-icon name="colorize" class="cursor-pointer">
+                <q-popup-proxy
+                  cover
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-color v-model="server.tagColor" />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+          <q-select
+            v-model="gpuType"
+            class="q-mt-md"
+            :options="gpuTypeOptions"
+            :label="t('serverGPUType')"
+            map-options
+            emit-value
+            outlined
+          />
+        </template>
       </q-card-section>
       <q-card-actions align="right" class="q-px-md q-pb-md">
         <q-btn
@@ -178,6 +233,8 @@ watch(visible, (isVisible) => {
           no-caps
           type="submit"
           icon="save"
+          :loading="saving"
+          :disable="missingServer"
           :label="mode === 'add' ? t('addBtn') : t('saveEditBtn')"
         />
       </q-card-actions>

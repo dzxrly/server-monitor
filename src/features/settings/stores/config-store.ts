@@ -47,11 +47,13 @@ export const useConfigStore = defineStore('config', () => {
     config.value.serverListConfig.push(server);
   }
 
-  function updateServer(server: ServerConfig): void {
+  function updateServer(serverId: string, server: ServerConfig): boolean {
     const index = config.value.serverListConfig.findIndex(
-      (candidate) => candidate.uniqueId === server.uniqueId,
+      (candidate) => candidate.uniqueId === serverId,
     );
-    if (index >= 0) config.value.serverListConfig[index] = server;
+    if (index < 0) return false;
+    config.value.serverListConfig[index] = { ...server, uniqueId: serverId };
+    return true;
   }
 
   function deleteServer(serverId: string): void {

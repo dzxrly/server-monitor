@@ -29,27 +29,40 @@ export function useServerMetrics(options: PollingOptions) {
   async function refresh(): Promise<void> {
     if (options.paused.value || refreshing.value) return;
     refreshing.value = true;
-    controller = new AbortController();
+    const request = new AbortController();
+    controller = request;
     try {
-      metrics.value = await fetchMetrics(
+      const snapshot = await fetchMetrics(
         options.serverUrl.value,
         options.processLimit.value,
-        controller.signal,
+        request.signal,
       );
+      if (controller !== request || request.signal.aborted) return;
+      metrics.value = snapshot;
       error.value = undefined;
     } catch (reason) {
-      if (!controller.signal.aborted) {
+      if (controller === request && !request.signal.aborted) {
         error.value = reason instanceof Error ? reason.message : String(reason);
       }
     } finally {
-      loading.value = false;
-      refreshing.value = false;
+      if (controller === request) {
+        controller = undefined;
+        loading.value = false;
+        refreshing.value = false;
+      }
     }
   }
 
-  function restart(): void {
+  function stop(): void {
     if (timer !== undefined) window.clearInterval(timer);
+    timer = undefined;
     controller?.abort();
+    controller = undefined;
+    refreshing.value = false;
+  }
+
+  function restart(): void {
+    stop();
     if (!options.paused.value) {
       void refresh();
       timer = window.setInterval(
@@ -66,13 +79,17 @@ export function useServerMetrics(options: PollingOptions) {
       options.processLimit,
       options.paused,
     ],
-    restart,
+    ([serverUrl], [previousUrl]) => {
+      if (serverUrl !== previousUrl) {
+        metrics.value = undefined;
+        error.value = undefined;
+        loading.value = true;
+      }
+      restart();
+    },
   );
   onMounted(restart);
-  onBeforeUnmount(() => {
-    if (timer !== undefined) window.clearInterval(timer);
-    controller?.abort();
-  });
+  onBeforeUnmount(stop);
 
   return {
     metrics,

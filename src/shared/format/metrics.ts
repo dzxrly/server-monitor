@@ -1,6 +1,6 @@
 import type { ByteUnit } from '@/features/settings/model/config';
 
-const UNITS: ByteUnit[] = ['B', 'KB', 'MB', 'GB', 'TB'];
+const UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'] as const;
 
 export function rounded(value: number | null | undefined, digits = 0): number {
   if (value == null || !Number.isFinite(value)) return 0;
@@ -11,13 +11,15 @@ export function rounded(value: number | null | undefined, digits = 0): number {
 export function formatBytes(
   bytes: number | null | undefined,
   preferredUnit?: ByteUnit,
+  maxAutoUnit: 'TB' | 'PB' | 'EB' = 'TB',
 ): string {
   if (bytes == null || !Number.isFinite(bytes)) return '—';
   let unitIndex = preferredUnit ? UNITS.indexOf(preferredUnit) : 0;
   if (!preferredUnit) {
+    const maxUnitIndex = UNITS.indexOf(maxAutoUnit);
     while (
       Math.abs(bytes) >= 1024 ** (unitIndex + 1) &&
-      unitIndex < UNITS.length - 1
+      unitIndex < maxUnitIndex
     ) {
       unitIndex += 1;
     }

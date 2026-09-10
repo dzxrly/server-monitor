@@ -31,7 +31,11 @@ A Vue 3 and Quasar dashboard for monitoring multiple Windows and Linux servers. 
 - Compact responsive server cards for displaying more hosts on one screen.
 - Light and dark themes across pages, dialogs, tables, controls, and loading/error states.
 - CPU, memory, NVIDIA GPU, temperature, every mounted volume, disk I/O, every network interface, and transfer-rate panels.
-- Per-core CPU usage and frequency with solid backgrounds and no blur or animated fills.
+- Per-core CPU usage and frequency with solid backgrounds and smooth usage transitions that respect reduced-motion preferences.
+- RAM and swap usage percentages and used/total capacity, plus available RAM and free swap.
+- Dashboard storage summaries prioritize `/` on Linux and `C:` on Windows, falling back to the fullest reported volume if the system volume is absent.
+- Detail-page volumes are ordered by total capacity, largest first, with equal-capacity volumes ordered by mount path.
+- Disk capacities automatically use B, KB, MB, GB, TB, PB, or EB according to each value; memory, swap, and GPU memory use their configured units, selectable from B through EB.
 - Configurable top CPU, memory, and GPU process counts merged into one sortable table, ordered by CPU usage by default.
 - Compact, standard, and detailed dashboard density settings.
 - Configurable refresh interval, byte units, temperature units, thresholds, and three UI languages.

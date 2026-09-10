@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type { MetricsSnapshot } from '@/features/monitoring/api/metrics-types';
 import MetricCard from '@/features/monitoring/components/shared/MetricCard.vue';
-import type { ByteUnit } from '@/features/settings/model/config';
 import {
   formatBytes,
   formatRate,
@@ -11,14 +11,21 @@ import {
   usageColor,
 } from '@/shared/format/metrics';
 
-defineProps<{
+const props = defineProps<{
   storage: MetricsSnapshot['storage'];
-  unit: ByteUnit;
   freeThreshold: number;
   midThreshold: number;
 }>();
 
 const { t } = useI18n();
+const sortedVolumes = computed(() =>
+  [...props.storage.volumes].sort(
+    (left, right) =>
+      right.totalBytes - left.totalBytes ||
+      left.mountpoint.localeCompare(right.mountpoint) ||
+      left.device.localeCompare(right.device),
+  ),
+);
 </script>
 
 <template>
@@ -29,7 +36,7 @@ const { t } = useI18n();
   >
     <div v-if="storage.volumes.length > 0" class="volume-grid">
       <section
-        v-for="volume in storage.volumes"
+        v-for="volume in sortedVolumes"
         :key="`${volume.device}-${volume.mountpoint}`"
         class="volume-item"
       >
@@ -50,8 +57,11 @@ const { t } = useI18n();
           size="8px"
         />
         <div class="row justify-between text-caption q-mt-xs">
-          <span>{{ formatBytes(volume.usedBytes, unit) }} {{ t('used') }}</span>
-          <span>{{ formatBytes(volume.totalBytes, unit) }}</span>
+          <span
+            >{{ formatBytes(volume.usedBytes, undefined, 'EB') }}
+            {{ t('used') }}</span
+          >
+          <span>{{ formatBytes(volume.totalBytes, undefined, 'EB') }}</span>
         </div>
       </section>
     </div>

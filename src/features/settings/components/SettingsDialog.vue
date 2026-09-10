@@ -6,6 +6,7 @@ import { useQuasar } from 'quasar';
 import { languageMap } from '@/boot/i18n';
 import {
   type AppConfig,
+  BYTE_UNITS,
   normalizeConfig,
   partialConfigSchema,
 } from '@/features/settings/model/config';
@@ -29,7 +30,7 @@ const layoutOptions = computed(() => [
   { value: 'md', label: t('layoutMd') },
   { value: 'lg', label: t('layoutLg') },
 ]);
-const unitOptions = ['B', 'KB', 'MB', 'GB', 'TB'].map((value) => ({
+const unitOptions = BYTE_UNITS.map((value) => ({
   value,
   label: value,
 }));

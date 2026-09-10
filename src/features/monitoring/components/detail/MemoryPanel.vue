@@ -51,6 +51,17 @@ const { t } = useI18n();
         <span>{{ t('memoryAvailable') }}</span>
         <strong>{{ formatBytes(memory.availableBytes, unit) }}</strong>
       </div>
+      <div class="fact-row">
+        <span>{{ t('swapUsed') }}</span>
+        <strong
+          >{{ formatBytes(memory.swap.usedBytes, unit) }} /
+          {{ formatBytes(memory.swap.totalBytes, unit) }}</strong
+        >
+      </div>
+      <div class="fact-row">
+        <span>{{ t('swapFree') }}</span>
+        <strong>{{ formatBytes(memory.swap.freeBytes, unit) }}</strong>
+      </div>
     </div>
   </MetricCard>
 </template>

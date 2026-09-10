@@ -108,6 +108,8 @@ export default {
   perCoreUsage: 'Per-core usage',
   memoryUsed: 'Used memory',
   memoryAvailable: 'Available memory',
+  swapUsed: 'Used swap',
+  swapFree: 'Free swap',
   noGpuData: 'No NVIDIA GPU data',
   osVersion: 'OS version',
   uptime: 'Uptime',

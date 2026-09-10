@@ -100,6 +100,8 @@ export default {
   perCoreUsage: '各逻辑核心占用',
   memoryUsed: '已用内存',
   memoryAvailable: '可用内存',
+  swapUsed: '已用 Swap',
+  swapFree: '剩余 Swap',
   noGpuData: '没有 NVIDIA GPU 数据',
   osVersion: '系统版本',
   uptime: '运行时间',

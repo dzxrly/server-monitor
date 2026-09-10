@@ -66,6 +66,7 @@ const tileStyle = computed(
   background: var(--cpu-accent);
   transform: scaleY(var(--cpu-usage));
   transform-origin: bottom;
+  transition: transform 0.4s ease;
 }
 
 .cpu-usage-tile__index {
@@ -98,6 +99,12 @@ const tileStyle = computed(
     color: var(--text-muted-color);
     font-size: clamp(0.58rem, 0.75vw, 0.7rem);
     white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cpu-usage-tile__fill {
+    transition: none;
   }
 }
 </style>

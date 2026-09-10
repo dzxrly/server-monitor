@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { POLLING_PAUSED_KEY } from '@/features/monitoring/composables/polling-context';
 import { useServerMetrics } from '@/features/monitoring/composables/use-server-metrics';
 import UsageRing from '@/features/monitoring/components/shared/UsageRing.vue';
+import { selectDashboardVolume } from '@/features/monitoring/model/dashboard-volume';
 import type {
   PanelLayout,
   ServerConfig,
@@ -47,14 +48,9 @@ const hottestTemperature = computed(() => {
     ? Math.max(...sensors.map((sensor) => sensor.currentCelsius))
     : null;
 });
-const fullestVolume = computed(() => {
-  const volumes = metrics.value?.storage.volumes ?? [];
-  return volumes.length > 0
-    ? volumes.reduce((highest, volume) =>
-        volume.usagePercent > highest.usagePercent ? volume : highest,
-      )
-    : undefined;
-});
+const primaryVolume = computed(() =>
+  selectDashboardVolume(metrics.value?.storage.volumes ?? []),
+);
 </script>
 
 <template>
@@ -142,8 +138,8 @@ const fullestVolume = computed(() => {
         <div>
           <q-icon name="storage" />
           <span>{{
-            fullestVolume
-              ? `${fullestVolume.mountpoint} ${rounded(fullestVolume.usagePercent)}%`
+            primaryVolume
+              ? `${primaryVolume.mountpoint} ${rounded(primaryVolume.usagePercent)}%`
               : '—'
           }}</span>
         </div>

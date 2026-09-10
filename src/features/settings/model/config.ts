@@ -3,7 +3,8 @@ import { z } from 'zod';
 import messages from '@/i18n';
 
 export type PanelLayout = 'sm' | 'md' | 'lg';
-export type ByteUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
+export const BYTE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'] as const;
+export type ByteUnit = (typeof BYTE_UNITS)[number];
 
 export interface ServerConfig {
   customName: string;
@@ -48,8 +49,8 @@ export const partialConfigSchema = z
     useFahrenheitUnit: z.boolean().optional(),
     freeUsageThreshold: z.number().min(0).max(100).optional(),
     midUsageThreshold: z.number().min(0).max(100).optional(),
-    memoryUnit: z.enum(['B', 'KB', 'MB', 'GB', 'TB']).optional(),
-    gpuMemoryUnit: z.enum(['B', 'KB', 'MB', 'GB', 'TB']).optional(),
+    memoryUnit: z.enum(BYTE_UNITS).optional(),
+    gpuMemoryUnit: z.enum(BYTE_UNITS).optional(),
     showBackendTipsDialog: z.boolean().optional(),
   })
   .strict();

@@ -41,12 +41,15 @@ function frequencyForCore(index: number): number | null {
     :subtitle="`${cpu.physicalCores ?? '—'}C / ${cpu.logicalCores ?? '—'}T`"
   >
     <div class="cpu-summary">
-      <div class="cpu-summary__item cpu-summary__item--primary">
+      <div class="cpu-summary__item">
         <span>{{ t('cpuUsage') }}</span>
-        <strong
-          :class="`text-${usageColor(cpu.usagePercent, freeThreshold, midThreshold)}`"
-          >{{ rounded(cpu.usagePercent) }}%</strong
+        <q-badge
+          class="cpu-summary__usage"
+          :color="usageColor(cpu.usagePercent, freeThreshold, midThreshold)"
+          text-color="white"
         >
+          {{ rounded(cpu.usagePercent) }}%
+        </q-badge>
       </div>
       <div class="cpu-summary__item">
         <span>{{ t('cpuFreq') }}</span>
@@ -103,7 +106,8 @@ function frequencyForCore(index: number): number | null {
     font-size: 0.72rem;
   }
 
-  strong {
+  strong,
+  .cpu-summary__usage {
     overflow: hidden;
     font-size: 1.05rem;
     text-overflow: ellipsis;
@@ -111,8 +115,13 @@ function frequencyForCore(index: number): number | null {
   }
 }
 
-.cpu-summary__item--primary {
-  background: var(--bg-section-strong-color);
+.cpu-summary__usage {
+  align-self: center;
+  justify-self: start;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .cpu-grid-heading {
@@ -139,7 +148,8 @@ function frequencyForCore(index: number): number | null {
       font-size: 0.66rem;
     }
 
-    strong {
+    strong,
+    .cpu-summary__usage {
       font-size: 0.9rem;
     }
   }

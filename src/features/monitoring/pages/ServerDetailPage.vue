@@ -114,7 +114,6 @@ useMasonryGrid(detailGrid);
         <ProcessPanel :processes="metrics.processes" />
         <StoragePanel
           :storage="metrics.storage"
-          :unit="configStore.config.memoryUnit"
           :free-threshold="configStore.config.freeUsageThreshold"
           :mid-threshold="configStore.config.midUsageThreshold"
         />

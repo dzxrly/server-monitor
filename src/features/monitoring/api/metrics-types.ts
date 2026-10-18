@@ -20,6 +20,15 @@ export interface ProcessRow {
   types?: string[];
 }
 
+/** Linux: used/buffers/cache/free. Windows: inUse/modified/standby/free. */
+export type MemorySegmentKey =
+  'used' | 'buffers' | 'cache' | 'inUse' | 'modified' | 'standby' | 'free';
+
+export interface MemorySegment {
+  key: MemorySegmentKey;
+  bytes: number;
+}
+
 export interface MetricsSnapshot {
   apiVersion: 'v1';
   sequence: number;
@@ -61,7 +70,11 @@ export interface MetricsSnapshot {
     availableBytes: number;
     usedBytes: number;
     freeBytes: number;
+    /** Linux Shmem (tmpfs, /dev/shm); counted inside the cache segment. */
+    sharedBytes?: number | null;
     usagePercent: number;
+    /** Segments that add up to totalBytes; null when the platform has no breakdown. */
+    composition?: MemorySegment[] | null;
     swap: {
       totalBytes: number;
       usedBytes: number;

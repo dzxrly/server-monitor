@@ -31,6 +31,13 @@ describe('config migration', () => {
     expect(config.serverListConfig).toEqual([]);
   });
 
+  it('defaults memory colors to low contrast and keeps a saved choice', () => {
+    expect(normalizeConfig({}).memoryColorMode).toBe('lowContrast');
+    expect(
+      normalizeConfig({ memoryColorMode: 'highContrast' }).memoryColorMode,
+    ).toBe('highContrast');
+  });
+
   it.each(['PB', 'EB'])(
     'preserves %s memory and GPU units when importing or reloading configuration',
     (unit) => {

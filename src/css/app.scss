@@ -30,6 +30,14 @@
   --free-color: #8ac926;
   --mid-color: #ffca3a;
   --max-color: #ff595e;
+  /* Memory composition ring. High contrast: categorical hues, >= 3:1 on cards.
+     Low contrast: one gray ramp, darker = harder to reclaim. */
+  --memory-high-1-color: #2a78d6;
+  --memory-high-2-color: #c94f1c;
+  --memory-high-3-color: #148a60;
+  --memory-low-1-color: #4a4a4a;
+  --memory-low-2-color: #858585;
+  --memory-low-3-color: #b0b0b0;
 }
 
 html,
@@ -69,6 +77,12 @@ body.body--dark {
   --progress-track-color: #3a4049;
   --card-shadow: none;
   --card-shadow-hover: none;
+  --memory-high-1-color: #3987e5;
+  --memory-high-2-color: #d95926;
+  --memory-high-3-color: #199e70;
+  --memory-low-1-color: #c8ccd2;
+  --memory-low-2-color: #8a919b;
+  --memory-low-3-color: #5d646e;
 }
 
 .rounded-borders {

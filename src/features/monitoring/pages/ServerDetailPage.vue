@@ -101,6 +101,7 @@ useMasonryGrid(detailGrid);
         <MemoryPanel
           :memory="metrics.memory"
           :unit="configStore.config.memoryUnit"
+          :color-mode="configStore.config.memoryColorMode"
           :free-threshold="configStore.config.freeUsageThreshold"
           :mid-threshold="configStore.config.midUsageThreshold"
         />

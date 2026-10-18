@@ -30,6 +30,7 @@ Server Monitor 後端透過一個具版本號的統一 API 提供 CPU、記憶�
 
 - 使用單一 `GET /api/v1/metrics` 回傳同一採樣時刻的完整快照，不再呼叫多個舊介面。
 - 讀取所有可見掛載磁碟區、實體硬碟 I/O、網路介面及各介面即時速率。
+- 回傳各段總和等於實體記憶體總量的記憶體組成：Linux 與 `free` 命令一致，分為已用、緩衝區、快取和閒置；Windows 與工作管理員一致，透過 PDH 計數器讀取使用中、已修改、待命和閒置。
 - 可指定 CPU、記憶體和 NVIDIA GPU 高佔用程序的回傳數量。
 - 透過 NVML 讀取 NVIDIA 裝置和程序指標。
 - Linux 透過 `psutil` 讀取溫度；Windows 透過 LibreHardwareMonitor 讀取溫度。

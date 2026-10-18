@@ -32,7 +32,8 @@ A Vue 3 and Quasar dashboard for monitoring multiple Windows and Linux servers. 
 - Light and dark themes across pages, dialogs, tables, controls, and loading/error states.
 - CPU, memory, NVIDIA GPU, temperature, every mounted volume, disk I/O, every network interface, and transfer-rate panels.
 - Per-core CPU usage and frequency with solid backgrounds and smooth usage transitions that respect reduced-motion preferences.
-- RAM and swap usage percentages and used/total capacity, plus available RAM and free swap.
+- RAM and swap usage shown as threshold-colored badges, with segmented rings that split RAM into used, buffers, cache, and free on Linux, or in use, modified, standby, and free on Windows, plus available RAM.
+- Memory ring colors default to low-contrast gray tones and can be switched to high-contrast colors in settings.
 - Dashboard storage summaries prioritize `/` on Linux and `C:` on Windows, falling back to the fullest reported volume if the system volume is absent.
 - Detail-page volumes are ordered by total capacity, largest first, with equal-capacity volumes ordered by mount path.
 - Disk capacities automatically use B, KB, MB, GB, TB, PB, or EB according to each value; memory, swap, and GPU memory use their configured units, selectable from B through EB.

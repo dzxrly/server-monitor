@@ -5,6 +5,8 @@ import messages from '@/i18n';
 export type PanelLayout = 'sm' | 'md' | 'lg';
 export const BYTE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'] as const;
 export type ByteUnit = (typeof BYTE_UNITS)[number];
+export const MEMORY_COLOR_MODES = ['lowContrast', 'highContrast'] as const;
+export type MemoryColorMode = (typeof MEMORY_COLOR_MODES)[number];
 
 export interface ServerConfig {
   customName: string;
@@ -27,6 +29,7 @@ export interface AppConfig {
   midUsageThreshold: number;
   memoryUnit: ByteUnit;
   gpuMemoryUnit: ByteUnit;
+  memoryColorMode: MemoryColorMode;
   showBackendTipsDialog: boolean;
 }
 
@@ -51,6 +54,7 @@ export const partialConfigSchema = z
     midUsageThreshold: z.number().min(0).max(100).optional(),
     memoryUnit: z.enum(BYTE_UNITS).optional(),
     gpuMemoryUnit: z.enum(BYTE_UNITS).optional(),
+    memoryColorMode: z.enum(MEMORY_COLOR_MODES).optional(),
     showBackendTipsDialog: z.boolean().optional(),
   })
   .strict();
@@ -73,6 +77,7 @@ export function createDefaultConfig(): AppConfig {
     midUsageThreshold: 70,
     memoryUnit: 'GB',
     gpuMemoryUnit: 'GB',
+    memoryColorMode: 'lowContrast',
     showBackendTipsDialog: true,
   };
 }
@@ -103,6 +108,7 @@ export function normalizeConfig(input: unknown): AppConfig {
       parsed.data.midUsageThreshold ?? defaults.midUsageThreshold,
     memoryUnit: parsed.data.memoryUnit ?? defaults.memoryUnit,
     gpuMemoryUnit: parsed.data.gpuMemoryUnit ?? defaults.gpuMemoryUnit,
+    memoryColorMode: parsed.data.memoryColorMode ?? defaults.memoryColorMode,
     showBackendTipsDialog:
       parsed.data.showBackendTipsDialog ?? defaults.showBackendTipsDialog,
   };

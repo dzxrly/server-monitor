@@ -7,6 +7,7 @@ import { languageMap } from '@/boot/i18n';
 import {
   type AppConfig,
   BYTE_UNITS,
+  MEMORY_COLOR_MODES,
   normalizeConfig,
   partialConfigSchema,
 } from '@/features/settings/model/config';
@@ -34,6 +35,12 @@ const unitOptions = BYTE_UNITS.map((value) => ({
   value,
   label: value,
 }));
+const memoryColorOptions = computed(() =>
+  MEMORY_COLOR_MODES.map((value) => ({
+    value,
+    label: t(value === 'lowContrast' ? 'memoryColorLow' : 'memoryColorHigh'),
+  })),
+);
 
 function saveAndClose(): void {
   configStore.setConfig(
@@ -200,6 +207,22 @@ function updateLanguage(value: string): void {
             ><q-select
               v-model="config.memoryUnit"
               :options="unitOptions"
+              emit-value
+              map-options
+              dense
+              outlined
+          /></q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section
+            ><q-item-label>{{
+              t('memoryColorMode')
+            }}</q-item-label></q-item-section
+          >
+          <q-item-section side class="setting-control"
+            ><q-select
+              v-model="config.memoryColorMode"
+              :options="memoryColorOptions"
               emit-value
               map-options
               dense

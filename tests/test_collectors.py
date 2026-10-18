@@ -7,6 +7,7 @@ from server_monitor.collectors.network.interfaces import NetworkCollector
 from server_monitor.collectors.processes.top import TopProcessCollector
 from server_monitor.collectors.storage.disks import DiskCollector
 from server_monitor.collectors.system.cpu import CpuCollector, _linux_cpu_name
+from server_monitor.collectors.system.memory import MemoryCollector
 from server_monitor.collectors.temperature.windows_lhm import (
     LibreHardwareMonitorTemperatureProvider,
 )
@@ -208,3 +209,62 @@ def test_linux_cpu_name_accepts_descriptive_arm_processor() -> None:
     assert _linux_cpu_name("Processor : ARMv7 Processor rev 3 (v7l)\n") == (
         "ARMv7 Processor rev 3 (v7l)"
     )
+
+
+def test_memory_collector_linux_composition_adds_up_to_total(monkeypatch) -> None:
+    module = "server_monitor.collectors.system.memory.psutil"
+    monkeypatch.setattr(f"{module}.LINUX", True)
+    monkeypatch.setattr(f"{module}.WINDOWS", False)
+    monkeypatch.setattr(
+        f"{module}.virtual_memory",
+        lambda: SimpleNamespace(
+            total=1000,
+            available=700,
+            used=300,
+            free=200,
+            buffers=50,
+            cached=450,
+            shared=30,
+            percent=30.0,
+        ),
+    )
+    monkeypatch.setattr(
+        f"{module}.swap_memory",
+        lambda: SimpleNamespace(total=100, used=10, free=90, percent=10.0),
+    )
+
+    result = MemoryCollector().collect()
+
+    assert result["composition"] == [
+        {"key": "used", "bytes": 300},
+        {"key": "buffers", "bytes": 50},
+        {"key": "cache", "bytes": 450},
+        {"key": "free", "bytes": 200},
+    ]
+    assert result["sharedBytes"] == 30
+
+
+def test_memory_collector_windows_composition_uses_page_lists(monkeypatch) -> None:
+    module = "server_monitor.collectors.system.memory.psutil"
+    monkeypatch.setattr(f"{module}.LINUX", False)
+    monkeypatch.setattr(f"{module}.WINDOWS", False)
+    monkeypatch.setattr(
+        f"{module}.virtual_memory",
+        lambda: SimpleNamespace(total=1000, available=600, used=400, free=600, percent=40.0),
+    )
+    monkeypatch.setattr(
+        f"{module}.swap_memory",
+        lambda: SimpleNamespace(total=100, used=10, free=90, percent=10.0),
+    )
+    collector = MemoryCollector()
+    assert collector.collect()["composition"] is None
+
+    collector._windows_lists = SimpleNamespace(
+        sample=lambda: {"modified": 50, "standby": 450, "free": 150}
+    )
+    assert collector.collect()["composition"] == [
+        {"key": "inUse", "bytes": 350},
+        {"key": "modified", "bytes": 50},
+        {"key": "standby", "bytes": 450},
+        {"key": "free", "bytes": 150},
+    ]

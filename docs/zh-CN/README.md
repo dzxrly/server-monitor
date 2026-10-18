@@ -30,6 +30,7 @@ Server Monitor 后端通过一个带版本号的统一 API 提供 CPU、内存�
 
 - 使用单一 `GET /api/v1/metrics` 返回同一采样时刻的完整快照，不再调用多个旧接口。
 - 读取所有可见挂载卷、物理硬盘 I/O、网络接口及各接口实时速率。
+- 返回各段之和等于物理内存总量的内存组成：Linux 与 `free` 命令一致，分为已用、缓冲区、缓存和空闲；Windows 与任务管理器一致，通过 PDH 计数器读取使用中、已修改、备用和空闲。
 - 可指定 CPU、内存和 NVIDIA GPU 高占用进程的返回数量。
 - 通过 NVML 读取 NVIDIA 设备和进程指标。
 - Linux 通过 `psutil` 读取温度；Windows 通过 LibreHardwareMonitor 读取温度。

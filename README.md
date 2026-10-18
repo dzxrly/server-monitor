@@ -30,6 +30,7 @@ The Server Monitor backend exposes one versioned API for CPU, memory, NVIDIA GPU
 
 - One coherent `GET /api/v1/metrics` snapshot instead of separate legacy endpoints.
 - All visible mounted volumes, physical-disk I/O rates, network interfaces, and per-interface transfer rates.
+- Memory composition that adds up to total RAM: used, buffers, cache, and free on Linux (matching `free`); in use, modified, standby, and free on Windows (matching Task Manager, read through PDH counters).
 - Configurable top CPU, memory, and NVIDIA GPU process lists.
 - NVIDIA device and process metrics through NVML.
 - Linux temperatures through `psutil`; Windows temperatures through LibreHardwareMonitor.
